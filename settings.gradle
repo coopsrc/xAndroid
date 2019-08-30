@@ -1,2 +1,2 @@
-include ':app', ':adaptive'
+include ':app', ':adaptive', ':utils'
 rootProject.name='xAndroid'

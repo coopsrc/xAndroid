@@ -22,7 +22,6 @@ import io.reactivex.processors.FlowableProcessor
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import java.io.File
-import java.lang.RuntimeException
 import java.util.concurrent.Semaphore
 
 /**

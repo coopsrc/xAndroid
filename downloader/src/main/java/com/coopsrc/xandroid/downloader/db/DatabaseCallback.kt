@@ -2,8 +2,8 @@ package com.coopsrc.xandroid.downloader.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteOpenHelper
-import com.coopsrc.xandroid.downloader.utils.Logger
 import com.coopsrc.xandroid.downloader.BuildConfig
+import com.coopsrc.xandroid.downloader.utils.Logger
 
 
 /**

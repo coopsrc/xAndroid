@@ -5,11 +5,11 @@ import com.coopsrc.xandroid.downloader.core.DownloadTask
 import com.coopsrc.xandroid.downloader.core.Downloader
 import com.coopsrc.xandroid.downloader.db.DatabaseModule
 import com.coopsrc.xandroid.downloader.http.DownloadImpl
-import com.coopsrc.xandroid.downloader.utils.Constants
-import com.coopsrc.xandroid.downloader.utils.Logger
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Segment
 import com.coopsrc.xandroid.downloader.model.TaskInfo
+import com.coopsrc.xandroid.downloader.utils.Constants
+import com.coopsrc.xandroid.downloader.utils.Logger
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.schedulers.Schedulers

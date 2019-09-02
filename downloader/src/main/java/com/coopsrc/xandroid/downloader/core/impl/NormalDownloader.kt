@@ -2,7 +2,7 @@ package com.coopsrc.xandroid.downloader.core.impl
 
 import com.coopsrc.xandroid.downloader.core.DownloadTask
 import com.coopsrc.xandroid.downloader.core.Downloader
-import com.coopsrc.xandroid.downloader.http.DownloadImpl
+import com.coopsrc.xandroid.downloader.api.DownloadApiImpl
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.utils.Constants
 import com.coopsrc.xandroid.downloader.utils.Logger
@@ -46,7 +46,7 @@ class NormalDownloader(downloadTask: DownloadTask) : Downloader(downloadTask) {
 
         return Maybe.just(Constants.any)
                 .flatMap {
-                    DownloadImpl.download(downloadTask.taskInfo.url)
+                    DownloadApiImpl.download(downloadTask.taskInfo.url)
                 }.flatMapPublisher {
                     downloaderProxy.saveTargetFile(it)
                 }.map {

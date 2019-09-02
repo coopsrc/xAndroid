@@ -1,6 +1,7 @@
 package com.coopsrc.xandroid.http
 
 import android.content.Context
+import androidx.annotation.Nullable
 import com.coopsrc.xandroid.http.interceptor.BasicParamsInterceptor
 import com.coopsrc.xandroid.http.logging.HttpLogger
 import com.coopsrc.xandroid.utils.LogUtils
@@ -24,29 +25,24 @@ object RetrofitManager {
     private val DEFAULT_READ_TIME_OUT = TimeUnit.SECONDS.toMillis(5)
     private val DEFAULT_WRITE_TIME_OUT = TimeUnit.SECONDS.toMillis(5)
 
-    private const val CACHE_DIR = "http_cache"
-    private const val CACHE_SIZE: Long = 1024 * 1024 * 100
-
     @JvmStatic
-    fun newRetrofit(context: Context, serverHostConfig: ServerHostConfig): Retrofit {
+    fun newRetrofit(serverHostConfig: ServerHostConfig): Retrofit {
         LogUtils.i("newRetrofit: %s", serverHostConfig.getPrimaryHost())
 
-        return newRetrofit(context, serverHostConfig, BaseParamsConfig())
+        return newRetrofit(serverHostConfig, BaseParamsConfig())
     }
 
     @JvmStatic
     fun newRetrofit(
-        context: Context,
         serverHostConfig: ServerHostConfig,
         basicParamsConfig: BasicParamsConfig
     ): Retrofit {
         LogUtils.i("newRetrofit: %s", serverHostConfig.getPrimaryHost())
 
-        return createRetrofit(context, serverHostConfig, basicParamsConfig)
+        return createRetrofit(serverHostConfig, basicParamsConfig)
     }
 
     private fun createRetrofit(
-        context: Context,
         serverHostConfig: ServerHostConfig,
         basicParamsConfig: BasicParamsConfig
     ): Retrofit {
@@ -74,10 +70,6 @@ object RetrofitManager {
         // set cache dir.
         if (basicParamsConfig.getCache() != null) {
             httpClientBuilder.cache(basicParamsConfig.getCache())
-        } else {
-            val cacheDir = File(context.cacheDir, CACHE_DIR)
-            val cache = Cache(cacheDir, CACHE_SIZE) //100Mb
-            httpClientBuilder.cache(cache)
         }
 
         // set time out.

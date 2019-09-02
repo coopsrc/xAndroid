@@ -4,7 +4,7 @@ import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.core.DownloadTask
 import com.coopsrc.xandroid.downloader.core.Downloader
 import com.coopsrc.xandroid.downloader.db.DatabaseModule
-import com.coopsrc.xandroid.downloader.http.DownloadImpl
+import com.coopsrc.xandroid.downloader.api.DownloadApiImpl
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Segment
 import com.coopsrc.xandroid.downloader.model.TaskInfo
@@ -151,7 +151,7 @@ class RangeDownloader(downloadTask: DownloadTask) : Downloader(downloadTask) {
         }.doOnSuccess {
             Logger.w(tag, "Start download: $segment, Range: $it")
         }.flatMap {
-            DownloadImpl.download(downloadTask.taskInfo.url, it)
+            DownloadApiImpl.download(downloadTask.taskInfo.url, it)
         }.flatMapPublisher {
             downloaderProxy.saveTargetFile(it, segment)
         }.map {

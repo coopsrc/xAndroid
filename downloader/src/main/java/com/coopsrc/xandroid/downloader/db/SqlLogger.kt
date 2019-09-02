@@ -1,9 +1,7 @@
 package com.coopsrc.xandroid.downloader.db
 
-import android.util.Log
-import com.coopsrc.xandroid.downloader.utils.Logger
+import com.coopsrc.xandroid.utils.LogUtils
 import com.squareup.sqlbrite3.SqlBrite
-import java.util.*
 
 /**
  * Created by tingkuo.
@@ -12,14 +10,13 @@ import java.util.*
  */
 class SqlLogger : SqlBrite.Logger {
     override fun log(message: String?) {
-        Log.d(buildTag(tag), message)
+
+        LogUtils.tag(buildTag()).d(message);
     }
 
     companion object {
-        private const val tag = "SqlLogger"
-
-        private fun buildTag(tag: String): String {
-            return String.format(Locale.ROOT, "|%s|%s|%s|", tag, Thread.currentThread().name, Logger.randomKey())
+        private fun buildTag(): String {
+            return String.format("|SqlLogger|%s|", Thread.currentThread().name)
         }
     }
 }

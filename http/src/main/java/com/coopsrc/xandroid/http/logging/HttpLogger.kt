@@ -11,6 +11,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 class HttpLogger : HttpLoggingInterceptor.Logger {
 
     override fun log(message: String) {
-        LogUtils.d(message)
+        LogUtils.tag(buildTag()).d(message)
+    }
+
+    companion object {
+        private fun buildTag(): String {
+            return String.format("|HttpLogger|%s|", Thread.currentThread().name)
+        }
     }
 }

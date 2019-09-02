@@ -5,7 +5,7 @@ import com.coopsrc.xandroid.downloader.core.impl.NormalDownloader
 import com.coopsrc.xandroid.downloader.core.impl.RangeDownloader
 import com.coopsrc.xandroid.downloader.core.impl.SingleDownloader
 import com.coopsrc.xandroid.downloader.db.DatabaseModule
-import com.coopsrc.xandroid.downloader.http.DownloadImpl
+import com.coopsrc.xandroid.downloader.api.DownloadApiImpl
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Status
 import com.coopsrc.xandroid.downloader.model.TaskInfo
@@ -111,7 +111,7 @@ class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semaphore) {
     private fun detect(): Maybe<Any> {
         Logger.i(tag, "detect")
 
-        return DownloadImpl.detect(taskInfo.url).flatMap {
+        return DownloadApiImpl.detect(taskInfo.url).flatMap {
             taskInfo.progress.update(updated = HttpUtils.lastModified(it))
             if (taskInfo.type == null) {
                 setupResponse(it)

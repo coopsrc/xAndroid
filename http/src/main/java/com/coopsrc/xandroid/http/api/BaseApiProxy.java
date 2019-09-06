@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
  * <p>
  * Date: 2019-09-02 14:08
  */
-public abstract class BaseApiProxy<T extends BaseApiService> {
+public abstract class BaseApiProxy<T> {
 
     protected Retrofit mRetrofit;
     protected T mApiService;

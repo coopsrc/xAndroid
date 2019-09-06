@@ -26,24 +26,40 @@ public abstract class BaseApiProxy<T> {
     @NonNull
     protected abstract ServerHostConfig serverHostConfig();
 
+    @NonNull
     protected BasicParamsConfig basicParamsConfig() {
-        return new BasicParamsConfig() {
-        };
+        return new ParamsConfig();
     }
 
     protected abstract T initApiService();
 
 
-    public T createApiService(final Class<T> service) {
+    protected T createApiService(final Class<T> service) {
         return mRetrofit.create(service);
     }
 
-    public T createApiService(String baseUrl, final Class<T> service) {
+    public <S> S create(final Class<S> service) {
+        return mRetrofit.create(service);
+    }
+
+    protected T createApiService(String baseUrl, final Class<T> service) {
+        return mRetrofit.newBuilder().baseUrl(baseUrl).build().create(service);
+    }
+
+    public <S> S create(String baseUrl, final Class<S> service) {
         return mRetrofit.newBuilder().baseUrl(baseUrl).build().create(service);
     }
 
     public void updateBaseUrl(String baseUrl) {
         mRetrofit = mRetrofit.newBuilder().baseUrl(baseUrl).build();
+    }
+
+    protected class ParamsConfig extends BasicParamsConfig {
+
+    }
+
+    protected abstract class ServerConfig extends ServerHostConfig {
+
     }
 
 }

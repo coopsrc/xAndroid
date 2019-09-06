@@ -1,17 +1,14 @@
 package com.coopsrc.xandroid.http
 
-import android.content.Context
-import androidx.annotation.Nullable
+import androidx.annotation.NonNull
 import com.coopsrc.xandroid.http.interceptor.BasicParamsInterceptor
 import com.coopsrc.xandroid.http.logging.HttpLogger
 import com.coopsrc.xandroid.utils.LogUtils
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
 import java.util.concurrent.TimeUnit
 
 /**
@@ -26,39 +23,33 @@ object RetrofitManager {
     private val DEFAULT_WRITE_TIME_OUT = TimeUnit.SECONDS.toMillis(5)
 
     @JvmStatic
-    fun newRetrofit(serverHostConfig: ServerHostConfig): Retrofit {
-        LogUtils.i("newRetrofit: %s", serverHostConfig.getPrimaryHost())
+    fun newRetrofit(@NonNull serverConfig: ServerHostConfig): Retrofit {
+        LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
 
-        return newRetrofit(serverHostConfig, BaseParamsConfig())
+        return newRetrofit(serverConfig, BaseParamsConfig())
     }
 
     @JvmStatic
-    fun newRetrofit(
-        serverHostConfig: ServerHostConfig,
-        basicParamsConfig: BasicParamsConfig
-    ): Retrofit {
-        LogUtils.i("newRetrofit: %s", serverHostConfig.getPrimaryHost())
+    fun newRetrofit(@NonNull serverConfig: ServerHostConfig, @NonNull paramsConfig: BasicParamsConfig): Retrofit {
+        LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
 
-        return createRetrofit(serverHostConfig, basicParamsConfig)
+        return createRetrofit(serverConfig, paramsConfig)
     }
 
-    private fun createRetrofit(
-        serverHostConfig: ServerHostConfig,
-        basicParamsConfig: BasicParamsConfig
-    ): Retrofit {
-        LogUtils.i("createRetrofit: ", serverHostConfig)
+    private fun createRetrofit(@NonNull serverConfig: ServerHostConfig, @NonNull paramsConfig: BasicParamsConfig): Retrofit {
+        LogUtils.i("createRetrofit: ", serverConfig)
 
         val httpClientBuilder = OkHttpClient.Builder()
 
         // add basic params interceptor.
         val basicParamsBuilder = BasicParamsInterceptor.Builder()
-        basicParamsBuilder.addQueryParams(basicParamsConfig.getBasicQueryParams())
-        basicParamsBuilder.addBodyParams(basicParamsConfig.getBodyMapParams())
-        basicParamsBuilder.addHeaderParams(basicParamsConfig.getHeaderMapParams())
+        basicParamsBuilder.addQueryParams(paramsConfig.getBasicQueryParams())
+        basicParamsBuilder.addBodyParams(paramsConfig.getBodyMapParams())
+        basicParamsBuilder.addHeaderParams(paramsConfig.getHeaderMapParams())
         httpClientBuilder.addInterceptor(basicParamsBuilder.build())
 
         // add custom interceptor
-        for (interceptor in basicParamsConfig.getCustomInterceptors()) {
+        for (interceptor in paramsConfig.getCustomInterceptors()) {
             httpClientBuilder.addInterceptor(interceptor)
         }
 
@@ -68,8 +59,8 @@ object RetrofitManager {
         httpClientBuilder.addInterceptor(httpLoggingInterceptor)
 
         // set cache dir.
-        if (basicParamsConfig.getCache() != null) {
-            httpClientBuilder.cache(basicParamsConfig.getCache())
+        if (paramsConfig.getCache() != null) {
+            httpClientBuilder.cache(paramsConfig.getCache())
         }
 
         // set time out.
@@ -81,7 +72,7 @@ object RetrofitManager {
         // create retrofit.
         val retrofitBuilder = Retrofit.Builder()
         retrofitBuilder.client(httpClientBuilder.build())
-        retrofitBuilder.baseUrl(serverHostConfig.getPrimaryHost())
+        retrofitBuilder.baseUrl(serverConfig.getPrimaryHost())
         retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         retrofitBuilder.addConverterFactory(GsonConverterFactory.create())
 

@@ -10,8 +10,8 @@ import java.util.*
  */
 abstract class ServerHostConfig : IServerHostConfig {
 
-    override fun getSecondaryHosts(): LinkedList<String> {
-        return LinkedList()
+    override fun getSecondaryHosts(): LinkedHashSet<String> {
+        return LinkedHashSet()
     }
 
     override fun isEnableHostLoop(): Boolean {

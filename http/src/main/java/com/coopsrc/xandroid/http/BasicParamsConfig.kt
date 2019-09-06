@@ -4,6 +4,7 @@ import com.coopsrc.xandroid.http.config.IBasicParamsConfig
 import okhttp3.Cache
 import okhttp3.Interceptor
 import java.util.*
+import kotlin.collections.HashSet
 
 /**
  * Created by tingkuo.
@@ -24,8 +25,8 @@ abstract class BasicParamsConfig : IBasicParamsConfig {
         return HashMap()
     }
 
-    override fun getCustomInterceptors(): List<Interceptor> {
-        return ArrayList()
+    override fun getCustomInterceptors(): Set<Interceptor> {
+        return HashSet()
     }
 
     override fun getCache(): Cache? {

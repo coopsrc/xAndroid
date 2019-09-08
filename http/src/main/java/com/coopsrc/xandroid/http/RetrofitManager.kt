@@ -1,6 +1,7 @@
 package com.coopsrc.xandroid.http
 
 import androidx.annotation.NonNull
+import com.coopsrc.xandroid.http.adapter.LiveDataCallAdapterFactory
 import com.coopsrc.xandroid.http.interceptor.BasicParamsInterceptor
 import com.coopsrc.xandroid.http.logging.HttpLogger
 import com.coopsrc.xandroid.utils.LogUtils
@@ -74,6 +75,7 @@ object RetrofitManager {
         retrofitBuilder.client(httpClientBuilder.build())
         retrofitBuilder.baseUrl(serverConfig.getPrimaryHost())
         retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        retrofitBuilder.addCallAdapterFactory(LiveDataCallAdapterFactory.create())
         retrofitBuilder.addConverterFactory(GsonConverterFactory.create())
 
         return retrofitBuilder.build()

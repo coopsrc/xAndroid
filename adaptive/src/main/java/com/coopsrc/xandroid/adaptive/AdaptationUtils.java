@@ -28,7 +28,7 @@ public class AdaptationUtils {
 
         Resources resources = context.getResources();
 
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
             height = resources.getDimensionPixelSize(resourceId);
         }

@@ -1,7 +1,5 @@
 package com.coopsrc.xandroid.http.config
 
-import java.util.*
-
 /**
  * Created by tingkuo.
  * Date: 2017-12-23
@@ -11,7 +9,7 @@ interface IServerHostConfig {
 
     fun getPrimaryHost(): String
 
-    fun getSecondaryHosts(): LinkedList<String>
+    fun getSecondaryHosts(): LinkedHashSet<String>
 
     fun isEnableHostLoop(): Boolean
 }

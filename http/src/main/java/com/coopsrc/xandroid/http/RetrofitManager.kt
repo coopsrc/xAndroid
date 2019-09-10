@@ -1,15 +1,15 @@
 package com.coopsrc.xandroid.http
 
 import androidx.annotation.NonNull
-import com.coopsrc.xandroid.http.adapter.LiveDataCallAdapterFactory
+import com.coopsrc.xandroid.http.config.BasicParamsConfig
+import com.coopsrc.xandroid.http.config.HttpClientConfig
+import com.coopsrc.xandroid.http.config.ServerHostConfig
 import com.coopsrc.xandroid.http.interceptor.BasicParamsInterceptor
 import com.coopsrc.xandroid.http.logging.HttpLogger
 import com.coopsrc.xandroid.utils.LogUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 /**
@@ -19,25 +19,39 @@ import java.util.concurrent.TimeUnit
  */
 object RetrofitManager {
 
-    private val DEFAULT_CONN_TIME_OUT = TimeUnit.SECONDS.toMillis(10)
-    private val DEFAULT_READ_TIME_OUT = TimeUnit.SECONDS.toMillis(10)
-    private val DEFAULT_WRITE_TIME_OUT = TimeUnit.SECONDS.toMillis(10)
-
     @JvmStatic
     fun newRetrofit(@NonNull serverConfig: ServerHostConfig): Retrofit {
         LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
 
-        return newRetrofit(serverConfig, BaseParamsConfig())
+        return createRetrofit(serverConfig, BaseHttpClientConfig(), BaseParamsConfig())
     }
 
     @JvmStatic
     fun newRetrofit(@NonNull serverConfig: ServerHostConfig, @NonNull paramsConfig: BasicParamsConfig): Retrofit {
         LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
 
-        return createRetrofit(serverConfig, paramsConfig)
+        return createRetrofit(serverConfig, paramsConfig = paramsConfig)
     }
 
-    private fun createRetrofit(@NonNull serverConfig: ServerHostConfig, @NonNull paramsConfig: BasicParamsConfig): Retrofit {
+    @JvmStatic
+    fun newRetrofit(@NonNull serverConfig: ServerHostConfig, @NonNull clientConfig: HttpClientConfig): Retrofit {
+        LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
+
+        return createRetrofit(serverConfig, clientConfig)
+    }
+
+    @JvmStatic
+    fun newRetrofit(@NonNull serverConfig: ServerHostConfig, @NonNull clientConfig: HttpClientConfig, @NonNull paramsConfig: BasicParamsConfig): Retrofit {
+        LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
+
+        return createRetrofit(serverConfig, clientConfig, paramsConfig)
+    }
+
+    private fun createRetrofit(
+        @NonNull serverConfig: ServerHostConfig,
+        @NonNull clientConfig: HttpClientConfig = BaseHttpClientConfig(),
+        @NonNull paramsConfig: BasicParamsConfig = BaseParamsConfig()
+    ): Retrofit {
         LogUtils.i("createRetrofit: ", serverConfig)
 
         val httpClientBuilder = OkHttpClient.Builder()
@@ -61,30 +75,35 @@ object RetrofitManager {
 
         // set logger interceptor.
         val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLogger())
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        httpLoggingInterceptor.level = clientConfig.httpLogLevel()
         httpClientBuilder.addInterceptor(httpLoggingInterceptor)
 
         // set cache dir.
-        if (paramsConfig.getCache() != null) {
-            httpClientBuilder.cache(paramsConfig.getCache())
+        if (clientConfig.httpClientCache() != null) {
+            httpClientBuilder.cache(clientConfig.httpClientCache())
         }
 
         // set time out.
-        httpClientBuilder.connectTimeout(DEFAULT_CONN_TIME_OUT, TimeUnit.MILLISECONDS)
-        httpClientBuilder.writeTimeout(DEFAULT_READ_TIME_OUT, TimeUnit.MILLISECONDS)
-        httpClientBuilder.readTimeout(DEFAULT_WRITE_TIME_OUT, TimeUnit.MILLISECONDS)
-        httpClientBuilder.retryOnConnectionFailure(true)
+        httpClientBuilder.connectTimeout(clientConfig.connectTimeoutMillis(), TimeUnit.MILLISECONDS)
+        httpClientBuilder.writeTimeout(clientConfig.writeTimeoutMillis(), TimeUnit.MILLISECONDS)
+        httpClientBuilder.readTimeout(clientConfig.readTimeoutMillis(), TimeUnit.MILLISECONDS)
+        httpClientBuilder.retryOnConnectionFailure(clientConfig.retryOnConnectionFailure())
 
         // create retrofit.
         val retrofitBuilder = Retrofit.Builder()
         retrofitBuilder.client(httpClientBuilder.build())
         retrofitBuilder.baseUrl(serverConfig.getPrimaryHost())
-        retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        retrofitBuilder.addCallAdapterFactory(LiveDataCallAdapterFactory.create())
-        retrofitBuilder.addConverterFactory(GsonConverterFactory.create())
+        for (callAdapterFactory in clientConfig.callAdapterFactories()) {
+            retrofitBuilder.addCallAdapterFactory(callAdapterFactory)
+        }
+        for (converterFactory in clientConfig.converterFactories()) {
+            retrofitBuilder.addConverterFactory(converterFactory)
+        }
 
         return retrofitBuilder.build()
     }
+
+    private class BaseHttpClientConfig : HttpClientConfig()
 
     private class BaseParamsConfig : BasicParamsConfig()
 }

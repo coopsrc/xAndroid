@@ -1,4 +1,4 @@
-package com.coopsrc.xandroid.http.api;
+package com.coopsrc.xandroid.http.response;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,20 +9,20 @@ import java.io.IOException;
 
 import retrofit2.Response;
 
-public class BaseApiResponse<T> {
+public class ApiResponse<T> {
     public final int code;
     @Nullable
     public final T body;
     @Nullable
     public final String message;
 
-    public BaseApiResponse(@NonNull Throwable throwable) {
+    public ApiResponse(@NonNull Throwable throwable) {
         code = 500;
         body = null;
         message = throwable.getMessage();
     }
 
-    public BaseApiResponse(@NonNull Response<T> response) {
+    public ApiResponse(@NonNull Response<T> response) {
         code = response.code();
 
         if (response.isSuccessful()) {

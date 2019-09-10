@@ -1,6 +1,5 @@
-package com.coopsrc.xandroid.http
+package com.coopsrc.xandroid.http.config
 
-import com.coopsrc.xandroid.http.config.IServerHostConfig
 import java.util.*
 
 /**

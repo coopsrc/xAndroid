@@ -1,6 +1,5 @@
 package com.coopsrc.xandroid.http.config
 
-import okhttp3.Cache
 import okhttp3.Interceptor
 
 /**
@@ -8,7 +7,7 @@ import okhttp3.Interceptor
  * Date: 2017-12-23
  * Time: 10:38
  */
-interface IBasicParamsConfig {
+internal interface IBasicParamsConfig {
     fun getBasicQueryParams(): Map<String, String>
 
     fun getBodyMapParams(): Map<String, String>
@@ -18,6 +17,4 @@ interface IBasicParamsConfig {
     fun getInterceptors(): Set<Interceptor>
 
     fun getNetworkInterceptors(): Set<Interceptor>
-
-    fun getCache(): Cache?
 }

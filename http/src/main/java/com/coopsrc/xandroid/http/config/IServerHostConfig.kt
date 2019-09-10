@@ -5,7 +5,7 @@ package com.coopsrc.xandroid.http.config
  * Date: 2017-12-23
  * Time: 10:37
  */
-interface IServerHostConfig {
+internal interface IServerHostConfig {
 
     fun getPrimaryHost(): String
 

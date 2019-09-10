@@ -2,11 +2,15 @@ package com.coopsrc.xandroid.downloader.api
 
 import com.coopsrc.xandroid.downloader.utils.Logger
 import com.coopsrc.xandroid.http.RetrofitManager
-import com.coopsrc.xandroid.http.ServerHostConfig
+import com.coopsrc.xandroid.http.config.HttpClientConfig
+import com.coopsrc.xandroid.http.config.ServerHostConfig
 import io.reactivex.Maybe
 import okhttp3.ResponseBody
+import retrofit2.CallAdapter
+import retrofit2.Converter
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 /**
  * Created by tingkuo.
@@ -20,6 +24,14 @@ object DownloadApiImpl {
         RetrofitManager.newRetrofit(object : ServerHostConfig() {
             override fun getPrimaryHost(): String {
                 return BASE_URL
+            }
+        }, object : HttpClientConfig() {
+            override fun callAdapterFactories(): Set<CallAdapter.Factory> {
+                return linkedSetOf(RxJava2CallAdapterFactory.create())
+            }
+
+            override fun converterFactories(): Set<Converter.Factory> {
+                return linkedSetOf()
             }
         })
     private var downloadApi: DownloadApi = sRetrofit.create(DownloadApi::class.java)

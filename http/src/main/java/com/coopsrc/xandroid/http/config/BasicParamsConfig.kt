@@ -1,7 +1,5 @@
-package com.coopsrc.xandroid.http
+package com.coopsrc.xandroid.http.config
 
-import com.coopsrc.xandroid.http.config.IBasicParamsConfig
-import okhttp3.Cache
 import okhttp3.Interceptor
 
 /**
@@ -29,9 +27,5 @@ abstract class BasicParamsConfig : IBasicParamsConfig {
 
     override fun getNetworkInterceptors(): Set<Interceptor> {
         return LinkedHashSet()
-    }
-
-    override fun getCache(): Cache? {
-        return null
     }
 }

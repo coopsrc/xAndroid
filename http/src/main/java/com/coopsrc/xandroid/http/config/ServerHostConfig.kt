@@ -1,6 +1,5 @@
-package com.coopsrc.xandroid.http
+package com.coopsrc.xandroid.http.config
 
-import com.coopsrc.xandroid.http.config.IServerHostConfig
 import java.util.*
 
 /**
@@ -14,7 +13,7 @@ abstract class ServerHostConfig : IServerHostConfig {
         return LinkedHashSet()
     }
 
-    override fun isEnableHostLoop(): Boolean {
+    override fun isHostLoopEnabled(): Boolean {
         return false
     }
 }

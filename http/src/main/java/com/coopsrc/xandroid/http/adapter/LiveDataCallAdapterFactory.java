@@ -3,7 +3,7 @@ package com.coopsrc.xandroid.http.adapter;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
-import com.coopsrc.xandroid.http.api.BaseApiResponse;
+import com.coopsrc.xandroid.http.response.ApiResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +32,7 @@ public class LiveDataCallAdapterFactory extends CallAdapter.Factory {
             throw new IllegalArgumentException("resource must be parameterized");
         }
         Class<?> rawObservableType = getRawType(observableType);
-        if (rawObservableType != BaseApiResponse.class) {
+        if (rawObservableType != ApiResponse.class) {
             throw new IllegalArgumentException("type must be a resource");
         }
         Type bodyType = getParameterUpperBound(0, (ParameterizedType) observableType);

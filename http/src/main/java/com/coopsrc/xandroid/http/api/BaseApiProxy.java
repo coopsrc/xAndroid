@@ -2,10 +2,17 @@ package com.coopsrc.xandroid.http.api;
 
 import androidx.annotation.NonNull;
 
-import com.coopsrc.xandroid.http.BasicParamsConfig;
 import com.coopsrc.xandroid.http.RetrofitManager;
-import com.coopsrc.xandroid.http.ServerHostConfig;
+import com.coopsrc.xandroid.http.config.BasicParamsConfig;
+import com.coopsrc.xandroid.http.config.HttpClientConfig;
+import com.coopsrc.xandroid.http.config.ServerHostConfig;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Set;
+
+import retrofit2.CallAdapter;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 /**
@@ -19,8 +26,13 @@ public abstract class BaseApiProxy<T> {
     protected T mApiService;
 
     protected BaseApiProxy() {
-        mRetrofit = RetrofitManager.newRetrofit(serverHostConfig(), basicParamsConfig());
+        mRetrofit = RetrofitManager.newRetrofit(serverHostConfig(), clientConfig(), basicParamsConfig());
         mApiService = initApiService();
+    }
+
+    @NonNull
+    protected HttpClientConfig clientConfig() {
+        return new ClientConfig();
     }
 
     @NonNull
@@ -52,6 +64,20 @@ public abstract class BaseApiProxy<T> {
 
     public void updateBaseUrl(String baseUrl) {
         mRetrofit = mRetrofit.newBuilder().baseUrl(baseUrl).build();
+    }
+
+    protected class ClientConfig extends HttpClientConfig {
+        @NotNull
+        @Override
+        public Set<CallAdapter.Factory> callAdapterFactories() {
+            return super.callAdapterFactories();
+        }
+
+        @NotNull
+        @Override
+        public Set<Converter.Factory> converterFactories() {
+            return super.converterFactories();
+        }
     }
 
     protected class ParamsConfig extends BasicParamsConfig {

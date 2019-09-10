@@ -15,7 +15,9 @@ interface IBasicParamsConfig {
 
     fun getHeaderMapParams(): Map<String, String>
 
-    fun getCustomInterceptors(): Set<Interceptor>
+    fun getInterceptors(): Set<Interceptor>
+
+    fun getNetworkInterceptors(): Set<Interceptor>
 
     fun getCache(): Cache?
 }

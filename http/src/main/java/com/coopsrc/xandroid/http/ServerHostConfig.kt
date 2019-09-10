@@ -14,7 +14,7 @@ abstract class ServerHostConfig : IServerHostConfig {
         return LinkedHashSet()
     }
 
-    override fun isEnableHostLoop(): Boolean {
+    override fun isHostLoopEnabled(): Boolean {
         return false
     }
 }

@@ -12,56 +12,57 @@ import java.util.*
  */
 class BasicParamsInterceptor : Interceptor {
 
+    private val headerParams = HashMap<String, String>()
     private val queryParams = HashMap<String, String>()
     private val bodyParams = HashMap<String, String>()
-    private val headerParams = HashMap<String, String>()
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
+        val originalRequest = chain.request()
 
+        val requestBuilder = originalRequest.newBuilder()
 
-        val headersBuilder = request.headers.newBuilder()
+        val headersBuilder = originalRequest.headers.newBuilder()
         for ((key, value) in headerParams) {
             headersBuilder.add(key, value)
         }
+        requestBuilder.headers(headersBuilder.build())
 
-        val requestBuilder = request.newBuilder()
-        val httpUrlBuilder = request.url.newBuilder()
+        val httpUrlBuilder = originalRequest.url.newBuilder()
         for ((key, value) in queryParams) {
             httpUrlBuilder.addQueryParameter(key, value)
         }
         requestBuilder.url(httpUrlBuilder.build())
 
-        if (canInjectRequestBody(request)) {
-            if (request.body is FormBody) {
+        if (canInjectRequestBody(originalRequest)) {
+            if (originalRequest.body is FormBody) {
                 val formBodyBuilder = FormBody.Builder()
                 for ((key, value) in bodyParams) {
                     formBodyBuilder.add(key, value)
                 }
 
-                val originalBody = request.body as FormBody?
+                val originalBody = originalRequest.body as FormBody?
                 if (originalBody != null && originalBody.size > 0) {
                     for (i in 0 until originalBody.size) {
                         formBodyBuilder.add(originalBody.name(i), originalBody.value(i))
                     }
                 }
 
-                requestBuilder.method(request.method, formBodyBuilder.build());
-            } else if (request.body is MultipartBody) {
+                requestBuilder.method(originalRequest.method, formBodyBuilder.build());
+            } else if (originalRequest.body is MultipartBody) {
                 val multipartBuilder = MultipartBody.Builder()
                 for ((key, value) in bodyParams) {
                     multipartBuilder.addFormDataPart(key, value)
                 }
 
-                val originalBody = request.body as MultipartBody?
+                val originalBody = originalRequest.body as MultipartBody?
                 if (originalBody != null && originalBody.size > 0) {
                     for (part in originalBody.parts) {
                         multipartBuilder.addPart(part)
                     }
                 }
 
-                requestBuilder.method(request.method, multipartBuilder.build())
+                requestBuilder.method(originalRequest.method, multipartBuilder.build())
             }
         }
 
@@ -81,8 +82,8 @@ class BasicParamsInterceptor : Interceptor {
 
         private val mInterceptor: BasicParamsInterceptor = BasicParamsInterceptor()
 
-        fun addQueryParam(key: String, value: String): Builder {
-            mInterceptor.queryParams[key] = value
+        fun addHeaderParams(headers: Map<String, String>): Builder {
+            mInterceptor.headerParams.putAll(headers)
             return this
         }
 
@@ -91,23 +92,8 @@ class BasicParamsInterceptor : Interceptor {
             return this
         }
 
-        fun addBodyParam(key: String, value: String): Builder {
-            mInterceptor.bodyParams[key] = value
-            return this
-        }
-
         fun addBodyParams(body: Map<String, String>): Builder {
             mInterceptor.bodyParams.putAll(body)
-            return this
-        }
-
-        fun addHeaderParam(key: String, value: String): Builder {
-            mInterceptor.headerParams[key] = value
-            return this
-        }
-
-        fun addHeaderParams(headers: Map<String, String>): Builder {
-            mInterceptor.headerParams.putAll(headers)
             return this
         }
 

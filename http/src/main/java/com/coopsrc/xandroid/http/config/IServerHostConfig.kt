@@ -11,5 +11,5 @@ interface IServerHostConfig {
 
     fun getSecondaryHosts(): LinkedHashSet<String>
 
-    fun isEnableHostLoop(): Boolean
+    fun isHostLoopEnabled(): Boolean
 }

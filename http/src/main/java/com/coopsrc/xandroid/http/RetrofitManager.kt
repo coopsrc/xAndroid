@@ -19,9 +19,9 @@ import java.util.concurrent.TimeUnit
  */
 object RetrofitManager {
 
-    private val DEFAULT_CONN_TIME_OUT = TimeUnit.SECONDS.toMillis(5)
-    private val DEFAULT_READ_TIME_OUT = TimeUnit.SECONDS.toMillis(5)
-    private val DEFAULT_WRITE_TIME_OUT = TimeUnit.SECONDS.toMillis(5)
+    private val DEFAULT_CONN_TIME_OUT = TimeUnit.SECONDS.toMillis(10)
+    private val DEFAULT_READ_TIME_OUT = TimeUnit.SECONDS.toMillis(10)
+    private val DEFAULT_WRITE_TIME_OUT = TimeUnit.SECONDS.toMillis(10)
 
     @JvmStatic
     fun newRetrofit(@NonNull serverConfig: ServerHostConfig): Retrofit {
@@ -50,8 +50,13 @@ object RetrofitManager {
         httpClientBuilder.addInterceptor(basicParamsBuilder.build())
 
         // add custom interceptor
-        for (interceptor in paramsConfig.getCustomInterceptors()) {
+        for (interceptor in paramsConfig.getInterceptors()) {
             httpClientBuilder.addInterceptor(interceptor)
+        }
+
+        // add custom network interceptor
+        for (interceptor in paramsConfig.getNetworkInterceptors()) {
+            httpClientBuilder.addNetworkInterceptor(interceptor)
         }
 
         // set logger interceptor.

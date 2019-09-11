@@ -11,7 +11,7 @@ import java.io.File
  * Date: 2018-07-23
  * Time: 20:14
  */
-interface ITaskRepo {
+internal interface ITaskRepo {
 
     fun taskList(): Maybe<List<TaskInfo>>
 

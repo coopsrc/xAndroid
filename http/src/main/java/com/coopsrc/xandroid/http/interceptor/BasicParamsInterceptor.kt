@@ -48,7 +48,7 @@ class BasicParamsInterceptor : Interceptor {
                     }
                 }
 
-                requestBuilder.method(originalRequest.method, formBodyBuilder.build());
+                requestBuilder.method(originalRequest.method, formBodyBuilder.build())
             } else if (originalRequest.body is MultipartBody) {
                 val multipartBuilder = MultipartBody.Builder()
                 for ((key, value) in bodyParams) {

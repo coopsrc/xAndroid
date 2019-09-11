@@ -11,7 +11,7 @@ import com.coopsrc.xandroid.downloader.utils.Logger
  * Date: 2018-07-24
  * Time: 09:18
  */
-class DatabaseCallback : SupportSQLiteOpenHelper.Callback(DB_VERSION) {
+internal class DatabaseCallback : SupportSQLiteOpenHelper.Callback(DB_VERSION) {
 
     override fun onCreate(db: SupportSQLiteDatabase?) {
         Logger.i("DatabaseCallback", "onCreate: $db, $SQL_CREATE_TASK_INFO")

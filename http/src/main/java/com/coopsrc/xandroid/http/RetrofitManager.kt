@@ -1,9 +1,7 @@
 package com.coopsrc.xandroid.http
 
 import androidx.annotation.NonNull
-import com.coopsrc.xandroid.http.config.BasicParamsConfig
 import com.coopsrc.xandroid.http.config.HttpClientConfig
-import com.coopsrc.xandroid.http.config.ServerHostConfig
 import com.coopsrc.xandroid.http.interceptor.BasicParamsInterceptor
 import com.coopsrc.xandroid.http.logging.HttpLogger
 import com.coopsrc.xandroid.utils.LogUtils
@@ -20,57 +18,49 @@ import java.util.concurrent.TimeUnit
 object RetrofitManager {
 
     @JvmStatic
-    fun newRetrofit(@NonNull serverConfig: ServerHostConfig): Retrofit {
-        LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
+    fun newRetrofit(): Retrofit {
+        LogUtils.i("newRetrofit: %s")
 
-        return createRetrofit(serverConfig, BaseHttpClientConfig(), BaseParamsConfig())
+        return createRetrofit()
     }
 
     @JvmStatic
-    fun newRetrofit(@NonNull serverConfig: ServerHostConfig, @NonNull paramsConfig: BasicParamsConfig): Retrofit {
-        LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
+    fun newRetrofit(@NonNull clientConfig: HttpClientConfig): Retrofit {
+        LogUtils.i("newRetrofit: %s", clientConfig.getPrimaryHost())
 
-        return createRetrofit(serverConfig, paramsConfig = paramsConfig)
+        return createRetrofit(clientConfig)
     }
 
-    @JvmStatic
-    fun newRetrofit(@NonNull serverConfig: ServerHostConfig, @NonNull clientConfig: HttpClientConfig): Retrofit {
-        LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
-
-        return createRetrofit(serverConfig, clientConfig)
-    }
-
-    @JvmStatic
-    fun newRetrofit(@NonNull serverConfig: ServerHostConfig, @NonNull clientConfig: HttpClientConfig, @NonNull paramsConfig: BasicParamsConfig): Retrofit {
-        LogUtils.i("newRetrofit: %s", serverConfig.getPrimaryHost())
-
-        return createRetrofit(serverConfig, clientConfig, paramsConfig)
-    }
-
-    private fun createRetrofit(
-        @NonNull serverConfig: ServerHostConfig,
-        @NonNull clientConfig: HttpClientConfig = BaseHttpClientConfig(),
-        @NonNull paramsConfig: BasicParamsConfig = BaseParamsConfig()
-    ): Retrofit {
-        LogUtils.i("createRetrofit: ", serverConfig)
+    private fun createRetrofit(@NonNull clientConfig: HttpClientConfig = BaseHttpClientConfig()): Retrofit {
+        LogUtils.i("createRetrofit: ", clientConfig)
 
         val httpClientBuilder = OkHttpClient.Builder()
 
         // add basic params interceptor.
         val basicParamsBuilder = BasicParamsInterceptor.Builder()
-        basicParamsBuilder.addQueryParams(paramsConfig.getBasicQueryParams())
-        basicParamsBuilder.addBodyParams(paramsConfig.getBodyMapParams())
-        basicParamsBuilder.addHeaderParams(paramsConfig.getHeaderMapParams())
+        basicParamsBuilder.addQueryParams(clientConfig.getBasicQueryParams())
+        basicParamsBuilder.addBodyParams(clientConfig.getBodyMapParams())
+        basicParamsBuilder.addHeaderParams(clientConfig.getHeaderMapParams())
         httpClientBuilder.addInterceptor(basicParamsBuilder.build())
 
         // add custom interceptor
-        for (interceptor in paramsConfig.getInterceptors()) {
+        for (interceptor in clientConfig.getInterceptors()) {
             httpClientBuilder.addInterceptor(interceptor)
         }
 
         // add custom network interceptor
-        for (interceptor in paramsConfig.getNetworkInterceptors()) {
+        for (interceptor in clientConfig.getNetworkInterceptors()) {
             httpClientBuilder.addNetworkInterceptor(interceptor)
+        }
+
+        //  add token interceptor
+        if (clientConfig.getTokenInterceptor() != null) {
+            httpClientBuilder.addInterceptor(clientConfig.getTokenInterceptor()!!)
+        }
+
+        // add token authenticator
+        if (clientConfig.getTokenAuthenticator() != null) {
+            httpClientBuilder.authenticator(clientConfig.getTokenAuthenticator()!!)
         }
 
         // set logger interceptor.
@@ -92,7 +82,7 @@ object RetrofitManager {
         // create retrofit.
         val retrofitBuilder = Retrofit.Builder()
         retrofitBuilder.client(httpClientBuilder.build())
-        retrofitBuilder.baseUrl(serverConfig.getPrimaryHost())
+        retrofitBuilder.baseUrl(clientConfig.getPrimaryHost())
         for (callAdapterFactory in clientConfig.callAdapterFactories()) {
             retrofitBuilder.addCallAdapterFactory(callAdapterFactory)
         }
@@ -105,5 +95,4 @@ object RetrofitManager {
 
     private class BaseHttpClientConfig : HttpClientConfig()
 
-    private class BaseParamsConfig : BasicParamsConfig()
 }

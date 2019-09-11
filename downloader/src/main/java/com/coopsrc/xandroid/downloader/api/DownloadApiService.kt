@@ -13,7 +13,7 @@ import retrofit2.http.Url
  * Date: 2018-07-23
  * Time: 19:58
  */
-internal interface DownloadApi {
+internal interface DownloadApiService {
     @GET
     fun detect(@Url url: String, @Header("Range") range: String): Maybe<Response<Void>>
 

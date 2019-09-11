@@ -1,16 +1,17 @@
 package com.coopsrc.xandroid.http.config
 
-import com.coopsrc.xandroid.http.adapter.LiveDataCallAdapterFactory
+import okhttp3.Authenticator
 import okhttp3.Cache
+import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.CallAdapter
 import retrofit2.Converter
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
-import java.util.concurrent.TimeUnit
 
 abstract class HttpClientConfig : IHttpClientConfig {
+    override fun getPrimaryHost(): String {
+        return HttpConstants.BASE_URL
+    }
+
     override fun httpClientCache(): Cache? {
         return null
     }
@@ -20,31 +21,62 @@ abstract class HttpClientConfig : IHttpClientConfig {
     }
 
     override fun connectTimeoutMillis(): Long {
-        return TimeUnit.SECONDS.toMillis(10)
+        return HttpConstants.TIMEOUT_MILLIS
     }
 
     override fun writeTimeoutMillis(): Long {
-        return TimeUnit.SECONDS.toMillis(10)
+        return HttpConstants.TIMEOUT_MILLIS
     }
 
     override fun readTimeoutMillis(): Long {
-        return TimeUnit.SECONDS.toMillis(10)
+        return HttpConstants.TIMEOUT_MILLIS
     }
 
     override fun retryOnConnectionFailure(): Boolean {
-        return true
+        return HttpConstants.RETRY_ON_CONNECTION_FAILURE
     }
 
-    override fun callAdapterFactories(): Set<CallAdapter.Factory> {
-        return linkedSetOf(
-            RxJava2CallAdapterFactory.create(),
-            LiveDataCallAdapterFactory.create()
-        )
+    override fun callAdapterFactories(): LinkedHashSet<CallAdapter.Factory> {
+        return linkedSetOf()
     }
 
-    override fun converterFactories(): Set<Converter.Factory> {
-        return linkedSetOf(
-            GsonConverterFactory.create()
-        )
+    override fun converterFactories(): LinkedHashSet<Converter.Factory> {
+        return linkedSetOf()
+    }
+
+    override fun getSecondaryHosts(): LinkedHashSet<String> {
+        return linkedSetOf()
+    }
+
+    override fun isHostLoopEnable(): Boolean {
+        return HttpConstants.HOST_LOOP_ENABLE
+    }
+
+    override fun getBasicQueryParams(): LinkedHashMap<String, String> {
+        return linkedMapOf()
+    }
+
+    override fun getBodyMapParams(): LinkedHashMap<String, String> {
+        return linkedMapOf()
+    }
+
+    override fun getHeaderMapParams(): LinkedHashMap<String, String> {
+        return linkedMapOf()
+    }
+
+    override fun getInterceptors(): LinkedHashSet<Interceptor> {
+        return linkedSetOf()
+    }
+
+    override fun getNetworkInterceptors(): LinkedHashSet<Interceptor> {
+        return linkedSetOf()
+    }
+
+    override fun getTokenInterceptor(): Interceptor? {
+        return null
+    }
+
+    override fun getTokenAuthenticator(): Authenticator? {
+        return null
     }
 }

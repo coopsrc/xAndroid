@@ -7,7 +7,7 @@ import android.database.Cursor
  * Date: 2018-07-24
  * Time: 09:45
  */
-object DatabaseUtils {
+internal object DatabaseUtils {
     private const val BOOLEAN_FALSE = 0
     private const val BOOLEAN_TRUE = 1
 

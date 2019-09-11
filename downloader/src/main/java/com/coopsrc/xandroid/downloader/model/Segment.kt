@@ -5,7 +5,7 @@ package com.coopsrc.xandroid.downloader.model
  * Date: 2018-08-01
  * Time: 09:38
  */
-class Segment {
+internal class Segment {
 
     var tag: String
     var index: Long

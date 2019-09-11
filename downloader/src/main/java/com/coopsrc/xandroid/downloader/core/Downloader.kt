@@ -9,7 +9,7 @@ import java.io.File
  * Date: 2018-07-23
  * Time: 20:40
  */
-abstract class Downloader(val downloadTask: DownloadTask) {
+internal abstract class Downloader(val downloadTask: DownloadTask) {
 
     protected lateinit var downloaderProxy: DownloaderProxy
 

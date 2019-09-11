@@ -1,11 +1,11 @@
 package com.coopsrc.xandroid.downloader.core
 
 import com.coopsrc.xandroid.downloader.ExDownloader
+import com.coopsrc.xandroid.downloader.api.DownloadApiProxy
 import com.coopsrc.xandroid.downloader.core.impl.NormalDownloader
 import com.coopsrc.xandroid.downloader.core.impl.RangeDownloader
 import com.coopsrc.xandroid.downloader.core.impl.SingleDownloader
 import com.coopsrc.xandroid.downloader.db.DatabaseModule
-import com.coopsrc.xandroid.downloader.api.DownloadApiImpl
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Status
 import com.coopsrc.xandroid.downloader.model.TaskInfo
@@ -29,7 +29,7 @@ import java.util.concurrent.Semaphore
  * Date: 2018-07-23
  * Time: 20:22
  */
-class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semaphore) {
+internal class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semaphore) {
 
     private val mProgressProcessor: FlowableProcessor<Progress> = BehaviorProcessor.create<Progress>().toSerialized()
 
@@ -111,7 +111,7 @@ class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semaphore) {
     private fun detect(): Maybe<Any> {
         Logger.i(tag, "detect")
 
-        return DownloadApiImpl.detect(taskInfo.url).flatMap {
+        return DownloadApiProxy.detect(taskInfo.url).flatMap {
             taskInfo.progress.update(updated = HttpUtils.lastModified(it))
             if (taskInfo.type == null) {
                 setupResponse(it)

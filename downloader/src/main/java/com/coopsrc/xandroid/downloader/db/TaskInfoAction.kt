@@ -18,7 +18,7 @@ import io.reactivex.functions.Function
  * Date: 2018-07-24
  * Time: 09:03
  */
-class TaskInfoAction(private val briteDatabase: BriteDatabase) : DatabaseAction<TaskInfo> {
+internal class TaskInfoAction(private val briteDatabase: BriteDatabase) : DatabaseAction<TaskInfo> {
 
     private var taskInfoMapper: Function<Cursor, TaskInfo> = Function { getTaskInfo(it) }
 

@@ -8,7 +8,7 @@ import com.squareup.sqlbrite3.SqlBrite
  * Date: 2018-07-25
  * Time: 11:25
  */
-class SqlLogger : SqlBrite.Logger {
+internal class SqlLogger : SqlBrite.Logger {
     override fun log(message: String?) {
 
         LogUtils.tag(buildTag()).d(message);

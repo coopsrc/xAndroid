@@ -14,7 +14,7 @@ import io.reactivex.functions.Function
  * Date: 2018-08-02
  * Time: 16:53
  */
-class SegmentsAction(private val briteDatabase: BriteDatabase) : DatabaseAction<Segment> {
+internal class SegmentsAction(private val briteDatabase: BriteDatabase) : DatabaseAction<Segment> {
 
     private var segmentsMapper: io.reactivex.functions.Function<Cursor, Segment> = Function { getSegment(it) }
     private val tag = "SegmentsAction"

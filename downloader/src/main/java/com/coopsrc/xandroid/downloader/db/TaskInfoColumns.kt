@@ -5,7 +5,7 @@ package com.coopsrc.xandroid.downloader.db
  * Date: 2018-07-24
  * Time: 09:42
  */
-object TaskInfoColumns {
+internal object TaskInfoColumns {
     const val TABLE_NAME = "tasks"
 
     const val COLUMN_NAME_ID = "id"

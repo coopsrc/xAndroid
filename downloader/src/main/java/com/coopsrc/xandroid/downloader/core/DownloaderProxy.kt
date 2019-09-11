@@ -14,7 +14,7 @@ import java.io.File
  * Date: 2018-07-24
  * Time: 11:33
  */
-abstract class DownloaderProxy(protected val downloadTask: DownloadTask) {
+internal abstract class DownloaderProxy(protected val downloadTask: DownloadTask) {
 
     private val tag = "DownloaderProxy"
 

@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
  * Date: 2018-08-01
  * Time: 09:48
  */
-class DatabaseModule private constructor() {
+internal class DatabaseModule private constructor() {
 
     private val tag = "DatabaseModule"
 

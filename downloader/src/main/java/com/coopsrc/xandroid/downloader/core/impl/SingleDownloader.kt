@@ -1,8 +1,8 @@
 package com.coopsrc.xandroid.downloader.core.impl
 
+import com.coopsrc.xandroid.downloader.api.DownloadApiProxy
 import com.coopsrc.xandroid.downloader.core.DownloadTask
 import com.coopsrc.xandroid.downloader.core.Downloader
-import com.coopsrc.xandroid.downloader.api.DownloadApiImpl
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.utils.Constants
 import com.coopsrc.xandroid.downloader.utils.Logger
@@ -15,7 +15,7 @@ import java.io.File
  * Date: 2018-07-26
  * Time: 15:22
  */
-class SingleDownloader(downloadTask: DownloadTask) : Downloader(downloadTask) {
+internal class SingleDownloader(downloadTask: DownloadTask) : Downloader(downloadTask) {
 
     private val tag = "SingleDownloader"
 
@@ -46,7 +46,7 @@ class SingleDownloader(downloadTask: DownloadTask) : Downloader(downloadTask) {
 
         return Maybe.just(Constants.any)
                 .flatMap {
-                    DownloadApiImpl.download(downloadTask.taskInfo.url, provideRange())
+                    DownloadApiProxy.download(downloadTask.taskInfo.url, provideRange())
                 }.flatMapPublisher {
                     downloaderProxy.saveTargetFile(it)
                 }.map {

@@ -7,7 +7,7 @@ import com.coopsrc.xandroid.downloader.core.Action
  * Date: 2018-07-24
  * Time: 08:17
  */
-interface DatabaseAction<in T> : Action {
+internal interface DatabaseAction<in T> : Action {
 
     fun exist(data: T): Boolean
 

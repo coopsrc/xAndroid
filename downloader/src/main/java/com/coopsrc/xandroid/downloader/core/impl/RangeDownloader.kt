@@ -1,10 +1,10 @@
 package com.coopsrc.xandroid.downloader.core.impl
 
 import com.coopsrc.xandroid.downloader.ExDownloader
+import com.coopsrc.xandroid.downloader.api.DownloadApiProxy
 import com.coopsrc.xandroid.downloader.core.DownloadTask
 import com.coopsrc.xandroid.downloader.core.Downloader
 import com.coopsrc.xandroid.downloader.db.DatabaseModule
-import com.coopsrc.xandroid.downloader.api.DownloadApiImpl
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Segment
 import com.coopsrc.xandroid.downloader.model.TaskInfo
@@ -20,7 +20,7 @@ import java.io.File
  * Date: 2018-07-26
  * Time: 17:17
  */
-class RangeDownloader(downloadTask: DownloadTask) : Downloader(downloadTask) {
+internal class RangeDownloader(downloadTask: DownloadTask) : Downloader(downloadTask) {
 
     private val tag = "RangeDownloader"
 
@@ -151,7 +151,7 @@ class RangeDownloader(downloadTask: DownloadTask) : Downloader(downloadTask) {
         }.doOnSuccess {
             Logger.w(tag, "Start download: $segment, Range: $it")
         }.flatMap {
-            DownloadApiImpl.download(downloadTask.taskInfo.url, it)
+            DownloadApiProxy.download(downloadTask.taskInfo.url, it)
         }.flatMapPublisher {
             downloaderProxy.saveTargetFile(it, segment)
         }.map {

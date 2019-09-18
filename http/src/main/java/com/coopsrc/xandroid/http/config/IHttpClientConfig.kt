@@ -22,26 +22,26 @@ internal interface IHttpClientConfig {
 
     fun retryOnConnectionFailure(): Boolean
 
-    fun callAdapterFactories(): LinkedHashSet<CallAdapter.Factory>
+    fun callAdapterFactories(): Set<CallAdapter.Factory>
 
-    fun converterFactories(): LinkedHashSet<Converter.Factory>
+    fun converterFactories(): Set<Converter.Factory>
 
     fun getPrimaryHost(): String
 
     // optional
-    fun getSecondaryHosts(): LinkedHashSet<String>
+    fun getSecondaryHosts(): Set<String>
 
     fun isHostLoopEnable(): Boolean
 
-    fun getBasicQueryParams(): LinkedHashMap<String, String>
+    fun getBasicQueryParams(): Map<String, String>
 
-    fun getBodyMapParams(): LinkedHashMap<String, String>
+    fun getBodyMapParams(): Map<String, String>
 
-    fun getHeaderMapParams(): LinkedHashMap<String, String>
+    fun getHeaderMapParams(): Map<String, String>
 
     fun getInterceptors(): Set<Interceptor>
 
-    fun getNetworkInterceptors(): LinkedHashSet<Interceptor>
+    fun getNetworkInterceptors(): Set<Interceptor>
 
     fun getTokenInterceptor(): Interceptor?
 

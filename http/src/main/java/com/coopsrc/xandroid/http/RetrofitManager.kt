@@ -19,7 +19,7 @@ object RetrofitManager {
 
     @JvmStatic
     fun newRetrofit(): Retrofit {
-        LogUtils.i("newRetrofit: %s")
+        LogUtils.i("newRetrofit: ")
 
         return createRetrofit()
     }

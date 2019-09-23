@@ -1,9 +1,12 @@
 package com.coopsrc.xandroid.downloader.api
 
+import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.utils.Logger
 import com.coopsrc.xandroid.http.api.BaseApiProxy
 import com.coopsrc.xandroid.http.config.HttpClientConfig
+import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
 import io.reactivex.Maybe
+import okhttp3.Interceptor
 import okhttp3.ResponseBody
 import retrofit2.CallAdapter
 import retrofit2.Response
@@ -24,6 +27,11 @@ internal object DownloadApiProxy : BaseApiProxy<DownloadApiService>() {
     private class DownloadClientConfig : ClientConfig() {
         override fun callAdapterFactories(): LinkedHashSet<CallAdapter.Factory> {
             return linkedSetOf(RxJava2CallAdapterFactory.create())
+        }
+
+        override fun getInterceptors(): Set<Interceptor> {
+            return super.getInterceptors()
+                .plus(MonitorInterceptor(ExDownloader.downloadCore.config.context))
         }
     }
 

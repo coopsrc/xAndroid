@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -26,22 +25,20 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.1.0'
 
-    implementation 'com.squareup.okio:okio:2.4.0'
-    api 'com.squareup.okhttp3:okhttp:4.2.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.0'
-    api 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation "com.squareup.retrofit2:converter-gson:2.6.1"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.1"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 
-    implementation "androidx.lifecycle:lifecycle-livedata:2.1.0"
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.1.0"
-    implementation "androidx.lifecycle:lifecycle-reactivestreams:2.1.0"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.0.0'
 
     debugImplementation project(path: ':utils')
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
+
+    compileOnly "com.squareup.okhttp3:okhttp:4.2.0"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+
+    implementation 'androidx.room:room-runtime:2.1.0'
+    annotationProcessor 'androidx.room:room-compiler:2.1.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:core:1.2.0'
@@ -51,9 +48,8 @@ dependencies {
 }
 
 ext {
-    releaseArtifact = 'common-http'
-    releaseDescription = 'The Android common http request module.'
+    releaseArtifact = 'http-monitor'
+    releaseDescription = 'The Android common http monitor request module.'
 }
 
 apply from: '../publish.gradle'
-

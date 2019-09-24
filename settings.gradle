@@ -1,8 +1,9 @@
 include ':downloader-example'
 
-include ':adaptive'
 include ':utils'
-include ':downloader'
 include ':http'
+include ':http-monitor'
+include ':adaptive'
+include ':downloader'
 
 rootProject.name = 'xAndroid'

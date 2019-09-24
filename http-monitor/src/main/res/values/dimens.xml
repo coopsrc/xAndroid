@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="commonPadding">4dp</dimen>
+    <dimen name="commonBigPadding">8dp</dimen>
+</resources>

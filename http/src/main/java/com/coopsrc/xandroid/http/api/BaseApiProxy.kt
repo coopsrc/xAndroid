@@ -1,5 +1,6 @@
 package com.coopsrc.xandroid.http.api
 
+import androidx.annotation.NonNull
 import com.coopsrc.xandroid.http.RetrofitManager
 import com.coopsrc.xandroid.http.adapter.LiveDataCallAdapterFactory
 import com.coopsrc.xandroid.http.config.HttpClientConfig
@@ -52,21 +53,16 @@ abstract class BaseApiProxy<T> protected constructor() {
     }
 
     protected open class ClientConfig : HttpClientConfig() {
-        override fun callAdapterFactories(): LinkedHashSet<CallAdapter.Factory> {
-            val factorySet = super.callAdapterFactories()
+        override fun callAdapterFactories(): Set<CallAdapter.Factory> {
 
-            factorySet.plus(RxJava2CallAdapterFactory.create())
-            factorySet.plus(LiveDataCallAdapterFactory.create())
-
-            return factorySet
+            return super.callAdapterFactories()
+                .plus(RxJava2CallAdapterFactory.create())
+                .plus(LiveDataCallAdapterFactory.create())
         }
 
-        override fun converterFactories(): LinkedHashSet<Converter.Factory> {
-            val factorySet = super.converterFactories()
+        override fun converterFactories(): Set<Converter.Factory> {
 
-            factorySet.plus(GsonConverterFactory.create())
-
-            return factorySet
+            return super.converterFactories().plus(GsonConverterFactory.create())
         }
     }
 

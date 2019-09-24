@@ -36,15 +36,15 @@ abstract class HttpClientConfig : IHttpClientConfig {
         return HttpConstants.RETRY_ON_CONNECTION_FAILURE
     }
 
-    override fun callAdapterFactories(): LinkedHashSet<CallAdapter.Factory> {
+    override fun callAdapterFactories(): Set<CallAdapter.Factory> {
         return linkedSetOf()
     }
 
-    override fun converterFactories(): LinkedHashSet<Converter.Factory> {
+    override fun converterFactories(): Set<Converter.Factory> {
         return linkedSetOf()
     }
 
-    override fun getSecondaryHosts(): LinkedHashSet<String> {
+    override fun getSecondaryHosts(): Set<String> {
         return linkedSetOf()
     }
 
@@ -52,23 +52,23 @@ abstract class HttpClientConfig : IHttpClientConfig {
         return HttpConstants.HOST_LOOP_ENABLE
     }
 
-    override fun getBasicQueryParams(): LinkedHashMap<String, String> {
+    override fun getBasicQueryParams(): Map<String, String> {
         return linkedMapOf()
     }
 
-    override fun getBodyMapParams(): LinkedHashMap<String, String> {
+    override fun getBodyMapParams(): Map<String, String> {
         return linkedMapOf()
     }
 
-    override fun getHeaderMapParams(): LinkedHashMap<String, String> {
+    override fun getHeaderMapParams(): Map<String, String> {
         return linkedMapOf()
     }
 
-    override fun getInterceptors(): LinkedHashSet<Interceptor> {
+    override fun getInterceptors(): Set<Interceptor> {
         return linkedSetOf()
     }
 
-    override fun getNetworkInterceptors(): LinkedHashSet<Interceptor> {
+    override fun getNetworkInterceptors(): Set<Interceptor> {
         return linkedSetOf()
     }
 

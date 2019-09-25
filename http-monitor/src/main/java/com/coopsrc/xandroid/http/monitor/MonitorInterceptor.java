@@ -38,24 +38,16 @@ import okio.GzipSource;
  * Datetime: 2019-09-23 10:32
  */
 public class MonitorInterceptor implements Interceptor {
-    private static final String TAG = "MonitorInterceptor";
 
     public enum Level {
         NONE, BASIC, HEADERS, BODY
     }
     private Level level = Level.HEADERS;
 
-    private final Context context;
     private final IMonitor monitor;
 
     public MonitorInterceptor(Context context) {
-        this.context = context;
         this.monitor = new Monitor(context);
-    }
-
-    public MonitorInterceptor(Context context, Monitor monitor) {
-        this.context = context;
-        this.monitor = monitor;
     }
 
     @NotNull
@@ -148,7 +140,7 @@ public class MonitorInterceptor implements Interceptor {
         if (monitorHeaders) {
             httpInfo.responseInfo.setHeaders(response.headers());
 
-            if (!monitorBody || HttpHeaders.promisesBody(response)) {
+            if (!monitorBody || !HttpHeaders.promisesBody(response)) {
                 httpInfo.responseInfo.setExtra("END HTTP");
             } else if (bodyHasUnknownEncoding(response.headers())) {
                 httpInfo.responseInfo.setExtra("END HTTP (encoded body omitted)");

@@ -1,6 +1,7 @@
 <resources>
 
-    <string name="action_settings">Settings</string>
     <string name="title_activity_monitor">Http Monitor</string>
     <string name="title_activity_details">Http Details</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_clear">Clear</string>
 </resources>

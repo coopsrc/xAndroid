@@ -9,8 +9,6 @@ import androidx.room.PrimaryKey;
 
 import com.coopsrc.xandroid.http.monitor.utils.MonitorUtils;
 
-import java.net.URLDecoder;
-
 /**
  * @author tingkuo
  * <p>

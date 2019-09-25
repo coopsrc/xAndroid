@@ -1,7 +1,6 @@
 package com.coopsrc.xandroid.http.monitor.ui.list;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.coopsrc.xandroid.http.monitor.R;
 import com.coopsrc.xandroid.http.monitor.model.HttpInfo;
-import com.coopsrc.xandroid.http.monitor.ui.details.DetailsActivity;
 import com.coopsrc.xandroid.http.monitor.utils.MonitorUtils;
 
 import java.util.List;
@@ -39,6 +37,14 @@ public class MonitorAdapter extends RecyclerView.Adapter<MonitorAdapter.MonitorV
     private final AsyncListDiffer<HttpInfo> httpInfoAsyncListDiffer;
 
     private Context context;
+
+    public interface OnItemClickListener {
+        void onItemClicked(View view, int position, HttpInfo httpInfo);
+
+        boolean onItemLongPress(View view, int position, HttpInfo httpInfo);
+    }
+
+    private OnItemClickListener onItemClickListener;
 
     public MonitorAdapter(Context context) {
         this.context = context;
@@ -103,7 +109,15 @@ public class MonitorAdapter extends RecyclerView.Adapter<MonitorAdapter.MonitorV
         httpInfoAsyncListDiffer.submitList(httpInfoList);
     }
 
-    class MonitorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public OnItemClickListener getOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    class MonitorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         public final TextView textViewId;
         public final TextView textViewCode;
         public final TextView textViewPath;
@@ -124,15 +138,25 @@ public class MonitorAdapter extends RecyclerView.Adapter<MonitorAdapter.MonitorV
             textViewDuration = itemView.findViewById(R.id.tv_duration);
             textViewSize = itemView.findViewById(R.id.tv_size);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            HttpInfo httpInfo = httpInfoAsyncListDiffer.getCurrentList().get(getAdapterPosition());
+            if (onItemClickListener != null) {
+                HttpInfo httpInfo = httpInfoAsyncListDiffer.getCurrentList().get(getAdapterPosition());
 
-            Intent intent = new Intent(context, DetailsActivity.class);
-            intent.putExtra("id", httpInfo.id);
-            context.startActivity(intent);
+                onItemClickListener.onItemClicked(view, getAdapterPosition(), httpInfo);
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (onItemClickListener != null) {
+                HttpInfo httpInfo = httpInfoAsyncListDiffer.getCurrentList().get(getAdapterPosition());
+                return onItemClickListener.onItemLongPress(view, getAdapterPosition(), httpInfo);
+            }
+            return false;
         }
     }
 }

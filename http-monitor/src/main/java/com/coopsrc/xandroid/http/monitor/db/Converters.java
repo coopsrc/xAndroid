@@ -1,7 +1,5 @@
 package com.coopsrc.xandroid.http.monitor.db;
 
-import android.text.TextUtils;
-
 import androidx.room.TypeConverter;
 
 import com.coopsrc.xandroid.utils.GsonUtils;

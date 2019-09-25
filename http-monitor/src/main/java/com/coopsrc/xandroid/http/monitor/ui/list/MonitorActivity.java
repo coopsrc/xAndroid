@@ -1,8 +1,8 @@
 package com.coopsrc.xandroid.http.monitor.ui.list;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -10,8 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.coopsrc.xandroid.http.monitor.R;
+import com.coopsrc.xandroid.http.monitor.arch.MonitorViewModel;
+import com.coopsrc.xandroid.http.monitor.arch.MonitorViewModelFactory;
+import com.coopsrc.xandroid.http.monitor.db.HttpMonitorDatabase;
 
 public class MonitorActivity extends AppCompatActivity {
+
+    private MonitorViewModel monitorViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +28,27 @@ public class MonitorActivity extends AppCompatActivity {
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        HttpMonitorDatabase database = HttpMonitorDatabase.getInstance(this);
+        monitorViewModel = MonitorViewModelFactory.getInstance(database).create(MonitorViewModel.class);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_monitor, menu);
+
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == android.R.id.home) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
             onBackPressed();
+        } else if (itemId == R.id.action_clear) {
+            monitorViewModel.clearRecord();
         }
 
         return super.onOptionsItemSelected(item);

@@ -42,6 +42,8 @@ dependencies {
 
     debugImplementation project(path: ':utils')
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
+    debugImplementation project(path: ':http-monitor')
+    api "com.coopsrc.xandroid:http-monitor:${versionName}"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:core:1.2.0'

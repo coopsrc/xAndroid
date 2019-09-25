@@ -51,7 +51,6 @@ dependencies {
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
     debugImplementation project(path: ':http')
     releaseImplementation "com.coopsrc.xandroid:common-http:${versionName}"
-    implementation project(path: ':http-monitor')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 

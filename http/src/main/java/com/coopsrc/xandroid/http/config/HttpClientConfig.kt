@@ -1,5 +1,6 @@
 package com.coopsrc.xandroid.http.config
 
+import android.content.Context
 import okhttp3.Authenticator
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -8,6 +9,10 @@ import retrofit2.CallAdapter
 import retrofit2.Converter
 
 abstract class HttpClientConfig : IHttpClientConfig {
+    override fun getAppContext(): Context? {
+        return null
+    }
+
     override fun getPrimaryHost(): String {
         return HttpConstants.BASE_URL
     }
@@ -78,5 +83,9 @@ abstract class HttpClientConfig : IHttpClientConfig {
 
     override fun getTokenAuthenticator(): Authenticator? {
         return null
+    }
+
+    override fun useDebugMonitor(): Boolean {
+        return false
     }
 }

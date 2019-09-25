@@ -1,5 +1,6 @@
 package com.coopsrc.xandroid.http.config
 
+import android.content.Context
 import okhttp3.Authenticator
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -10,6 +11,8 @@ import retrofit2.Converter
 internal interface IHttpClientConfig {
 
     // primary
+    fun getAppContext(): Context?
+
     fun httpClientCache(): Cache?
 
     fun httpLogLevel(): HttpLoggingInterceptor.Level
@@ -46,4 +49,7 @@ internal interface IHttpClientConfig {
     fun getTokenInterceptor(): Interceptor?
 
     fun getTokenAuthenticator(): Authenticator?
+
+    // helper
+    fun useDebugMonitor(): Boolean
 }

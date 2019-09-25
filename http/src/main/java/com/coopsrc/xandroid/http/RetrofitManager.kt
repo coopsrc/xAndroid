@@ -4,6 +4,7 @@ import androidx.annotation.NonNull
 import com.coopsrc.xandroid.http.config.HttpClientConfig
 import com.coopsrc.xandroid.http.interceptor.BasicParamsInterceptor
 import com.coopsrc.xandroid.http.logging.HttpLogger
+import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
 import com.coopsrc.xandroid.utils.LogUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -61,6 +62,11 @@ object RetrofitManager {
         // add token authenticator
         if (clientConfig.getTokenAuthenticator() != null) {
             httpClientBuilder.authenticator(clientConfig.getTokenAuthenticator()!!)
+        }
+
+        // set debug monitor interceptor
+        if (clientConfig.useDebugMonitor() && clientConfig.getAppContext() != null) {
+            httpClientBuilder.addInterceptor(MonitorInterceptor(clientConfig.getAppContext()))
         }
 
         // set logger interceptor.

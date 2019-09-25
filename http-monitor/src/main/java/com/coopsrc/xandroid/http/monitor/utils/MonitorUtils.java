@@ -107,7 +107,7 @@ public class MonitorUtils {
 
     private static String formatJson(String json) {
         try {
-            return GsonUtils.toJson(json);
+            return GsonUtils.toPrettyFormat(json);
         } catch (Exception e) {
             return json;
         }

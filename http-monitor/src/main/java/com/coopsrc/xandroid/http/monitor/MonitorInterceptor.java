@@ -42,6 +42,7 @@ public class MonitorInterceptor implements Interceptor {
     public enum Level {
         NONE, BASIC, HEADERS, BODY
     }
+
     private Level level = Level.HEADERS;
 
     private final IMonitor monitor;
@@ -178,8 +179,10 @@ public class MonitorInterceptor implements Interceptor {
                         httpInfo.responseInfo.setBody(buffer.clone().readString(charset));
                     }
                     if (gzippedLength != null) {
+                        httpInfo.responseInfo.setContentLength(gzippedLength);
                         httpInfo.responseInfo.setExtra(String.format("END HTTP (binary %s-byte, %s-gzipped-byte body)", buffer.size(), gzippedLength));
                     } else {
+                        httpInfo.responseInfo.setContentLength(buffer.size());
                         httpInfo.responseInfo.setExtra(String.format("END HTTP (binary %s-byte body)", buffer.size()));
                     }
 

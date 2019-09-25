@@ -81,7 +81,7 @@ public class MonitorFragment extends Fragment implements MonitorAdapter.OnItemCl
     @Override
     public boolean onItemLongPress(View view, int position, HttpInfo httpInfo) {
 
-        monitorViewModel.delete(httpInfo);
+//        monitorViewModel.delete(httpInfo);
 
         return false;
     }

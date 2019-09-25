@@ -2,10 +2,8 @@ package com.coopsrc.xandroid.http.monitor;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.coopsrc.xandroid.http.monitor.common.IMonitor;
-import com.coopsrc.xandroid.http.monitor.common.Level;
 import com.coopsrc.xandroid.http.monitor.common.Monitor;
 import com.coopsrc.xandroid.http.monitor.model.HttpInfo;
 import com.coopsrc.xandroid.http.monitor.model.RequestInfo;
@@ -42,6 +40,9 @@ import okio.GzipSource;
 public class MonitorInterceptor implements Interceptor {
     private static final String TAG = "MonitorInterceptor";
 
+    public enum Level {
+        NONE, BASIC, HEADERS, BODY
+    }
     private Level level = Level.HEADERS;
 
     private final Context context;

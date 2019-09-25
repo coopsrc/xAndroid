@@ -1,6 +1,7 @@
 package com.coopsrc.xandroid.http.config
 
 import android.content.Context
+import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
 import okhttp3.Authenticator
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -52,4 +53,6 @@ internal interface IHttpClientConfig {
 
     // helper
     fun useDebugMonitor(): Boolean
+
+    fun debugMonitorLevel(): MonitorInterceptor.Level
 }

@@ -65,8 +65,8 @@ object RetrofitManager {
         }
 
         // set debug monitor interceptor
-        if (clientConfig.useDebugMonitor() && clientConfig.getAppContext() != null) {
-            httpClientBuilder.addInterceptor(MonitorInterceptor(clientConfig.getAppContext()))
+        if (clientConfig.getDebugMonitorInterceptor() != null) {
+            httpClientBuilder.addInterceptor(clientConfig.getDebugMonitorInterceptor()!!)
         }
 
         // set logger interceptor.

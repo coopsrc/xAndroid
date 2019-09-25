@@ -1,6 +1,8 @@
 package com.coopsrc.xandroid.http.config
 
 import android.content.Context
+import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
+import com.coopsrc.xandroid.http.monitor.common.Monitor
 import okhttp3.Authenticator
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -87,5 +89,18 @@ abstract class HttpClientConfig : IHttpClientConfig {
 
     override fun useDebugMonitor(): Boolean {
         return false
+    }
+
+    override fun debugMonitorLevel(): MonitorInterceptor.Level {
+        return MonitorInterceptor.Level.HEADERS
+    }
+
+    internal fun getDebugMonitorInterceptor(): MonitorInterceptor? {
+        if (useDebugMonitor() && getAppContext() != null) {
+            val monitorInterceptor = MonitorInterceptor(getAppContext())
+            monitorInterceptor.level = debugMonitorLevel()
+            return monitorInterceptor
+        }
+        return null
     }
 }

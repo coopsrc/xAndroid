@@ -172,14 +172,16 @@ public final class GsonUtils {
      */
     private static Gson createGson(final boolean serializeNulls) {
         final GsonBuilder builder = new GsonBuilder();
-        if (serializeNulls) builder.serializeNulls();
+        if (serializeNulls) {
+            builder.serializeNulls();
+        }
+        builder.setPrettyPrinting();
         return builder.create();
     }
 
     public static String toPrettyFormat(String json) {
         JsonParser jsonParser = new JsonParser();
         JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(jsonObject);
+        return GSON.toJson(jsonObject);
     }
 }

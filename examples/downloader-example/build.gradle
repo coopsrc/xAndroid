@@ -15,7 +15,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        applicationId "com.coopsrc.demo.exdownloader"
+        applicationId "com.coopsrc.xandroid.downloader.example"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -44,6 +44,7 @@ dependencies {
 
     debugImplementation project(path: ':downloader')
     releaseImplementation "com.coopsrc.xandroid:exdownloader:${versionName}"
+    implementation project(path: ':dewdrops')
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:core:1.2.0'

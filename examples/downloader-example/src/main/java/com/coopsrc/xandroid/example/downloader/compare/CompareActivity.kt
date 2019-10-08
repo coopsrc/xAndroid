@@ -2,7 +2,7 @@ package com.coopsrc.xandroid.example.downloader.compare
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.coopsrc.xandroid.downloader.R
+import com.coopsrc.xandroid.downloader.example.R
 
 import kotlinx.android.synthetic.main.activity_compare.*
 

@@ -2,7 +2,7 @@ package com.coopsrc.xandroid.example.downloader
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.coopsrc.xandroid.downloader.R
+import com.coopsrc.xandroid.downloader.example.R
 import com.coopsrc.xandroid.example.downloader.common.startActivity
 import com.coopsrc.xandroid.example.downloader.compare.CompareActivity
 import com.coopsrc.xandroid.example.downloader.list.ListActivity
@@ -26,5 +26,7 @@ class MainActivity : AppCompatActivity() {
         buttonList.setOnClickListener {
             startActivity(ListActivity::class.java)
         }
+
+        blurringView.setBlurredView(imageView)
     }
 }

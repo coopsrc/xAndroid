@@ -1,4 +1,4 @@
-package com.coopsrc.demo.exdownloader.common
+package com.coopsrc.xandroid.example.downloader.common
 
 import android.app.Activity
 import android.content.Intent

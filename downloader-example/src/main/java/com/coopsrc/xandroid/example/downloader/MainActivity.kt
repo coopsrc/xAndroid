@@ -1,11 +1,12 @@
-package com.coopsrc.demo.exdownloader
+package com.coopsrc.xandroid.example.downloader
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.coopsrc.demo.exdownloader.common.startActivity
-import com.coopsrc.demo.exdownloader.compare.CompareActivity
-import com.coopsrc.demo.exdownloader.list.ListActivity
-import com.coopsrc.demo.exdownloader.simple.SimpleActivity
+import com.coopsrc.xandroid.downloader.R
+import com.coopsrc.xandroid.example.downloader.common.startActivity
+import com.coopsrc.xandroid.example.downloader.compare.CompareActivity
+import com.coopsrc.xandroid.example.downloader.list.ListActivity
+import com.coopsrc.xandroid.example.downloader.simple.SimpleActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

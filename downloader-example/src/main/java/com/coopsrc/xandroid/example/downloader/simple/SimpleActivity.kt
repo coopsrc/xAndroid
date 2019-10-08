@@ -1,9 +1,9 @@
-package com.coopsrc.demo.exdownloader.simple
+package com.coopsrc.xandroid.example.downloader.simple
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import com.coopsrc.demo.exdownloader.R
+import com.coopsrc.xandroid.downloader.R
 
 import kotlinx.android.synthetic.main.activity_simple.*
 

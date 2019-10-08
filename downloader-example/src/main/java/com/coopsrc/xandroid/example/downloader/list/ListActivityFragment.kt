@@ -1,4 +1,4 @@
-package com.coopsrc.demo.exdownloader.list
+package com.coopsrc.xandroid.example.downloader.list
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.coopsrc.demo.exdownloader.R
+import com.coopsrc.xandroid.downloader.R
 import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Status

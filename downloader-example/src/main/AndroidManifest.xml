@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.coopsrc.demo.exdownloader">
+    package="com.coopsrc.xandroid.downloader.example">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".DownloadApp"
+        android:name="com.coopsrc.xandroid.example.downloader.DownloadApp"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.coopsrc.xandroid.example.downloader.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,15 +25,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".simple.SimpleActivity"
+            android:name="com.coopsrc.xandroid.example.downloader.simple.SimpleActivity"
             android:label="@string/title_activity_simple"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".list.ListActivity"
+            android:name="com.coopsrc.xandroid.example.downloader.list.ListActivity"
             android:label="@string/title_activity_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".compare.CompareActivity"
+            android:name="com.coopsrc.xandroid.example.downloader.compare.CompareActivity"
             android:label="@string/title_activity_compare"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

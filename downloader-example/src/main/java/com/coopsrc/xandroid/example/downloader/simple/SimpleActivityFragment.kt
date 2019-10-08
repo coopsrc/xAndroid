@@ -1,4 +1,4 @@
-package com.coopsrc.demo.exdownloader.simple
+package com.coopsrc.xandroid.example.downloader.simple
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.coopsrc.demo.exdownloader.R
+import com.coopsrc.xandroid.downloader.R
 import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Status

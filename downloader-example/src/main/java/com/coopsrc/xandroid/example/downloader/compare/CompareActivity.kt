@@ -1,8 +1,8 @@
-package com.coopsrc.demo.exdownloader.compare
+package com.coopsrc.xandroid.example.downloader.compare
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.coopsrc.demo.exdownloader.R
+import com.coopsrc.xandroid.downloader.R
 
 import kotlinx.android.synthetic.main.activity_compare.*
 

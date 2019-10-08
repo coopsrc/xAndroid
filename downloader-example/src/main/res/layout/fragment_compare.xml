@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".compare.CompareActivityFragment"
+    tools:context="com.coopsrc.xandroid.example.downloader.compare.CompareActivityFragment"
     tools:showIn="@layout/activity_compare">
 
     <androidx.recyclerview.widget.RecyclerView

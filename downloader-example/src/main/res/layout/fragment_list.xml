@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".list.ListActivityFragment"
+    tools:context="com.coopsrc.xandroid.example.downloader.list.ListActivityFragment"
     tools:showIn="@layout/activity_list">
 
     <Button

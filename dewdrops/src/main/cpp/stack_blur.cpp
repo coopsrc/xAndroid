@@ -257,8 +257,8 @@ Java_com_coopsrc_xandroid_dewdrops_blur_NativeBlur_stackBlur(JNIEnv *env, jclass
                                                              jobject bitmap, jint radius,
                                                              jint workers, jint index,
                                                              jint direction) {
-    ALOGD("NativeBlur#gaussianBlur: %d, %d, %d, %d", radius, workers, index, direction);
-    if (bitmap == NULL) {
+    ALOGD("NativeBlur#stackBlur: %d, %d, %d, %d", radius, workers, index, direction);
+    if (bitmap == nullptr) {
         return;
     }
 
@@ -267,7 +267,7 @@ Java_com_coopsrc_xandroid_dewdrops_blur_NativeBlur_stackBlur(JNIEnv *env, jclass
         return;
     }
 
-    int *pixels = NULL;
+    int *pixels = nullptr;
     if (AndroidBitmap_lockPixels(env, bitmap, (void **) &pixels) < 0) {
         return;
     }

@@ -7,5 +7,7 @@ include ':downloader'
 
 include ':downloader-example'
 project(':downloader-example').projectDir = new File(rootDir, 'examples/downloader-example')
+include ':dewdrops-blur'
+project(':dewdrops-blur').projectDir = new File(rootDir, 'examples/dewdrops-blur')
 
 rootProject.name = 'xAndroid'

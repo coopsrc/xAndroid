@@ -110,6 +110,10 @@ public class DragBlurringView extends View {
         this.blurredView = blurredView;
     }
 
+    public void setBlurProcessor(IBlurProcessor blurProcessor) {
+        this.blurProcessor = blurProcessor;
+    }
+
     private boolean prepare() {
 
         final int width = blurredView.getWidth();

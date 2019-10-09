@@ -22,8 +22,8 @@ public class ProcessorBuilder implements IProcessorBuilder {
     @Scheme
     int scheme = BlurConfig.SCHEME_NATIVE;
 
-    int radius = 4;
-    float sampleFactor = 4.0f;
+    int radius = BlurConfig.DEFAULT_RADIUS;
+    float sampleFactor = BlurConfig.DEFAULT_SAMPLE_FACTOR;
     boolean isForceCopy = false;
     boolean needUpscale = true;
 

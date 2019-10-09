@@ -26,7 +26,5 @@ class MainActivity : AppCompatActivity() {
         buttonList.setOnClickListener {
             startActivity(ListActivity::class.java)
         }
-
-        blurringView.setBlurredView(imageView)
     }
 }

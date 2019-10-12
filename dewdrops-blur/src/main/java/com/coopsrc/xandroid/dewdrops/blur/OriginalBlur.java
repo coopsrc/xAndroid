@@ -12,7 +12,7 @@ import com.coopsrc.xandroid.dewdrops.utils.BitmapUtils;
  * <p>
  * Datetime: 2019-10-08 20:07
  */
-public final class OriginBlur {
+public final class OriginalBlur {
 
     public static void doBlur(@Mode int mode, Bitmap bitmap, int radius, int cores, int index, @Direction int direction) {
 
@@ -26,15 +26,14 @@ public final class OriginBlur {
         bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
 
         switch (mode) {
-
-            case BlurConfig.MODE_BOX:
-                OriginalBoxBlur.doBlur(pixels, width, height, radius, BlurConfig.DIRECTION_FULL);
-                break;
             case BlurConfig.MODE_GAUSSIAN:
-                OriginalGaussianBlur.doBlur(pixels, width, height, radius, BlurConfig.DIRECTION_FULL);
+                gaussianBlur(pixels, width, height, radius, BlurConfig.DIRECTION_FULL);
                 break;
             case BlurConfig.MODE_STACK:
-                OriginalStackBlur.doBlur(pixels, width, height, radius, BlurConfig.DIRECTION_FULL);
+                stackBlur(pixels, width, height, radius, BlurConfig.DIRECTION_FULL);
+                break;
+            case BlurConfig.MODE_BOX:
+                boxBlur(pixels, width, height, radius, BlurConfig.DIRECTION_FULL);
                 break;
         }
 
@@ -43,5 +42,17 @@ public final class OriginBlur {
         } else {
             BitmapUtils.replaceBitmap(bitmap, pixels, 0, 0, width, height);
         }
+    }
+
+    private static void gaussianBlur(int[] pixels, int width, int height, int radius, @Direction int direction) {
+        OriginalGaussianBlur.doBlur(pixels, width, height, radius, direction);
+    }
+
+    private static void stackBlur(int[] pixels, int width, int height, int radius, @Direction int direction) {
+        OriginalStackBlur.doBlur(pixels, width, height, radius, direction);
+    }
+
+    private static void boxBlur(int[] pixels, int width, int height, int radius, @Direction int direction) {
+        OriginalBoxBlur.doBlur(pixels, width, height, radius, direction);
     }
 }

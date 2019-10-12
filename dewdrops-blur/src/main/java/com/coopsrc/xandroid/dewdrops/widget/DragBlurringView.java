@@ -10,10 +10,11 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.math.MathUtils;
 
 import com.coopsrc.xandroid.dewdrops.DewdropsBlur;
 import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
-import com.coopsrc.xandroid.dewdrops.processor.IBlurProcessor;
+import com.coopsrc.xandroid.dewdrops.processor.BlurProcessor;
 
 /**
  * @author tingkuo
@@ -22,7 +23,7 @@ import com.coopsrc.xandroid.dewdrops.processor.IBlurProcessor;
  */
 public class DragBlurringView extends View {
 
-    private static final int SCALE_RESAMPLE = 4;
+    private int scale = BlurConfig.DEFAULT_BLUR_SCALE;
 
     private float oldX;
     private float oldY;
@@ -33,7 +34,7 @@ public class DragBlurringView extends View {
     private Bitmap blurredBitmap;
     private Canvas blurringCanvas;
 
-    private IBlurProcessor blurProcessor;
+    private BlurProcessor blurProcessor;
 
     public DragBlurringView(Context context) {
         super(context);
@@ -54,8 +55,8 @@ public class DragBlurringView extends View {
         blurProcessor = DewdropsBlur.with(getContext())
                 .scheme(BlurConfig.SCHEME_NATIVE)
                 .mode(BlurConfig.MODE_GAUSSIAN)
-                .radius(4)
-                .sampleFactor(1.0f)
+                .radius(BlurConfig.DEFAULT_RADIUS)
+                .sampleFactor(BlurConfig.DEFAULT_SAMPLE_FACTOR)
                 .build();
     }
 
@@ -76,7 +77,7 @@ public class DragBlurringView extends View {
 
                 canvas.save();
                 canvas.translate(blurredView.getX() - getX(), blurredView.getY() - getY());
-                canvas.scale(SCALE_RESAMPLE, SCALE_RESAMPLE);
+                canvas.scale(scale, scale);
                 canvas.drawBitmap(blurredBitmap, 0, 0, null);
                 canvas.restore();
             }
@@ -110,8 +111,16 @@ public class DragBlurringView extends View {
         this.blurredView = blurredView;
     }
 
-    public void setBlurProcessor(IBlurProcessor blurProcessor) {
+    public void setBlurProcessor(BlurProcessor blurProcessor) {
         this.blurProcessor = blurProcessor;
+    }
+
+    public void setScale(int scale) {
+        scale = MathUtils.clamp(scale, 1, BlurConfig.MAX_BLUR_SCALE);
+        this.scale = scale;
+        blurringCanvas = null;
+        originalBitmap = null;
+        invalidate();
     }
 
     private boolean prepare() {
@@ -121,8 +130,8 @@ public class DragBlurringView extends View {
 
         if (blurringCanvas == null) {
 
-            int scaledWidth = width / SCALE_RESAMPLE;
-            int scaleHeight = height / SCALE_RESAMPLE;
+            int scaledWidth = width / scale;
+            int scaleHeight = height / scale;
 
             if (originalBitmap == null) {
                 originalBitmap = Bitmap.createBitmap(scaledWidth, scaleHeight, Bitmap.Config.ARGB_8888);
@@ -133,7 +142,7 @@ public class DragBlurringView extends View {
             }
 
             blurringCanvas = new Canvas(originalBitmap);
-            blurringCanvas.scale(1.0f / SCALE_RESAMPLE, 1.0f / SCALE_RESAMPLE);
+            blurringCanvas.scale(1.0f / scale, 1.0f / scale);
         }
 
         return true;

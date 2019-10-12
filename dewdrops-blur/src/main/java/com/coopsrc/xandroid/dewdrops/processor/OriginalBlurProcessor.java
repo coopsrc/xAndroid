@@ -4,15 +4,15 @@ import android.graphics.Bitmap;
 
 import androidx.core.util.Preconditions;
 
-import com.coopsrc.xandroid.dewdrops.blur.OriginBlur;
+import com.coopsrc.xandroid.dewdrops.blur.OriginalBlur;
 
 /**
  * @author tingkuo
  * <p>
  * Datetime: 2019-10-08 19:52
  */
-public class OriginalBlurProcessor extends AbsBlurProcessor {
-    public OriginalBlurProcessor(ProcessorBuilder processorBuilder) {
+ class OriginalBlurProcessor extends AbsBlurProcessor {
+    OriginalBlurProcessor(ProcessorBuilder processorBuilder) {
         super(processorBuilder);
     }
 
@@ -24,9 +24,9 @@ public class OriginalBlurProcessor extends AbsBlurProcessor {
         try {
             if (concurrent) {
                 // TODO: 19-10-9
-                OriginBlur.doFullBlur(mode, bitmap, radius);
+                OriginalBlur.doFullBlur(mode, bitmap, radius);
             } else {
-                OriginBlur.doFullBlur(mode, bitmap, radius);
+                OriginalBlur.doFullBlur(mode, bitmap, radius);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -8,7 +8,7 @@ import com.coopsrc.xandroid.dewdrops.annotation.Direction;
 import com.coopsrc.xandroid.dewdrops.annotation.Mode;
 import com.coopsrc.xandroid.dewdrops.annotation.Scheme;
 import com.coopsrc.xandroid.dewdrops.blur.NativeBlur;
-import com.coopsrc.xandroid.dewdrops.blur.OriginBlur;
+import com.coopsrc.xandroid.dewdrops.blur.OriginalBlur;
 import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
 
 import java.util.concurrent.Callable;
@@ -63,7 +63,7 @@ public class BlurTask implements Callable<Void> {
             case BlurConfig.SCHEME_OPEN_GL:
                 break;
             case BlurConfig.SCHEME_JAVA:
-                OriginBlur.doBlur(mode, bitmap, radius, threads, index, direction);
+                OriginalBlur.doBlur(mode, bitmap, radius, threads, index, direction);
                 break;
             case BlurConfig.SCHEME_RENDER_SCRIPT:
                 break;

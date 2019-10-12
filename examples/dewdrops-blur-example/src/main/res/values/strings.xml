@@ -11,4 +11,5 @@
     <string name="algorithm_box">Box</string>
     <string name="radius_key">Radius:</string>
     <string name="sample_key">Sample:</string>
+    <string name="scale_key">Scale:</string>
 </resources>

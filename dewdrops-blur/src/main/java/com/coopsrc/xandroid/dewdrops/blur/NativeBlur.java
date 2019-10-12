@@ -32,7 +32,6 @@ public final class NativeBlur {
             case BlurConfig.MODE_STACK:
                 stackBlur(bitmap, radius, cores, index, direction);
                 break;
-
         }
     }
 

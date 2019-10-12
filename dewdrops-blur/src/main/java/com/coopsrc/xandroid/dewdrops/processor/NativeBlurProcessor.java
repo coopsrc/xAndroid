@@ -12,8 +12,8 @@ import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
  * <p>
  * Datetime: 2019-10-09 10:17
  */
-public class NativeBlurProcessor extends AbsBlurProcessor {
-    public NativeBlurProcessor(ProcessorBuilder processorBuilder) {
+ class NativeBlurProcessor extends AbsBlurProcessor {
+    NativeBlurProcessor(ProcessorBuilder processorBuilder) {
         super(processorBuilder);
     }
 

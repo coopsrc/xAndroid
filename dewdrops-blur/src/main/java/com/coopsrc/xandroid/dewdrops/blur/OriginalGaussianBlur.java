@@ -11,7 +11,7 @@ import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
  * Datetime: 2019-10-08 20:07
  */
 final class OriginalGaussianBlur {
-    public static void doBlur(int[] pixels, int width, int height, int radius, @Direction int direction) {
+    static void doBlur(int[] pixels, int width, int height, int radius, @Direction int direction) {
         int[] result = new int[width * height];
         float[] kernel = makeKernel(radius);
 

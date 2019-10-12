@@ -11,7 +11,7 @@ import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
  * Datetime: 2019-10-08 20:08
  */
 final class OriginalBoxBlur {
-    public static void doBlur(int[] pixels, int width, int height, int radius, @Direction int direction) {
+    static void doBlur(int[] pixels, int width, int height, int radius, @Direction int direction) {
         int[] result = new int[width * height];
 
         if (direction == BlurConfig.DIRECTION_HORIZONTAL) {
@@ -77,7 +77,7 @@ final class OriginalBoxBlur {
     private static void boxBlurVertical(int[] in, int[] out, int width, int height, int radius) {
         int heightMinus1 = height - 1;
         int tableSize = 2 * radius + 1;
-        int divide[] = new int[256 * tableSize];
+        int[] divide = new int[256 * tableSize];
 
         // construct a query table from 0 to 255
         for (int i = 0; i < 256 * tableSize; i++)

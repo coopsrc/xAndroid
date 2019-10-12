@@ -1,6 +1,7 @@
 package com.coopsrc.xandroid.dewdrops;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.coopsrc.xandroid.dewdrops.processor.IProcessorBuilder;
 import com.coopsrc.xandroid.dewdrops.processor.ProcessorBuilder;
@@ -11,6 +12,8 @@ import com.coopsrc.xandroid.dewdrops.processor.ProcessorBuilder;
  * Datetime: 2019-10-08 16:48
  */
 public class DewdropsBlur {
+    private static final String TAG = "DewdropsBlur";
+
     static {
         System.loadLibrary("dewdrops-blur");
     }
@@ -18,6 +21,7 @@ public class DewdropsBlur {
     public static native String libVersion();
 
     public static IProcessorBuilder with(Context context) {
+        Log.i(TAG, "with: libVersion: " + libVersion());
         return new ProcessorBuilder(context);
     }
 }

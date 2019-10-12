@@ -22,11 +22,13 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup radioGroupAlgorithm;
     private SeekBar seekBarRadius;
     private SeekBar seekBarSampleFactor;
+    private SeekBar seekBarBlurScale;
 
-    private int scheme = BlurConfig.SCHEME_NATIVE;
+    private int scheme = BlurConfig.SCHEME_RENDER_SCRIPT;
     private int mode = BlurConfig.MODE_GAUSSIAN;
     private int radius = BlurConfig.DEFAULT_RADIUS;
     private float sampleFactor = BlurConfig.DEFAULT_SAMPLE_FACTOR;
+    private int blurScale = BlurConfig.DEFAULT_BLUR_SCALE;
 
     private ImageView imageView;
     private DragBlurringView blurringView;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         radioGroupAlgorithm = findViewById(R.id.radioGroupAlgorithm);
         seekBarRadius = findViewById(R.id.seekBarRadius);
         seekBarSampleFactor = findViewById(R.id.seekBarSampleFactor);
+        seekBarBlurScale = findViewById(R.id.seekBarBlurScale);
 
         imageView = findViewById(R.id.imageView);
         blurringView = findViewById(R.id.blurringView);
@@ -92,6 +95,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 updateSampleFactor(progress);
+                updateConfigInfo();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        seekBarBlurScale.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                updateBlurScale(progress);
                 updateConfigInfo();
             }
 
@@ -162,8 +182,12 @@ public class MainActivity extends AppCompatActivity {
         sampleFactor = progress;
     }
 
+    private void updateBlurScale(int progress) {
+        blurScale = progress;
+    }
+
     private void updateConfigInfo() {
-        String info = String.format("Scheme: %s, Mode: %s, Radius: %s, Sample: %s", getSchemeText(scheme), getModeText(mode), radius, sampleFactor);
+        String info = String.format("Scheme: %s, Mode: %s, Radius: %s, Sample: %s, Scale: %s", getSchemeText(scheme), getModeText(mode), radius, sampleFactor, blurScale);
         textViewInfo.setText(info);
 
         updateBlurProcessor();
@@ -183,15 +207,16 @@ public class MainActivity extends AppCompatActivity {
         return String.valueOf(mode);
     }
 
-    private void updateBlurProcessor(){
+    private void updateBlurProcessor() {
 
-        if (blurringView!=null){
+        if (blurringView != null) {
             blurringView.setBlurProcessor(DewdropsBlur.with(this)
                     .scheme(scheme)
                     .mode(mode)
                     .radius(radius)
                     .sampleFactor(sampleFactor)
                     .build());
+            blurringView.setScale(blurScale);
         }
     }
 }

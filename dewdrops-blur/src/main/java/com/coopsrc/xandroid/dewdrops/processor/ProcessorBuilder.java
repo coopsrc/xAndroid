@@ -20,7 +20,7 @@ public class ProcessorBuilder implements IProcessorBuilder {
     @Mode
     int mode = BlurConfig.MODE_GAUSSIAN;
     @Scheme
-    int scheme = BlurConfig.SCHEME_NATIVE;
+    int scheme = BlurConfig.SCHEME_RENDER_SCRIPT;
 
     int radius = BlurConfig.DEFAULT_RADIUS;
     float sampleFactor = BlurConfig.DEFAULT_SAMPLE_FACTOR;
@@ -83,7 +83,7 @@ public class ProcessorBuilder implements IProcessorBuilder {
     }
 
     @Override
-    public IBlurProcessor build() {
-        return BlurProcessorFactory.create(this);
+    public BlurProcessor build() {
+        return new BlurProcessor(this);
     }
 }

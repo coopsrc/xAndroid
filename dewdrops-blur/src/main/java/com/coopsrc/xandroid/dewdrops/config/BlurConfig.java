@@ -19,6 +19,9 @@ public class BlurConfig {
     public static final int SCHEME_RENDER_SCRIPT = 3;
     public static final int SCHEME_OPEN_GL = 4;
 
-    public static final int DEFAULT_RADIUS = 4;
+    public static final int DEFAULT_RADIUS = 5;
+    public static final int RS_MAX_RADIUS = 25;
     public static final float DEFAULT_SAMPLE_FACTOR = 4.0f;
+    public static final int DEFAULT_BLUR_SCALE = 4;
+    public static final int MAX_BLUR_SCALE = 5;
 }

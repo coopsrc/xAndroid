@@ -25,5 +25,5 @@ public interface IProcessorBuilder {
 
     IProcessorBuilder translateY(int translateY);
 
-    IBlurProcessor build();
+    BlurProcessor build();
 }

@@ -33,7 +33,7 @@ public abstract class AbsBlurProcessor implements IBlurProcessor {
     protected int translateX;
     protected int translateY;
 
-    public AbsBlurProcessor(ProcessorBuilder processorBuilder) {
+    AbsBlurProcessor(ProcessorBuilder processorBuilder) {
         mode = processorBuilder.mode;
         scheme = processorBuilder.scheme;
         radius = processorBuilder.radius;

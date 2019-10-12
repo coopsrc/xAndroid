@@ -22,7 +22,6 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
-        android:padding="4dp"
         android:id="@+id/textViewInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +29,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="#EAEAEA"
+        android:padding="4dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,13 +71,14 @@
             android:id="@+id/radioSchemeNative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+            android:checked="false"
             android:text="@string/scheme_native" />
 
         <RadioButton
             android:id="@+id/radioSchemeRender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/scheme_render" />
 
         <RadioButton
@@ -190,14 +191,42 @@
         app:layout_constraintStart_toEndOf="@+id/textViewSampleFactor"
         app:layout_constraintTop_toTopOf="@+id/textViewSampleFactor" />
 
+    <TextView
+        android:id="@+id/textViewBlurScale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/scale_key"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintEnd_toStartOf="@+id/seekBarBlurScale"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSampleFactor" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/seekBarBlurScale"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:max="5"
+        android:progress="4"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewBlurScale"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toEndOf="@+id/textViewBlurScale"
+        app:layout_constraintTop_toTopOf="@+id/textViewBlurScale" />
+
     <com.coopsrc.xandroid.dewdrops.widget.DragBlurringView
         android:id="@+id/blurringView"
         android:layout_width="256dp"
         android:layout_height="192dp"
         android:background="#33c9c4c9"
+        app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="@id/imageView"
         app:layout_constraintStart_toStartOf="@id/imageView"
-        app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintTop_toTopOf="@id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

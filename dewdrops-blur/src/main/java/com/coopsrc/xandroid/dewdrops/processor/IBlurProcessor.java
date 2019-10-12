@@ -12,7 +12,7 @@ import java.util.concurrent.Future;
  * <p>
  * Datetime: 2019-10-08 18:04
  */
-public interface IBlurProcessor {
+ interface IBlurProcessor {
     Bitmap blur(Bitmap bitmap);
 
     Bitmap blur(View view);

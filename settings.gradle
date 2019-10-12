@@ -1,9 +1,13 @@
-include ':downloader-example'
-
 include ':utils'
+include ':dewdrops-blur'
 include ':http'
 include ':http-monitor'
 include ':adaptive'
 include ':downloader'
+
+include ':downloader-example'
+project(':downloader-example').projectDir = new File(rootDir, 'examples/downloader-example')
+include ':dewdrops-blur-example'
+project(':dewdrops-blur-example').projectDir = new File(rootDir, 'examples/dewdrops-blur-example')
 
 rootProject.name = 'xAndroid'

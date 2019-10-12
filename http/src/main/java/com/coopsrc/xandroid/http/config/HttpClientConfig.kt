@@ -1,5 +1,8 @@
 package com.coopsrc.xandroid.http.config
 
+import android.content.Context
+import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
+import com.coopsrc.xandroid.http.monitor.common.Monitor
 import okhttp3.Authenticator
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -8,6 +11,10 @@ import retrofit2.CallAdapter
 import retrofit2.Converter
 
 abstract class HttpClientConfig : IHttpClientConfig {
+    override fun getAppContext(): Context? {
+        return null
+    }
+
     override fun getPrimaryHost(): String {
         return HttpConstants.BASE_URL
     }
@@ -77,6 +84,23 @@ abstract class HttpClientConfig : IHttpClientConfig {
     }
 
     override fun getTokenAuthenticator(): Authenticator? {
+        return null
+    }
+
+    override fun useDebugMonitor(): Boolean {
+        return false
+    }
+
+    override fun debugMonitorLevel(): MonitorInterceptor.Level {
+        return MonitorInterceptor.Level.HEADERS
+    }
+
+    internal fun getDebugMonitorInterceptor(): MonitorInterceptor? {
+        if (useDebugMonitor() && getAppContext() != null) {
+            val monitorInterceptor = MonitorInterceptor(getAppContext())
+            monitorInterceptor.level = debugMonitorLevel()
+            return monitorInterceptor
+        }
         return null
     }
 }

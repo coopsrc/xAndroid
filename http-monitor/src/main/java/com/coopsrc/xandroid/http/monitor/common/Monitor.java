@@ -1,9 +1,7 @@
 package com.coopsrc.xandroid.http.monitor.common;
 
-import android.app.PendingIntent;
 import android.content.Context;
 
-import com.coopsrc.xandroid.http.monitor.HttpMonitor;
 import com.coopsrc.xandroid.http.monitor.db.HttpMonitorDao;
 import com.coopsrc.xandroid.http.monitor.db.HttpMonitorDatabase;
 import com.coopsrc.xandroid.http.monitor.model.HttpInfo;
@@ -29,9 +27,8 @@ public class Monitor implements IMonitor {
     @Override
     public long insert(HttpInfo httpInfo) {
         LogUtils.d("insert: %s", httpInfo);
-        notification(httpInfo);
+//        notification(httpInfo);
         return httpMonitorDao.insert(httpInfo);
-//        return -1;
     }
 
     @Override
@@ -41,7 +38,7 @@ public class Monitor implements IMonitor {
         httpMonitorDao.update(httpInfo);
     }
 
-    protected void notification(HttpInfo httpInfo) {
+    private void notification(HttpInfo httpInfo) {
         LogUtils.w("notification: %s", httpInfo);
         MonitorNotification.getInstance(context).show(httpInfo);
     }

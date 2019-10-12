@@ -1,5 +1,12 @@
 package com.coopsrc.xandroid.http.monitor.ui.list;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -7,24 +14,19 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.coopsrc.xandroid.http.monitor.R;
 import com.coopsrc.xandroid.http.monitor.arch.MonitorViewModel;
 import com.coopsrc.xandroid.http.monitor.arch.MonitorViewModelFactory;
 import com.coopsrc.xandroid.http.monitor.db.HttpMonitorDatabase;
 import com.coopsrc.xandroid.http.monitor.model.HttpInfo;
+import com.coopsrc.xandroid.http.monitor.ui.details.DetailsActivity;
 
 import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MonitorFragment extends Fragment {
+public class MonitorFragment extends Fragment implements MonitorAdapter.OnItemClickListener {
     private static final String TAG = "MonitorFragment";
 
     private RecyclerView recyclerView;
@@ -46,6 +48,7 @@ public class MonitorFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         final MonitorAdapter adapter = new MonitorAdapter(getContext());
+        adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
 
         HttpMonitorDatabase database = HttpMonitorDatabase.getInstance(getContext());
@@ -66,5 +69,20 @@ public class MonitorFragment extends Fragment {
         super.onResume();
 
         monitorViewModel.fetch(100);
+    }
+
+    @Override
+    public void onItemClicked(View view, int position, HttpInfo httpInfo) {
+        Intent intent = new Intent(getContext(), DetailsActivity.class);
+        intent.putExtra("id", httpInfo.id);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onItemLongPress(View view, int position, HttpInfo httpInfo) {
+
+//        monitorViewModel.delete(httpInfo);
+
+        return false;
     }
 }

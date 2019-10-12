@@ -9,7 +9,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import javax.xml.transform.OutputKeys;
@@ -108,7 +107,7 @@ public class MonitorUtils {
 
     private static String formatJson(String json) {
         try {
-            return GsonUtils.toJson(json);
+            return GsonUtils.toPrettyFormat(json);
         } catch (Exception e) {
             return json;
         }

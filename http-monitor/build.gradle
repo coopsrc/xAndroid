@@ -34,7 +34,7 @@ dependencies {
     debugImplementation project(path: ':utils')
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
 
-    compileOnly "com.squareup.okhttp3:okhttp:4.2.0"
+    compileOnly 'com.squareup.okhttp3:okhttp:4.2.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
     implementation 'androidx.room:room-runtime:2.1.0'

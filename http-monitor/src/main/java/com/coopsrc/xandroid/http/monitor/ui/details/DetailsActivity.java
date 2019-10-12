@@ -1,11 +1,8 @@
 package com.coopsrc.xandroid.http.monitor.ui.details;
 
 import android.os.Bundle;
-
-import com.coopsrc.xandroid.http.monitor.arch.MonitorViewModel;
-import com.coopsrc.xandroid.http.monitor.arch.MonitorViewModelFactory;
-import com.coopsrc.xandroid.http.monitor.db.HttpMonitorDatabase;
-import com.coopsrc.xandroid.http.monitor.model.HttpInfo;
+import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -15,10 +12,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
-import android.view.MenuItem;
-
 import com.coopsrc.xandroid.http.monitor.R;
+import com.coopsrc.xandroid.http.monitor.arch.MonitorViewModel;
+import com.coopsrc.xandroid.http.monitor.arch.MonitorViewModelFactory;
+import com.coopsrc.xandroid.http.monitor.db.HttpMonitorDatabase;
+import com.coopsrc.xandroid.http.monitor.model.HttpInfo;
 import com.google.android.material.tabs.TabLayout;
 
 public class DetailsActivity extends AppCompatActivity {

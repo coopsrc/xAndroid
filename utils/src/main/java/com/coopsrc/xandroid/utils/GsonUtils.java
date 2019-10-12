@@ -2,6 +2,8 @@ package com.coopsrc.xandroid.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.Reader;
@@ -170,7 +172,16 @@ public final class GsonUtils {
      */
     private static Gson createGson(final boolean serializeNulls) {
         final GsonBuilder builder = new GsonBuilder();
-        if (serializeNulls) builder.serializeNulls();
+        if (serializeNulls) {
+            builder.serializeNulls();
+        }
+        builder.setPrettyPrinting();
         return builder.create();
+    }
+
+    public static String toPrettyFormat(String json) {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
+        return GSON.toJson(jsonObject);
     }
 }

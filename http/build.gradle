@@ -29,12 +29,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.1.0'
 
-    implementation 'com.squareup.okio:okio:2.4.0'
-    api 'com.squareup.okhttp3:okhttp:4.2.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.0'
-    api 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation "com.squareup.retrofit2:converter-gson:2.6.1"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.1"
+    implementation 'com.squareup.okio:okio:2.4.1'
+    api 'com.squareup.okhttp3:okhttp:4.2.2'
+    api 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    api 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
 
     implementation "androidx.lifecycle:lifecycle-livedata:2.1.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.1.0"
@@ -42,6 +42,8 @@ dependencies {
 
     debugImplementation project(path: ':utils')
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
+    debugImplementation project(path: ':http-monitor')
+    releaseApi "com.coopsrc.xandroid:http-monitor:${versionName}"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:core:1.2.0'

@@ -12,6 +12,7 @@ import com.coopsrc.xandroid.http.monitor.db.HttpMonitorDatabase;
 import com.coopsrc.xandroid.http.monitor.model.HttpInfo;
 import com.coopsrc.xandroid.http.monitor.model.KeyValue;
 import com.coopsrc.xandroid.http.monitor.utils.MonitorUtils;
+import com.coopsrc.xandroid.utils.AppExecutors;
 import com.coopsrc.xandroid.utils.LogUtils;
 
 import java.util.LinkedList;
@@ -31,7 +32,6 @@ public class MonitorViewModel extends ViewModel {
 
     private MutableLiveData<Long> fetchId = new MutableLiveData<>();
     private LiveData<HttpInfo> httpInfoLiveData;
-
 
 
     private LiveData<List<KeyValue>> keyValueData;
@@ -93,7 +93,7 @@ public class MonitorViewModel extends ViewModel {
         return listLiveData;
     }
 
-    public void fetch(int limit){
+    public void fetch(int limit) {
         fetchCount.postValue(limit);
     }
 
@@ -107,5 +107,32 @@ public class MonitorViewModel extends ViewModel {
 
     public LiveData<List<KeyValue>> getKeyValueData() {
         return keyValueData;
+    }
+
+    public void clearRecord() {
+        AppExecutors.getInstance().databaseIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getHttpMonitorDao().clear();
+            }
+        });
+    }
+
+    public void delete(final HttpInfo httpInfo) {
+        AppExecutors.getInstance().databaseIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getHttpMonitorDao().delete(httpInfo);
+            }
+        });
+    }
+
+    public void deleteById(final long id) {
+        AppExecutors.getInstance().databaseIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getHttpMonitorDao().deleteById(id);
+            }
+        });
     }
 }

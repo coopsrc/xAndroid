@@ -2,6 +2,7 @@ package com.coopsrc.xandroid.http.monitor.db;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -43,4 +44,12 @@ public interface HttpMonitorDao {
 
     @Query("DELETE FROM http_info")
     void clear();
+
+    @Delete
+    void delete(HttpInfo httpInfo);
+
+    @Query("DELETE FROM http_info WHERE id =:id")
+    void deleteById(long id);
+
+
 }

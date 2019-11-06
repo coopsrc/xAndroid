@@ -4,7 +4,6 @@ import androidx.annotation.NonNull
 import com.coopsrc.xandroid.http.config.HttpClientConfig
 import com.coopsrc.xandroid.http.interceptor.BasicParamsInterceptor
 import com.coopsrc.xandroid.http.logging.HttpLogger
-import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
 import com.coopsrc.xandroid.utils.LogUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

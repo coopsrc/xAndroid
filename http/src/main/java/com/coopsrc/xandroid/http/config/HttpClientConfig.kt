@@ -2,7 +2,6 @@ package com.coopsrc.xandroid.http.config
 
 import android.content.Context
 import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
-import com.coopsrc.xandroid.http.monitor.common.Monitor
 import okhttp3.Authenticator
 import okhttp3.Cache
 import okhttp3.Interceptor

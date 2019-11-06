@@ -37,8 +37,8 @@ dependencies {
     compileOnly 'com.squareup.okhttp3:okhttp:4.2.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
-    implementation 'androidx.room:room-runtime:2.1.0'
-    annotationProcessor 'androidx.room:room-compiler:2.1.0'
+    implementation 'androidx.room:room-runtime:2.2.1'
+    annotationProcessor 'androidx.room:room-compiler:2.2.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:core:1.2.0'

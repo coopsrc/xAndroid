@@ -3,7 +3,7 @@ package com.coopsrc.xandroid.example.downloader.simple
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import com.coopsrc.xandroid.downloader.example.R
+import com.coopsrc.xandroid.example.downloader.R
 
 import kotlinx.android.synthetic.main.activity_simple.*
 

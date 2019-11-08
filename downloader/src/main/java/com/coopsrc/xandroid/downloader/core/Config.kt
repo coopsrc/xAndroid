@@ -3,6 +3,7 @@ package com.coopsrc.xandroid.downloader.core
 import android.content.Context
 import com.coopsrc.xandroid.downloader.db.DatabaseModule
 import com.coopsrc.xandroid.downloader.utils.Constants
+import com.coopsrc.xandroid.utils.ContextProvider
 
 /**
  * Created by tingkuo.
@@ -11,11 +12,11 @@ import com.coopsrc.xandroid.downloader.utils.Constants
  */
 class Config {
 
-    internal var context: Context? = null
+    internal var context: Context = ContextProvider.getAppContext()
 
     private var maxTask = Constants.Config.maxTask
     internal var maxRange = Constants.Config.maxRange
-    internal var savePath = Constants.Config.savePath(null)
+    internal var workPath = Constants.Config.workPath(context)
     internal var autoStart = Constants.Config.autoStart
     private var enableBackground = Constants.Config.enableBackground
 
@@ -33,7 +34,7 @@ class Config {
 
         this.maxTask = builder.maxTask
         this.maxRange = builder.maxRange
-        this.savePath = builder.savePath
+        this.workPath = builder.savePath
         this.autoStart = builder.autoStart
         this.limitSpeed = builder.limitSpeed
 
@@ -50,16 +51,21 @@ class Config {
         DatabaseModule.instance.init(builder.context)
     }
 
-    class Builder(internal var context: Context) {
-
+    class Builder() {
+        internal var context=ContextProvider.getAppContext()
         internal var maxTask = Constants.Config.maxTask
         internal var maxRange = Constants.Config.maxRange
-        internal var savePath = Constants.Config.savePath(context)
+        internal var savePath = Constants.Config.workPath(context)
         internal var autoStart = Constants.Config.autoStart
         internal var limitSpeed = Constants.Config.limitSpeed
         internal var enableBackground = Constants.Config.enableBackground
 
         var withDebug = Constants.Config.withDebug
+
+        fun context(context: Context):Builder{
+            this.context=context;
+            return this
+        }
 
         fun maxTask(maxTask: Int): Builder {
             this.maxTask = maxTask
@@ -114,6 +120,6 @@ class Config {
     }
 
     override fun toString(): String {
-        return "Config(context=$context, maxTask=$maxTask, maxRange=$maxRange, savePath='$savePath', autoStart=$autoStart, enableBackground=$enableBackground, withDebug=$withDebug, taskRepo=$taskRepo, limitSpeed=$limitSpeed)"
+        return "Config(context=$context, maxTask=$maxTask, maxRange=$maxRange, workPath='$workPath', autoStart=$autoStart, enableBackground=$enableBackground, withDebug=$withDebug, taskRepo=$taskRepo, limitSpeed=$limitSpeed)"
     }
 }

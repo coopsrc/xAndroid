@@ -36,6 +36,6 @@ ext {
     buildToolsVersion = "29.0.2"
 
     // A.BB.CCC
-    versionCode = 104009
-    versionName = '1.4.9'
+    versionCode = 104010
+    versionName = '1.4.10'
 }

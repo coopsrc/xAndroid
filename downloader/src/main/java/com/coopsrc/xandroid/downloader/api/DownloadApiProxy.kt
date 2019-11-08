@@ -16,7 +16,7 @@ internal object DownloadApiProxy : BaseApiProxy<DownloadApiService >() {
     private const val tag = "DownloadApiImpl"
 
     private class DownloadClientConfig : HttpClientConfig() {
-        override fun getAppContext(): Context? {
+        override fun getAppContext(): Context {
             return ExDownloader.downloadCore.config.context
         }
 

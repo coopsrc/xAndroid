@@ -71,7 +71,7 @@ class TaskInfo(var url: String) {
     }
 
     override fun toString(): String {
-        return "TaskInfo(url='$url', saveName='$saveName', savePath='$savePath', type=$type, tag='$tag', progress=$progress)"
+        return "TaskInfo(url='$url', saveName='$saveName', workPath='$savePath', type=$type, tag='$tag', progress=$progress)"
     }
 
 }

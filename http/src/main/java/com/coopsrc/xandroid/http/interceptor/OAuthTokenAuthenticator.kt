@@ -6,8 +6,11 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import java.io.IOException
 
 abstract class OAuthTokenAuthenticator : Authenticator {
+
+    @Throws(IOException::class)
     override fun authenticate(route: Route?, response: Response): Request? {
         LogUtils.w("authenticate: rote=%s, response=%s", route, response)
 

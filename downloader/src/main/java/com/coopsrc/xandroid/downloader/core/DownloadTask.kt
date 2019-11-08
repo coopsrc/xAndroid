@@ -131,7 +131,7 @@ internal class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semap
         Logger.i(tag, "setupResponse: $response")
 
         taskInfo.savePath = if (taskInfo.savePath.isEmpty()) {
-            ExDownloader.downloadCore.config.savePath
+            ExDownloader.downloadCore.config.workPath
         } else {
             taskInfo.savePath
         }

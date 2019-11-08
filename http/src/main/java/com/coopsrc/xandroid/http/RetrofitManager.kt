@@ -5,9 +5,12 @@ import com.coopsrc.xandroid.http.config.HttpClientConfig
 import com.coopsrc.xandroid.http.interceptor.BasicParamsInterceptor
 import com.coopsrc.xandroid.http.logging.HttpLogger
 import com.coopsrc.xandroid.utils.LogUtils
+import com.coopsrc.xandroid.utils.MemoryUnit
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 /**
@@ -74,9 +77,7 @@ object RetrofitManager {
         httpClientBuilder.addInterceptor(httpLoggingInterceptor)
 
         // set cache dir.
-        if (clientConfig.httpClientCache() != null) {
-            httpClientBuilder.cache(clientConfig.httpClientCache())
-        }
+        httpClientBuilder.cache(clientConfig.httpClientCache())
 
         // set time out.
         httpClientBuilder.connectTimeout(clientConfig.connectTimeoutMillis(), TimeUnit.MILLISECONDS)

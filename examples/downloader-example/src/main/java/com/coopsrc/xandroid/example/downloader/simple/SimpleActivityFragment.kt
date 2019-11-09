@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.coopsrc.xandroid.downloader.ExDownloader
-import com.coopsrc.xandroid.downloader.example.R
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Status
 import com.coopsrc.xandroid.downloader.model.TaskInfo
 import com.coopsrc.xandroid.downloader.utils.DownloaderUtils
+import com.coopsrc.xandroid.example.downloader.R
 import com.coopsrc.xandroid.utils.LogUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

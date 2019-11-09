@@ -1,7 +1,6 @@
 package com.coopsrc.xandroid.downloader.api
 
 import android.content.Context
-import com.coopsrc.xandroid.downloader.BuildConfig
 import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.utils.Logger
 import com.coopsrc.xandroid.http.api.BaseApiProxy
@@ -12,20 +11,12 @@ import retrofit2.CallAdapter
 import retrofit2.Response
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
-internal object DownloadApiProxy : BaseApiProxy<DownloadApiService>() {
+internal object DownloadApiProxy : BaseApiProxy<DownloadApiService >() {
 
     private const val tag = "DownloadApiImpl"
 
-    override fun initApiService(): DownloadApiService {
-        return createApiService(DownloadApiService::class.java)
-    }
-
-    override fun clientConfig(): HttpClientConfig {
-        return DownloadClientConfig()
-    }
-
-    private class DownloadClientConfig : ClientConfig() {
-        override fun getAppContext(): Context? {
+    private class DownloadClientConfig : HttpClientConfig() {
+        override fun getAppContext(): Context {
             return ExDownloader.downloadCore.config.context
         }
 
@@ -36,6 +27,10 @@ internal object DownloadApiProxy : BaseApiProxy<DownloadApiService>() {
         override fun useDebugMonitor(): Boolean {
             return ExDownloader.withDebug()
         }
+    }
+
+    override fun clientConfig(): HttpClientConfig {
+        return DownloadClientConfig()
     }
 
     fun detect(url: String, range: String = "bytes=0-0"): Maybe<Response<Void>> {

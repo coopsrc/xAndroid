@@ -21,23 +21,14 @@ object Constants {
 
         internal var maxTask = 3
         internal var maxRange = Runtime.getRuntime().availableProcessors()
-        internal fun savePath(context: Context?): String {
+        internal fun workPath(context: Context): String {
+            val externalCacheDir = context.externalCacheDir
 
-            return try {
-                if (context == null) {
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path
-                } else {
-                    if (File(context.externalCacheDir!!.path).exists()) {
-                        context.externalCacheDir!!.path
-                    } else {
-                        context.cacheDir.path
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Environment.getExternalStorageDirectory().path
+            return if (externalCacheDir != null && externalCacheDir.exists()) {
+                externalCacheDir.path
+            } else {
+                context.cacheDir.path
             }
-
         }
 
         internal var autoStart = false

@@ -1,2 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.coopsrc.xandroid.utils" />
+    package="com.coopsrc.xandroid.utils">
+
+    <application>
+        <provider
+            android:name=".provider.LaunchProvider"
+            android:authorities="${applicationId}.LaunchProvider"
+            android:enabled="true"
+            android:exported="true" />
+    </application>
+
+</manifest>

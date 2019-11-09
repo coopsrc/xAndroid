@@ -2,25 +2,27 @@ package com.coopsrc.xandroid.http.config
 
 import android.content.Context
 import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
-import com.coopsrc.xandroid.http.monitor.common.Monitor
+import com.coopsrc.xandroid.utils.ContextProvider
 import okhttp3.Authenticator
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.CallAdapter
 import retrofit2.Converter
+import java.io.File
 
 abstract class HttpClientConfig : IHttpClientConfig {
-    override fun getAppContext(): Context? {
-        return null
+    override fun getAppContext(): Context {
+        return ContextProvider.getAppContext()
     }
 
     override fun getPrimaryHost(): String {
         return HttpConstants.BASE_URL
     }
 
-    override fun httpClientCache(): Cache? {
-        return null
+    override fun httpClientCache(): Cache {
+        val cacheDir = File(getAppContext().externalCacheDir, HttpConstants.HTTP_CACHE_DIR_NAME)
+        return Cache(cacheDir, HttpConstants.HTTP_CACHE_SIZE)
     }
 
     override fun httpLogLevel(): HttpLoggingInterceptor.Level {

@@ -48,7 +48,7 @@ object HttpUtils {
     }
 
 
-    fun contentDisposition(response: Response<*>): String {
+    private fun contentDisposition(response: Response<*>): String {
         val disposition = response.headers().get("Content-Disposition")
 
         if (disposition == null || disposition.isEmpty()) {

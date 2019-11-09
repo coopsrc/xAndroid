@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath 'com.android.tools.build:gradle:3.5.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,7 +19,9 @@ allprojects {
     repositories {
         google()
         jcenter()
-        mavenLocal()
+        maven {
+            url  "https://dl.bintray.com/coopsrc/xAndroid"
+        }
     }
 }
 
@@ -34,6 +36,6 @@ ext {
     buildToolsVersion = "29.0.2"
 
     // A.BB.CCC
-    versionCode = 104006
-    versionName = '1.4.6'
+    versionCode = 104010
+    versionName = '1.4.10'
 }

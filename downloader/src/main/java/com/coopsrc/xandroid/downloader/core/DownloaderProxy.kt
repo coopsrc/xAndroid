@@ -28,7 +28,7 @@ internal abstract class DownloaderProxy(protected val downloadTask: DownloadTask
     init {
         Logger.i(tag, "init")
         workspace = if (downloadTask.taskInfo.savePath.isEmpty()) {
-            ExDownloader.downloadCore.config.savePath
+            ExDownloader.downloadCore.config.workPath
         } else {
             downloadTask.taskInfo.savePath
         }

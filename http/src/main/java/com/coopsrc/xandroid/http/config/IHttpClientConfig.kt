@@ -12,9 +12,9 @@ import retrofit2.Converter
 internal interface IHttpClientConfig {
 
     // primary
-    fun getAppContext(): Context?
+    fun getAppContext(): Context
 
-    fun httpClientCache(): Cache?
+    fun httpClientCache(): Cache
 
     fun httpLogLevel(): HttpLoggingInterceptor.Level
 

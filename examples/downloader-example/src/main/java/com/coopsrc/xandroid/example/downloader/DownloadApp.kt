@@ -17,7 +17,7 @@ class DownloadApp : Application() {
         LogUtils.plant(LogUtils.DebugLogger())
 
         ExDownloader.init(
-            Config.Builder(applicationContext)
+            Config.Builder()
                 .autoStart(false)
                 .maxTask(1)
                 .maxRange(4)

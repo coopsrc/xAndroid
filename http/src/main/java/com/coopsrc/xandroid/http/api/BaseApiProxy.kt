@@ -1,15 +1,11 @@
 package com.coopsrc.xandroid.http.api
 
-import androidx.annotation.NonNull
 import com.coopsrc.xandroid.http.RetrofitManager
-import com.coopsrc.xandroid.http.adapter.LiveDataCallAdapterFactory
 import com.coopsrc.xandroid.http.config.HttpClientConfig
 
-import retrofit2.CallAdapter
-import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.ParameterizedType
+
 
 /**
  * @author tingkuo
@@ -23,20 +19,17 @@ abstract class BaseApiProxy<T> protected constructor() {
 
     init {
         retrofit = RetrofitManager.newRetrofit(clientConfig())
-        apiService = initApiService()
+
+        val parameterizedType = javaClass.genericSuperclass as ParameterizedType
+        val service: Class<T> = parameterizedType.actualTypeArguments[0] as Class<T>
+        apiService = createApiService(service)
     }
 
     protected open fun clientConfig(): HttpClientConfig {
-        return ClientConfig()
+        return BaseApiClientConfig()
     }
 
-    protected abstract fun initApiService(): T
-
-    protected fun createApiService(service: Class<T>): T {
-        return retrofit.create(service)
-    }
-
-    fun <S> create(service: Class<S>): S {
+    private fun createApiService(service: Class<T>): T {
         return retrofit.create(service)
     }
 
@@ -44,26 +37,10 @@ abstract class BaseApiProxy<T> protected constructor() {
         return retrofit.newBuilder().baseUrl(baseUrl).build().create(service)
     }
 
-    fun <S> create(baseUrl: String, service: Class<S>): S {
-        return retrofit.newBuilder().baseUrl(baseUrl).build().create(service)
-    }
-
     fun updateBaseUrl(baseUrl: String) {
         retrofit = retrofit.newBuilder().baseUrl(baseUrl).build()
     }
 
-    protected open class ClientConfig : HttpClientConfig() {
-        override fun callAdapterFactories(): Set<CallAdapter.Factory> {
-
-            return super.callAdapterFactories()
-                .plus(RxJava2CallAdapterFactory.create())
-                .plus(LiveDataCallAdapterFactory.create())
-        }
-
-        override fun converterFactories(): Set<Converter.Factory> {
-
-            return super.converterFactories().plus(GsonConverterFactory.create())
-        }
-    }
+    protected open class BaseApiClientConfig : HttpClientConfig()
 
 }

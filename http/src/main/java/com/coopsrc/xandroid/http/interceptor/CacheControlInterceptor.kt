@@ -16,7 +16,7 @@ import okhttp3.CacheControl
  *
  * Datetime: 2019-11-08 12:13
  */
-open class CacheInterceptor : Interceptor {
+open class CacheControlInterceptor : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {

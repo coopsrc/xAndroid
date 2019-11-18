@@ -98,7 +98,7 @@ abstract class HttpClientConfig : IHttpClientConfig {
     }
 
     internal fun getDebugMonitorInterceptor(): MonitorInterceptor? {
-        if (useDebugMonitor() && getAppContext() != null) {
+        if (useDebugMonitor()) {
             val monitorInterceptor = MonitorInterceptor(getAppContext())
             monitorInterceptor.level = debugMonitorLevel()
             return monitorInterceptor

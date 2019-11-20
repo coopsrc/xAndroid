@@ -13,6 +13,7 @@ import com.coopsrc.xandroid.downloader.model.TaskInfo
 import com.coopsrc.xandroid.downloader.utils.DownloaderUtils
 import com.coopsrc.xandroid.example.downloader.R
 import com.coopsrc.xandroid.utils.LogUtils
+import com.coopsrc.xandroid.utils.MemoryUnit
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_simple.*
@@ -68,6 +69,37 @@ class SimpleActivityFragment : Fragment() {
 
 
         }
+
+//        segmentProgressBar.setSegmentCount(16)
+//        segmentProgressBar.setSegmentCount(8)
+        segmentProgressBar.setSegmentCount(4)
+//        segmentProgressBar.setSegmentCount(2)
+//        segmentProgressBar.setSegmentCount(1)
+
+        segmentProgressBar.setSegment(0, MemoryUnit.MEGA_BYTE.toBytes(1024))
+        segmentProgressBar.setSegment(1, MemoryUnit.MEGA_BYTE.toBytes(2048))
+        segmentProgressBar.setSegment(2, MemoryUnit.MEGA_BYTE.toBytes(3072))
+        segmentProgressBar.setSegment(3, MemoryUnit.MEGA_BYTE.toBytes(4096))
+
+//        segmentProgressBar.setSegment(0x08FFFFFFF)
+//        segmentProgressBar.setSegment(0x1FF000F00)
+//        segmentProgressBar.setSegment(0x20FF0F000)
+//        segmentProgressBar.setSegment(0x300FF0000)
+//        segmentProgressBar.setSegment(0x40FF00FF)
+//        segmentProgressBar.setSegment(0x5FFF0FF0)
+//        segmentProgressBar.setSegment(0x60FFFF00)
+//        segmentProgressBar.setSegment(0x7F00F00F)
+//        segmentProgressBar.setSegment(0x80FF0FFF)
+//        segmentProgressBar.setSegment(0x90FFFFF0)
+//        segmentProgressBar.setSegment(0xAF0FFF0F)
+//        segmentProgressBar.setSegment(0xB0FFF0FF)
+//        segmentProgressBar.setSegment(0xC0FF0000)
+//        segmentProgressBar.setSegment(0xD0FF000F)
+//        segmentProgressBar.setSegment(0xE00F00FF)
+//        segmentProgressBar.setSegment(0xF0FF0FFF)
+//        segmentProgressBar.setSegment(0x0AFFF0F0F)
+
+        LogUtils.tag("SegmentProgressBar").d("Segments: %s", segmentProgressBar.segments)
     }
 
     override fun onDestroy() {

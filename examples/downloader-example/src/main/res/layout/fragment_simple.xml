@@ -25,12 +25,33 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <com.coopsrc.cicada.widget.SegmentProgressBar
+        android:id="@+id/segmentProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#CCCCCC"
+        android:padding="4dp"
+        app:dividerColor="#FF0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:percentFormat="%.2f"
+        app:percentTextAlign="end"
+        app:progressColor="#999999"
+        app:segmentColor="#BF99CC00"
+        app:segmentMode="combined"
+        app:textColor="#ff000000"
+        app:textSize="12sp" />
 
     <Button
         android:id="@+id/buttonStart"

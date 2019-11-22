@@ -113,7 +113,7 @@ class CompareActivityFragment : Fragment() {
                     Status.Suspend -> ExDownloader.start(taskInfo).subscribe()
                     Status.Complete -> Toast.makeText(itemView.context, "$progress", Toast.LENGTH_SHORT).show()
                     Status.Failed -> ExDownloader.start(taskInfo).subscribe()
-                    Status.Delete -> ExDownloader.start(taskInfo).subscribe()
+                    Status.Deleted -> ExDownloader.start(taskInfo).subscribe()
                     else -> Toast.makeText(itemView.context, "$taskInfo", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -153,7 +153,7 @@ class CompareActivityFragment : Fragment() {
                     Status.Complete -> "下载完成"
                     Status.Failed -> "下载失败 --> 重试"
                     Status.Removed -> "任务删除"
-                    Status.Delete -> "文件被删除 --> 重新下载"
+                    Status.Deleted -> "文件被删除 --> 重新下载"
                     else -> "开始"
                 }
 

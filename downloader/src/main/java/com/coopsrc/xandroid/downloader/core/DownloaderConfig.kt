@@ -2,6 +2,7 @@ package com.coopsrc.xandroid.downloader.core
 
 import android.content.Context
 import com.coopsrc.xandroid.downloader.db.DatabaseModule
+import com.coopsrc.xandroid.downloader.helper.RangeMode
 import com.coopsrc.xandroid.downloader.utils.Constants
 import com.coopsrc.xandroid.utils.ContextProvider
 
@@ -10,12 +11,12 @@ import com.coopsrc.xandroid.utils.ContextProvider
  * Date: 2018-07-23
  * Time: 20:10
  */
-class Config {
+class DownloaderConfig {
 
     internal var context: Context = ContextProvider.getAppContext()
 
     private var maxTask = Constants.Config.maxTask
-    internal var maxRange = Constants.Config.maxRange
+    internal var rangeMode = RangeMode.FLEXED
     internal var workPath = Constants.Config.workPath(context)
     internal var autoStart = Constants.Config.autoStart
     private var enableBackground = Constants.Config.enableBackground
@@ -33,7 +34,7 @@ class Config {
         this.context = builder.context
 
         this.maxTask = builder.maxTask
-        this.maxRange = builder.maxRange
+        this.rangeMode = builder.rangeMode
         this.workPath = builder.savePath
         this.autoStart = builder.autoStart
         this.limitSpeed = builder.limitSpeed
@@ -51,10 +52,11 @@ class Config {
         DatabaseModule.instance.init(builder.context)
     }
 
-    class Builder() {
-        internal var context=ContextProvider.getAppContext()
+    class Builder {
+        internal var context = ContextProvider.getAppContext()
         internal var maxTask = Constants.Config.maxTask
         internal var maxRange = Constants.Config.maxRange
+        internal var rangeMode = RangeMode.FLEXED
         internal var savePath = Constants.Config.workPath(context)
         internal var autoStart = Constants.Config.autoStart
         internal var limitSpeed = Constants.Config.limitSpeed
@@ -62,8 +64,8 @@ class Config {
 
         var withDebug = Constants.Config.withDebug
 
-        fun context(context: Context):Builder{
-            this.context=context;
+        fun context(context: Context): Builder {
+            this.context = context;
             return this
         }
 
@@ -80,6 +82,12 @@ class Config {
                 maxRange <= 0 -> Constants.Config.maxRange
                 else -> maxRange
             }
+
+            return this
+        }
+
+        fun rangeMode(rangeMode: RangeMode): Builder {
+            this.rangeMode = rangeMode;
 
             return this
         }
@@ -114,12 +122,12 @@ class Config {
             return this
         }
 
-        fun build(): Config {
-            return Config(this)
+        fun build(): DownloaderConfig {
+            return DownloaderConfig(this)
         }
     }
 
     override fun toString(): String {
-        return "Config(context=$context, maxTask=$maxTask, maxRange=$maxRange, workPath='$workPath', autoStart=$autoStart, enableBackground=$enableBackground, withDebug=$withDebug, taskRepo=$taskRepo, limitSpeed=$limitSpeed)"
+        return "Config(context=$context, maxTask=$maxTask, rangeMode=$rangeMode, workPath='$workPath', autoStart=$autoStart, enableBackground=$enableBackground, withDebug=$withDebug, taskRepo=$taskRepo, limitSpeed=$limitSpeed)"
     }
 }

@@ -15,7 +15,7 @@ import java.net.SocketException
  * Date: 2018-07-24
  * Time: 08:14
  */
-class DownloadCore(var config: Config) : ITaskRepo {
+class DownloadCore(var config: DownloaderConfig) : ITaskRepo {
 
     init {
         initRxJavaPlugin()

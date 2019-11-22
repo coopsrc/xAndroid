@@ -5,6 +5,8 @@ import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.utils.Logger
 import com.coopsrc.xandroid.http.api.BaseApiProxy
 import com.coopsrc.xandroid.http.config.HttpClientConfig
+import com.coopsrc.xandroid.http.interceptor.BaseMonitorInterceptor
+import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
 import io.reactivex.Maybe
 import okhttp3.ResponseBody
 import retrofit2.CallAdapter
@@ -24,8 +26,12 @@ internal object DownloadApiProxy : BaseApiProxy<DownloadApiService >() {
             return linkedSetOf(RxJava2CallAdapterFactory.create())
         }
 
-        override fun useDebugMonitor(): Boolean {
-            return ExDownloader.withDebug()
+        override fun getDebugMonitorInterceptor(): BaseMonitorInterceptor? {
+            return if (ExDownloader.withDebug()){
+                MonitorInterceptor(getAppContext())
+            } else{
+                null
+            }
         }
     }
 

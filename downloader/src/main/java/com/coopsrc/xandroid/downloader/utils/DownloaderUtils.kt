@@ -35,22 +35,6 @@ object DownloaderUtils {
         }
     }
 
-    fun formatSpeed(size: Long): String {
-        val b = size.toDouble()
-        val k = b / 1024.0
-        val m = k / 1024.0
-        val g = m / 1024.0
-        val t = g / 1024.0
-        val decimalFormat = DecimalFormat("0.00")
-
-        return when {
-            t > 1 -> decimalFormat.format(t) + " T/s"
-            g > 1 -> decimalFormat.format(g) + " G/s"
-            m > 1 -> decimalFormat.format(m) + " M/s"
-            else -> decimalFormat.format(b) + " K/s"
-        }
-    }
-
     fun encodeMd5(text: String): String {
         try {
             val digest: MessageDigest = MessageDigest.getInstance("MD5")

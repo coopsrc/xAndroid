@@ -1,15 +1,15 @@
 package com.coopsrc.xandroid.http.interceptor
 
 import android.content.Context
-import okhttp3.Interceptor
-import okhttp3.Response
-import java.io.IOException
 import android.content.Context.CONNECTIVITY_SERVICE
 import android.net.ConnectivityManager
 import android.text.TextUtils
 import com.coopsrc.xandroid.http.config.HttpConstants
 import com.coopsrc.xandroid.utils.ContextProvider
 import okhttp3.CacheControl
+import okhttp3.Interceptor
+import okhttp3.Response
+import java.io.IOException
 
 /**
  * @author tingkuo

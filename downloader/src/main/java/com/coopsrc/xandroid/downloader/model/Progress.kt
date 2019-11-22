@@ -1,6 +1,6 @@
 package com.coopsrc.xandroid.downloader.model
 
-import com.coopsrc.xandroid.downloader.utils.DownloaderUtils
+import com.coopsrc.xandroid.utils.MemoryUnit
 import java.text.NumberFormat
 
 /**
@@ -8,7 +8,10 @@ import java.text.NumberFormat
  * Date: 2018-07-23
  * Time: 19:20
  */
-class Progress(var tag: String){
+class Progress(var tag: String) {
+    var segmentIndex: Int = 0
+    var segmentProgress: Long = 0L
+    var segmentSize: Long = 0L
     var downloadSize: Long = 0L
     var totalSize: Long = 0L
     var status: Status = Status.Idle
@@ -49,14 +52,16 @@ class Progress(var tag: String){
 
     fun setTargetDeleted() {
         this.downloadSize = 0L
-        this.status = Status.Delete
+        this.status = Status.Deleted
     }
 
-    fun update(downloadSize: Long = this.downloadSize,
-               totalSize: Long = this.totalSize,
-               status: Status? = this.status,
-               lastModified: Long = this.lastModified,
-               updated: Long = this.updated) {
+    fun update(
+        downloadSize: Long = this.downloadSize,
+        totalSize: Long = this.totalSize,
+        status: Status? = this.status,
+        lastModified: Long = this.lastModified,
+        updated: Long = this.updated
+    ) {
 
         this.downloadSize = downloadSize
         this.totalSize = totalSize
@@ -72,15 +77,15 @@ class Progress(var tag: String){
     }
 
     private fun getFormatDownloadSize(): String {
-        return DownloaderUtils.formatSize(downloadSize)
+        return MemoryUnit.format(downloadSize)
     }
 
     private fun getFormatTotalSize(): String {
-        return DownloaderUtils.formatSize(totalSize)
+        return MemoryUnit.format(totalSize)
     }
 
     private fun getFormatSpeed(): String {
-        return DownloaderUtils.formatSpeed(speed)
+        return MemoryUnit.formatSpeed(speed)
     }
 
     override fun toString(): String {

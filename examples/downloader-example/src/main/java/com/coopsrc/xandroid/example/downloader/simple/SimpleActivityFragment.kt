@@ -63,7 +63,7 @@ class SimpleActivityFragment : Fragment() {
                 Status.Suspend -> ExDownloader.start(mTaskInfo).subscribe()
                 Status.Complete -> Toast.makeText(context, "$mProgress", Toast.LENGTH_SHORT).show()
                 Status.Failed -> ExDownloader.start(mTaskInfo).subscribe()
-                Status.Delete -> ExDownloader.start(mTaskInfo).subscribe()
+                Status.Deleted -> ExDownloader.start(mTaskInfo).subscribe()
                 else -> Toast.makeText(context, "$mProgress", Toast.LENGTH_SHORT).show()
             }
 
@@ -130,7 +130,7 @@ class SimpleActivityFragment : Fragment() {
             Status.Complete -> "下载完成"
             Status.Failed -> "下载失败 --> 重试"
             Status.Removed -> "任务删除"
-            Status.Delete -> "文件被删除 --> 重新下载"
+            Status.Deleted -> "文件被删除 --> 重新下载"
             else -> "开始"
         }
     }

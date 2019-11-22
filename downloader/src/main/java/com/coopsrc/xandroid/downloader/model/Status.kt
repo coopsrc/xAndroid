@@ -6,7 +6,7 @@ package com.coopsrc.xandroid.downloader.model
  * Time: 18:08
  */
 enum class Status {
-    Idle, Waiting, Starting, Downloading, Suspend, Complete, Failed, Removed, Delete;
+    Idle, Waiting, Starting, Downloading, Suspend, Complete, Failed, Removed, Deleted;
 
     object Parser {
         fun parse(ordinal: Int): Status {
@@ -19,7 +19,7 @@ enum class Status {
                 Complete.ordinal -> Complete
                 Failed.ordinal -> Failed
                 Removed.ordinal -> Removed
-                Delete.ordinal -> Delete
+                Deleted.ordinal -> Deleted
                 else -> Idle
             }
         }

@@ -141,7 +141,7 @@ internal class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semap
         if (HttpUtils.isSupportRange(response)) {
             taskInfo.progress.totalSize = HttpUtils.contentRangeLength(response)
 
-            if (ExDownloader.downloadCore.config.maxRange > 1) {
+            if (ExDownloader.downloadCore.config.rangeMode.count > 1) {
                 taskInfo.update(type = Type.Range)
             } else {
                 taskInfo.update(type = Type.Single)

@@ -375,8 +375,10 @@ public enum MemoryUnit {
             return String.format(Locale.getDefault(), "%s GB", decimalFormat.format(gigaByte));
         } else if (megaByte > 1) {
             return String.format(Locale.getDefault(), "%s MB", decimalFormat.format(megaByte));
-        } else {
+        }  else if (kiloByte > 1) {
             return String.format(Locale.getDefault(), "%s KB", decimalFormat.format(kiloByte));
+        } else {
+            return String.format(Locale.getDefault(), "%s B", bytes);
         }
     }
 

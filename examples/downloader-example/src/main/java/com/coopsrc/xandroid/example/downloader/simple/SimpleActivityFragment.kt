@@ -72,14 +72,14 @@ class SimpleActivityFragment : Fragment() {
 
 //        segmentProgressBar.setSegmentCount(16)
 //        segmentProgressBar.setSegmentCount(8)
-        segmentProgressBar.setSegmentCount(4)
+//        segmentProgressBar.setSegmentCount(4)
 //        segmentProgressBar.setSegmentCount(2)
-//        segmentProgressBar.setSegmentCount(1)
+        segmentProgressBar.setSegmentCount(1)
 
         segmentProgressBar.setSegment(0, MemoryUnit.MEGA_BYTE.toBytes(1024))
-        segmentProgressBar.setSegment(1, MemoryUnit.MEGA_BYTE.toBytes(2048))
-        segmentProgressBar.setSegment(2, MemoryUnit.MEGA_BYTE.toBytes(3072))
-        segmentProgressBar.setSegment(3, MemoryUnit.MEGA_BYTE.toBytes(4096))
+//        segmentProgressBar.setSegment(1, MemoryUnit.MEGA_BYTE.toBytes(2048))
+//        segmentProgressBar.setSegment(2, MemoryUnit.MEGA_BYTE.toBytes(3072))
+//        segmentProgressBar.setSegment(3, MemoryUnit.MEGA_BYTE.toBytes(4096))
 
 //        segmentProgressBar.setSegment(0x08FFFFFFF)
 //        segmentProgressBar.setSegment(0x1FF000F00)

@@ -1,4 +1,6 @@
+include ':demos'
 include ':utils'
+include ':androlua'
 include ':dewdrops-blur'
 include ':http'
 include ':http-monitor'

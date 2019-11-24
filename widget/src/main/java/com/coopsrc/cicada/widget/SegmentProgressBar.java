@@ -55,18 +55,17 @@ public class SegmentProgressBar extends View {
     private int mDataBitCount = DATA_BIT_COUNT;
     private SparseLongArray mSegments = new SparseLongArray(mSegmentCount);
 
-    public static final int MODE_COMBINED = 0;
-    public static final int MODE_SPLITTED = 1;
-    public static final int MODE_ALIGNED = 2;
+    public static final int FIXED_SIZE = 0;
+    public static final int FIXED_COUNT = 1;
 
-    @IntDef({MODE_COMBINED, MODE_SPLITTED, MODE_ALIGNED})
+    @IntDef({FIXED_SIZE, FIXED_COUNT})
     @Retention(RetentionPolicy.SOURCE)
     public @interface SegmentMode {
 
     }
 
     @SegmentMode
-    private int segmentMode = MODE_COMBINED;
+    private int segmentMode = FIXED_COUNT;
 
     private long mMax = MAX_PROGRESS;// 64G
     private long mProgress = Long.MIN_VALUE;

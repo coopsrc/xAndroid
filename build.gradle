@@ -36,6 +36,9 @@ ext {
     buildToolsVersion = "29.0.2"
 
     // A.BB.CCC
+    // Major.Minor.Commit
     versionCode = 105001
     versionName = '1.5.1'
+    versionNameAlpha = versionName+'-alpha'
+    versionNameBeta = versionName+'-beta'
 }

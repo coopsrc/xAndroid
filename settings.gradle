@@ -1,6 +1,6 @@
 include ':demos'
 
-include ':dewdrops-blur'
+include ':dewdrops'
 include ':downloader'
 include ':http-monitor'
 include ':http'

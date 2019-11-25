@@ -8,11 +8,11 @@ set(SRC_DIR ${CMAKE_SOURCE_DIR}/src/main/cpp)
 aux_source_directory(${SRC_DIR} SOURCE_FILES)
 
 add_library(
-        dewdrops-blur
+        dewdrops
         SHARED
         ${SOURCE_FILES})
 
 include_directories(${SRC_DIR}/includes)
 
-target_link_libraries(dewdrops-blur
+target_link_libraries(dewdrops
         ${log-lib} ${android-lib} ${graphics-lib})

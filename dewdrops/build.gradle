@@ -45,8 +45,8 @@ dependencies {
 }
 
 ext {
-    releaseArtifact = 'dewdrops-blur'
-    releaseDescription = 'The Android dewdrops blur module.'
+    releaseArtifact = 'dewdrops'
+    releaseDescription = 'The Android blur library.'
 }
 
 apply from: '../publish.gradle'

@@ -33,8 +33,8 @@ dependencies {
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
     debugImplementation project(path: ':androlua')
     releaseImplementation "com.coopsrc.xandroid:androlua:${versionNameAlpha}"
-    debugImplementation project(path: ':dewdrops-blur')
-    releaseImplementation "com.coopsrc.xandroid:dewdrops-blur:${versionName}"
+    debugImplementation project(path: ':dewdrops')
+    releaseImplementation "com.coopsrc.xandroid:dewdrops:${versionName}"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:core:1.2.0'

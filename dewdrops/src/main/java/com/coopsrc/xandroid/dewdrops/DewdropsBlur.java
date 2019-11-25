@@ -15,7 +15,7 @@ public class DewdropsBlur {
     private static final String TAG = "DewdropsBlur";
 
     static {
-        System.loadLibrary("dewdrops-blur");
+        System.loadLibrary("dewdrops");
     }
 
     public static native String libVersion();

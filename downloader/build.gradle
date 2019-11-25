@@ -39,10 +39,10 @@ dependencies {
     api 'io.reactivex.rxjava2:rxjava:2.2.13'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
     api 'io.reactivex.rxjava2:rxkotlin:2.4.0'
-    implementation 'com.squareup.okio:okio:2.4.1'
-    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+//    implementation 'com.squareup.okio:okio:2.4.1'
+//    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
+//    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+//    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
     implementation 'com.squareup.sqlbrite3:sqlbrite:3.2.0'
     implementation 'com.squareup.sqlbrite3:sqlbrite-kotlin:3.2.0'
@@ -51,6 +51,8 @@ dependencies {
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
     debugImplementation project(path: ':http')
     releaseImplementation "com.coopsrc.xandroid:common-http:${versionName}"
+    debugImplementation project(path: ':http-monitor')
+    releaseImplementation "com.coopsrc.xandroid:http-monitor:${versionName}"
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 

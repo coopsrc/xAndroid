@@ -1,8 +1,8 @@
 package com.coopsrc.xandroid.downloader
 
 import android.util.Log
-import com.coopsrc.xandroid.downloader.core.Config
 import com.coopsrc.xandroid.downloader.core.DownloadCore
+import com.coopsrc.xandroid.downloader.core.DownloaderConfig
 import com.coopsrc.xandroid.downloader.core.ITaskRepo
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.TaskInfo
@@ -23,11 +23,11 @@ object ExDownloader : ITaskRepo {
 
     fun init() {
         Log.i("ExDownloader", "init：")
-        downloadCore = DownloadCore(Config())
+        downloadCore = DownloadCore(DownloaderConfig())
         initialized = true
     }
 
-    fun init(config: Config) {
+    fun init(config: DownloaderConfig) {
         Log.i("ExDownloader", "init：$config")
         downloadCore = DownloadCore(config)
         initialized = true

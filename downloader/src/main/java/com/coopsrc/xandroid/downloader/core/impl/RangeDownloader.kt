@@ -26,7 +26,7 @@ internal class RangeDownloader(downloadTask: DownloadTask) : Downloader(download
 
     private val rangeSize = Constants.Config.rangeSize
 
-    private val maxRange = ExDownloader.downloadCore.config.maxRange
+    private val maxRange = ExDownloader.downloadCore.config.rangeMode.count
     private val segments = mutableListOf<Segment>()
 
     private val segmentsAction = DatabaseModule.instance.segmentsAction

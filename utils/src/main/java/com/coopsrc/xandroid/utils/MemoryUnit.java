@@ -1,5 +1,8 @@
 package com.coopsrc.xandroid.utils;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 /**
  * @author tingkuo
  * <p>
@@ -350,5 +353,57 @@ public enum MemoryUnit {
 
     public long convert(long value, MemoryUnit unit) {
         throw new AbstractMethodError();
+    }
+
+    public static String format(long value) {
+        double bytes = value * 1.0d;
+        double kiloByte = bytes / 1024.0d;
+        double megaByte = kiloByte / 1024.0d;
+        double gigaByte = megaByte / 1024.0d;
+        double teraByte = gigaByte / 1024.0d;
+        double petaByte = teraByte / 1024.0d;
+        double exaByte = petaByte / 1024.0d;
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        if (exaByte > 1) {
+            return String.format(Locale.getDefault(), "%s EB", decimalFormat.format(exaByte));
+        } else if (petaByte > 1) {
+            return String.format(Locale.getDefault(), "%s PB", decimalFormat.format(petaByte));
+        } else if (teraByte > 1) {
+            return String.format(Locale.getDefault(), "%s TB", decimalFormat.format(teraByte));
+        } else if (gigaByte > 1) {
+            return String.format(Locale.getDefault(), "%s GB", decimalFormat.format(gigaByte));
+        } else if (megaByte > 1) {
+            return String.format(Locale.getDefault(), "%s MB", decimalFormat.format(megaByte));
+        }  else if (kiloByte > 1) {
+            return String.format(Locale.getDefault(), "%s KB", decimalFormat.format(kiloByte));
+        } else {
+            return String.format(Locale.getDefault(), "%s B", bytes);
+        }
+    }
+
+    public static String formatSpeed(long value) {
+        double bytes = value * 1.0d;
+        double kiloByte = bytes / 1024.0d;
+        double megaByte = kiloByte / 1024.0d;
+        double gigaByte = megaByte / 1024.0d;
+        double teraByte = gigaByte / 1024.0d;
+        double petaByte = teraByte / 1024.0d;
+        double exaByte = petaByte / 1024.0d;
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        if (exaByte > 1) {
+            return String.format(Locale.getDefault(), "%s EB/s", decimalFormat.format(exaByte));
+        } else if (petaByte > 1) {
+            return String.format(Locale.getDefault(), "%s PB/s", decimalFormat.format(petaByte));
+        } else if (teraByte > 1) {
+            return String.format(Locale.getDefault(), "%s TB/s", decimalFormat.format(teraByte));
+        } else if (gigaByte > 1) {
+            return String.format(Locale.getDefault(), "%s GB/s", decimalFormat.format(gigaByte));
+        } else if (megaByte > 1) {
+            return String.format(Locale.getDefault(), "%s MB/s", decimalFormat.format(megaByte));
+        } else {
+            return String.format(Locale.getDefault(), "%s KB/s", decimalFormat.format(kiloByte));
+        }
     }
 }

@@ -8,7 +8,6 @@ import com.coopsrc.xandroid.downloader.utils.DownloaderUtils
  * Time: 17:44
  */
 class TaskInfo(var url: String) {
-
     var saveName: String = ""
     var savePath: String = ""
     var type: Type? = null
@@ -32,16 +31,20 @@ class TaskInfo(var url: String) {
         this.type = type
     }
 
-    constructor(url: String, saveName: String, savePath: String, type: Type?, tag: String) : this(url) {
+    constructor(url: String, saveName: String, savePath: String, type: Type?, tag: String) : this(
+        url
+    ) {
         this.saveName = saveName
         this.savePath = savePath
         this.type = type
         this.tag = tag
     }
 
-    fun update(saveName: String = this.saveName,
-               savePath: String = this.savePath,
-               type: Type? = this.type) {
+    fun update(
+        saveName: String = this.saveName,
+        savePath: String = this.savePath,
+        type: Type? = this.type
+    ) {
         this.saveName = saveName
         this.savePath = savePath
         this.type = type

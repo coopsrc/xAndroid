@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">xAndroid</string>
+    <string name="activity_title_androlua">Androlua</string>
+    <string name="activity_title_blur">Blur</string>
+
+
+    <string name="scheme_key">Scheme:</string>
+    <string name="scheme_java">JAVA</string>
+    <string name="scheme_native">Native</string>
+    <string name="scheme_render">Render Script</string>
+    <string name="scheme_opengl">OpenGL</string>
+    <string name="algorithm_key">Algorithm:</string>
+    <string name="algorithm_gaussian">Gaussian</string>
+    <string name="algorithm_stack">Stack</string>
+    <string name="algorithm_box">Box</string>
+    <string name="radius_key">Radius:</string>
+    <string name="sample_key">Sample:</string>
+    <string name="scale_key">Scale:</string>
+</resources>

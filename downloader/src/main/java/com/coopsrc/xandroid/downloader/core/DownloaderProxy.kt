@@ -51,7 +51,7 @@ internal abstract class DownloaderProxy(protected val downloadTask: DownloadTask
     internal abstract fun initWorkspace()
 
     internal fun isTargetDelete(): Boolean {
-        return downloadTask.taskInfo.progress.status == Status.Delete ||
+        return downloadTask.taskInfo.progress.status == Status.Deleted ||
                 (downloadTask.taskInfo.progress.status == Status.Complete && !isComplete())
     }
 

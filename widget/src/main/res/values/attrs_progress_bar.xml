@@ -1,0 +1,23 @@
+<resources>
+    <declare-styleable name="SegmentProgressBar">
+        <attr name="percentFormat" format="string" />
+        <attr name="progressFormat" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="progressColor" format="color" />
+        <attr name="segmentColor" format="color" />
+        <attr name="dividerColor" format="color" />
+        <attr name="segmentMode" format="integer">
+            <enum name="combined" value="0" />
+            <enum name="splitted" value="1" />
+            <enum name="aligned" value="2" />
+        </attr>
+        <attr name="showPercentText" format="boolean" />
+        <attr name="showProgressText" format="boolean" />
+        <attr name="showProgress" format="boolean" />
+        <attr name="percentTextAlign" format="integer">
+            <enum name="start" value="0"/>
+            <enum name="end" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>

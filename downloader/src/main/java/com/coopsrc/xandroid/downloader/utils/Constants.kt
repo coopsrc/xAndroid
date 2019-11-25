@@ -1,9 +1,9 @@
 package com.coopsrc.xandroid.downloader.utils
 
 import android.content.Context
-import android.os.Environment
 import com.coopsrc.xandroid.downloader.BuildConfig
-import java.io.File
+import com.coopsrc.xandroid.utils.MemoryUnit
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by tingkuo.
@@ -15,9 +15,9 @@ object Constants {
 
     object Config {
 
-        internal const val rangeSize: Long = 8 * 1024 * 1024
-        internal const val bufferSize = 1024 * 4
-        internal const val period: Long = (1000 / 5).toLong()
+        internal val rangeSize: Long = MemoryUnit.MEGA_BYTE.toBytes(8)
+        internal val bufferSize = MemoryUnit.KILO_BYTE.toBytes(4).toInt()
+        internal val period: Long = TimeUnit.MILLISECONDS.toMillis(200)
 
         internal var maxTask = 3
         internal var maxRange = Runtime.getRuntime().availableProcessors()

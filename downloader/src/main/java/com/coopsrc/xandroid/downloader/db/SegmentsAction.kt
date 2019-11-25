@@ -16,7 +16,7 @@ import io.reactivex.functions.Function
  */
 internal class SegmentsAction(private val briteDatabase: BriteDatabase) : DatabaseAction<Segment> {
 
-    private var segmentsMapper: io.reactivex.functions.Function<Cursor, Segment> = Function { getSegment(it) }
+    private var segmentsMapper: Function<Cursor, Segment> = Function { getSegment(it) }
     private val tag = "SegmentsAction"
 
 
@@ -35,8 +35,6 @@ internal class SegmentsAction(private val briteDatabase: BriteDatabase) : Databa
     fun exist(tag: String): Boolean {
         Logger.i(tag, "exist: $tag")
 
-        checkNotNull(tag)
-
         briteDatabase.query(SegmentColumns.COUNT_QUERY, tag).use { cursor ->
             if (cursor.count <= 0) {
                 return false
@@ -53,7 +51,6 @@ internal class SegmentsAction(private val briteDatabase: BriteDatabase) : Databa
     fun list(tag: String): MutableList<Segment> {
         Logger.i(tag, "list: $tag")
 
-        checkNotNull(tag)
         val segments = mutableListOf<Segment>()
 
         briteDatabase.query(SegmentColumns.LIST_QUERY, tag).use { cursor ->

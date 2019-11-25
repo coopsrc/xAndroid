@@ -1,4 +1,4 @@
-package com.coopsrc.xandroid.dewdrops.example;
+package com.coopsrc.xandroid.demos.blur;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,13 +9,14 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.coopsrc.xandroid.demos.R;
 import com.coopsrc.xandroid.dewdrops.DewdropsBlur;
 import com.coopsrc.xandroid.dewdrops.annotation.Mode;
 import com.coopsrc.xandroid.dewdrops.annotation.Scheme;
 import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
 import com.coopsrc.xandroid.dewdrops.widget.DragBlurringView;
 
-public class MainActivity extends AppCompatActivity {
+public class BlurActivity extends AppCompatActivity {
 
     private TextView textViewInfo;
     private RadioGroup radioGroupScheme;
@@ -36,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_blur);
         initView();
     }
 

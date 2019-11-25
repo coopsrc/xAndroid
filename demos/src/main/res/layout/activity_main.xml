@@ -8,13 +8,24 @@
     tools:context=".MainActivity">
 
     <Button
-        android:onClick="openAndrolua"
-        android:id="@+id/button"
+        android:id="@+id/button_androlua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="openAndrolua"
         android:text="@string/activity_title_androlua"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_blur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="openBlur"
+        android:text="@string/activity_title_blur"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_androlua" />
 </androidx.constraintlayout.widget.ConstraintLayout>

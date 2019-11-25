@@ -14,6 +14,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".blur.BlurActivity"
+            android:label="@string/activity_title_blur" />
+        <activity
             android:name=".androlua.AndroluaActivity"
             android:label="@string/activity_title_androlua" />
         <activity android:name=".MainActivity">

@@ -10,9 +10,4 @@ include ':adaptive'
 include ':widget'
 include ':utils'
 
-include ':downloader-example'
-project(':downloader-example').projectDir = new File(rootDir, 'examples/downloader-example')
-include ':dewdrops-blur-example'
-project(':dewdrops-blur-example').projectDir = new File(rootDir, 'examples/dewdrops-blur-example')
-
 rootProject.name = 'xAndroid'

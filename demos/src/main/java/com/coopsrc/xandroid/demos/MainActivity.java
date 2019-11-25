@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.coopsrc.xandroid.demos.androlua.AndroluaActivity;
+import com.coopsrc.xandroid.demos.blur.BlurActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openAndrolua(View view) {
         Intent intent = new Intent(this, AndroluaActivity.class);
+        startActivity(intent);
+    }
+
+    public void openBlur(View view) {
+        Intent intent = new Intent(this, BlurActivity.class);
         startActivity(intent);
     }
 }

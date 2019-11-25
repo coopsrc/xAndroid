@@ -1,4 +1,4 @@
-package com.coopsrc.cicada.androlua;
+package com.coopsrc.xandroid.androlua;
 
 import org.junit.Test;
 

@@ -15,13 +15,13 @@ extern "C" {
 
 
 JNIEXPORT jstring JNICALL
-Java_com_coopsrc_cicada_androlua_Androlua_getLuaVersion(JNIEnv *env, jclass clazz);
+Java_com_coopsrc_xandroid_androlua_Androlua_getLuaVersion(JNIEnv *env, jclass clazz);
 JNIEXPORT jstring JNICALL
-Java_com_coopsrc_cicada_androlua_Androlua_getLuaRelease(JNIEnv *env, jclass clazz);
+Java_com_coopsrc_xandroid_androlua_Androlua_getLuaRelease(JNIEnv *env, jclass clazz);
 JNIEXPORT jstring JNICALL
-Java_com_coopsrc_cicada_androlua_Androlua_getLuaCopyright(JNIEnv *env, jclass clazz);
+Java_com_coopsrc_xandroid_androlua_Androlua_getLuaCopyright(JNIEnv *env, jclass clazz);
 JNIEXPORT jstring JNICALL
-Java_com_coopsrc_cicada_androlua_Androlua_getLuaAuthors(JNIEnv *env, jclass clazz);
+Java_com_coopsrc_xandroid_androlua_Androlua_getLuaAuthors(JNIEnv *env, jclass clazz);
 
 };
 

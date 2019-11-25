@@ -1,4 +1,4 @@
-package com.coopsrc.cicada.selector;
+package com.coopsrc.xandroid.widget;
 
 import org.junit.Test;
 

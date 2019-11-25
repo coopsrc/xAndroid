@@ -1,4 +1,4 @@
-package com.coopsrc.cicada.widget;
+package com.coopsrc.xandroid.widget;
 
 import android.content.Context;
 

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.coopsrc.cicada.androlua.Androlua;
+import com.coopsrc.xandroid.androlua.Androlua;
 import com.coopsrc.xandroid.demos.R;
 
 public class AndroluaActivity extends AppCompatActivity {

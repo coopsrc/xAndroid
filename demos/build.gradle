@@ -32,7 +32,7 @@ dependencies {
     debugImplementation project(path: ':utils')
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
     debugImplementation project(path: ':androlua')
-    releaseImplementation "com.coopsrc.xandroid:androlua:${versionName}"
+    releaseImplementation "com.coopsrc.xandroid:androlua:${versionNameAlpha}"
     debugImplementation project(path: ':dewdrops-blur')
     releaseImplementation "com.coopsrc.xandroid:dewdrops-blur:${versionName}"
 

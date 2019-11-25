@@ -41,6 +41,7 @@ dependencies {
 ext {
     releaseArtifact = 'selector'
     releaseDescription = 'The Android file selector module.'
+    versionName = rootProject.ext.versionNameAlpha
 }
 
 apply from: '../publish.gradle'

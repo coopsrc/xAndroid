@@ -1,4 +1,4 @@
-package com.coopsrc.cicada.androlua;
+package com.coopsrc.xandroid.selector;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.coopsrc.cicada.androlua.test", appContext.getPackageName());
+        assertEquals("com.coopsrc.cicada.selector.test", appContext.getPackageName());
     }
 }

@@ -180,8 +180,7 @@ public final class GsonUtils {
     }
 
     public static String toPrettyFormat(String json) {
-        JsonParser jsonParser = new JsonParser();
-        JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
+        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
         return GSON.toJson(jsonObject);
     }
 }

@@ -1,17 +1,18 @@
 include ':demos'
-include ':utils'
-include ':androlua'
-//include ':dewdrops-blur'
-include ':http'
-include ':http-monitor'
-include ':adaptive'
+
+include ':dewdrops-blur'
 include ':downloader'
+include ':http-monitor'
+include ':http'
+include ':androlua'
 include ':selector'
+include ':adaptive'
 include ':widget'
-//
-//include ':downloader-example'
-//project(':downloader-example').projectDir = new File(rootDir, 'examples/downloader-example')
-//include ':dewdrops-blur-example'
-//project(':dewdrops-blur-example').projectDir = new File(rootDir, 'examples/dewdrops-blur-example')
+include ':utils'
+
+include ':downloader-example'
+project(':downloader-example').projectDir = new File(rootDir, 'examples/downloader-example')
+include ':dewdrops-blur-example'
+project(':dewdrops-blur-example').projectDir = new File(rootDir, 'examples/dewdrops-blur-example')
 
 rootProject.name = 'xAndroid'

@@ -45,8 +45,8 @@ dependencies {
     debugImplementation project(path: ':downloader')
     releaseImplementation "com.coopsrc.xandroid:exdownloader:${versionName}"
 
-    debugImplementation project(path: ':widget')
-    releaseImplementation project(path: ':widget')
+    implementation project(path: ':widget')
+//    debugImplementation project(path: ':widget')
 //    releaseImplementation "com.coopsrc.xandroid:widget:${versionName}"
 
     testImplementation 'junit:junit:4.12'

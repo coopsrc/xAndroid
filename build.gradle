@@ -37,8 +37,8 @@ ext {
 
     // A.BB.CCC
     // Major.Minor.Commit
-    versionCode = 105001
-    versionName = '1.5.1'
+    versionCode = 105002
+    versionName = '1.5.2'
     versionNameAlpha = versionName+'-alpha'
     versionNameBeta = versionName+'-beta'
 }

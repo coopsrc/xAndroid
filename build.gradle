@@ -20,7 +20,7 @@ allprojects {
         google()
         jcenter()
         maven {
-            url  "https://dl.bintray.com/coopsrc/xAndroid"
+            url "https://dl.bintray.com/coopsrc/xAndroid"
         }
     }
 }
@@ -37,8 +37,8 @@ ext {
 
     // A.BB.CCC
     // Major.Minor.Commit
-    versionCode = 105004
-    versionName = '1.5.4'
-    versionNameAlpha = versionName+'-alpha'
-    versionNameBeta = versionName+'-beta'
+    versionCode = 105005
+    versionName = '1.5.5'
+    versionNameAlpha = versionName + '-alpha'
+    versionNameBeta = versionName + '-beta'
 }

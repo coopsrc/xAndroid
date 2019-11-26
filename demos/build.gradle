@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -25,16 +27,22 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
+    implementation 'com.google.android.material:material:1.0.0'
     debugImplementation project(path: ':utils')
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
     debugImplementation project(path: ':androlua')
     releaseImplementation "com.coopsrc.xandroid:androlua:${versionNameAlpha}"
     debugImplementation project(path: ':dewdrops')
     releaseImplementation "com.coopsrc.xandroid:dewdrops:${versionName}"
+    debugImplementation project(path: ':downloader')
+    releaseImplementation "com.coopsrc.xandroid:exdownloader:${versionName}"
+    debugImplementation project(path: ':widget')
+    releaseImplementation "com.coopsrc.xandroid:widget:${versionName}"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:core:1.2.0'

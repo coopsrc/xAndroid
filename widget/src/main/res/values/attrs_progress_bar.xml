@@ -8,9 +8,8 @@
         <attr name="segmentColor" format="color" />
         <attr name="dividerColor" format="color" />
         <attr name="segmentMode" format="integer">
-            <enum name="combined" value="0" />
-            <enum name="splitted" value="1" />
-            <enum name="aligned" value="2" />
+            <enum name="fixed_count" value="0" />
+            <enum name="fixed_size" value="1" />
         </attr>
         <attr name="showPercentText" format="boolean" />
         <attr name="showProgressText" format="boolean" />

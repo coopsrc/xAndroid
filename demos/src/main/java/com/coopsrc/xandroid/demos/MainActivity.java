@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.coopsrc.xandroid.demos.androlua.AndroluaActivity;
 import com.coopsrc.xandroid.demos.blur.BlurActivity;
+import com.coopsrc.xandroid.demos.downloader.DownloaderActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openBlur(View view) {
         Intent intent = new Intent(this, BlurActivity.class);
+        startActivity(intent);
+    }
+
+    public void openDownloader(View view) {
+        Intent intent = new Intent(this, DownloaderActivity.class);
         startActivity(intent);
     }
 }

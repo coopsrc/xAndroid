@@ -104,6 +104,7 @@ internal class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semap
         emitStatus(Status.Starting)
         Logger.i(tag, "detectAndDownload")
         return detect().flatMapPublisher {
+            emitStatus(Status.Prepared)
             download()
         }
     }

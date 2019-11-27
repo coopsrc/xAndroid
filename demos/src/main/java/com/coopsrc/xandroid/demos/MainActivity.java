@@ -9,6 +9,7 @@ import android.view.View;
 import com.coopsrc.xandroid.demos.androlua.AndroluaActivity;
 import com.coopsrc.xandroid.demos.blur.BlurActivity;
 import com.coopsrc.xandroid.demos.downloader.DownloaderActivity;
+import com.coopsrc.xandroid.demos.particle.ParticleActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openDownloader(View view) {
         Intent intent = new Intent(this, DownloaderActivity.class);
+        startActivity(intent);
+    }
+
+    public void openParticle(View view) {
+        Intent intent = new Intent(this, ParticleActivity.class);
         startActivity(intent);
     }
 }

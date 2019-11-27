@@ -63,7 +63,7 @@ class SimpleDownloadActivity : AppCompatActivity() {
 
     private fun updateProgress() {
         when (progress.status) {
-            Status.Suspend, Status.Idle -> {
+            Status.Suspend, Status.Idle, Status.Complete -> {
                 initProgressBar()
                 updateProgressBar()
             }

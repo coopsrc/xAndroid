@@ -37,8 +37,8 @@ ext {
 
     // A.BB.CCC
     // Major.Minor.Commit
-    versionCode = 105006
-    versionName = '1.5.6'
+    versionCode = 106000
+    versionName = '1.6.0'
     versionNameAlpha = versionName + '-alpha'
 
     androidx_arch_core = "2.1.0"

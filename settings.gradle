@@ -1,5 +1,6 @@
 include ':demos'
 
+include ':particle'
 include ':dewdrops'
 include ':downloader'
 include ':http-monitor'

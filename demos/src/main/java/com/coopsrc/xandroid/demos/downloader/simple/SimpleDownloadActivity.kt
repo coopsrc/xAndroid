@@ -63,18 +63,15 @@ class SimpleDownloadActivity : AppCompatActivity() {
 
     private fun updateProgress() {
         when (progress.status) {
-            Status.Suspend,Status.Idle -> {
-                segmentProgressBar.setFixedCountSegments(progress.totalSize, 4)
-                segmentProgressBar.setSegment(0, progress.downloadSize)
-                segmentProgressBar.setSegment(1, progress.downloadSize/4)
-                segmentProgressBar.setSegment(2, progress.downloadSize/4)
-                segmentProgressBar.setSegment(3, progress.downloadSize/4)
+            Status.Suspend, Status.Idle -> {
+                initProgressBar()
+                updateProgressBar()
             }
             Status.Prepared -> {
-                segmentProgressBar.setFixedCountSegments(progress.totalSize, 1)
+                initProgressBar()
             }
             Status.Downloading -> {
-                segmentProgressBar.setSegment(0, progress.downloadSize)
+                updateProgressBar()
             }
         }
         button_download.text = when (progress.status) {
@@ -95,6 +92,17 @@ class SimpleDownloadActivity : AppCompatActivity() {
             Status.Deleted -> "文件被删除 --> 重新下载"
             else -> "开始"
         }
+    }
+
+    private fun initProgressBar() {
+        segmentProgressBar.setFixedCountSegments(progress.totalSize, 4)
+    }
+
+    private fun updateProgressBar() {
+        segmentProgressBar.setSegment(0, progress.downloadSize / 4)
+        segmentProgressBar.setSegment(1, progress.downloadSize / 4)
+        segmentProgressBar.setSegment(2, progress.downloadSize / 4)
+        segmentProgressBar.setSegment(3, progress.downloadSize / 4)
     }
 
 

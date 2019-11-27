@@ -26,13 +26,6 @@ internal object DownloadApiProxy : BaseApiProxy<DownloadApiService >() {
             return linkedSetOf(RxJava2CallAdapterFactory.create())
         }
 
-        override fun getDebugMonitorInterceptor(): BaseMonitorInterceptor? {
-            return if (ExDownloader.withDebug()){
-                MonitorInterceptor(getAppContext())
-            } else{
-                null
-            }
-        }
     }
 
     override fun clientConfig(): HttpClientConfig {

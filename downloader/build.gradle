@@ -25,27 +25,28 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'androidx.core:core:1.1.0'
+    implementation "androidx.core:core:$androidx_core"
 
-    implementation 'androidx.sqlite:sqlite:2.0.1'
-    implementation 'androidx.sqlite:sqlite-framework:2.0.1'
+    implementation "androidx.sqlite:sqlite:$androidx_sqlite"
+    implementation "androidx.sqlite:sqlite-framework:$androidx_sqlite"
 
-    api 'io.reactivex.rxjava2:rxjava:2.2.13'
-    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    api 'io.reactivex.rxjava2:rxkotlin:2.4.0'
-//    implementation 'com.squareup.okio:okio:2.4.1'
-//    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
-//    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
-//    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
-    implementation 'com.squareup.sqlbrite3:sqlbrite:3.2.0'
-    implementation 'com.squareup.sqlbrite3:sqlbrite-kotlin:3.2.0'
+    api "io.reactivex.rxjava2:rxjava:$reactivex_rxjava"
+    api "io.reactivex.rxjava2:rxandroid:$reactivex_rxandroid"
+    api "io.reactivex.rxjava2:rxkotlin:$reactivex_rxkotlin"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$squareup_retrofit"
+    implementation "com.squareup.sqlbrite3:sqlbrite:$squareup_sqlbrite3"
+    implementation "com.squareup.sqlbrite3:sqlbrite-kotlin:$squareup_sqlbrite3"
 
     debugImplementation project(path: ':utils')
     releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
@@ -56,11 +57,11 @@ dependencies {
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:core:1.2.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation "junit:junit:$junit"
+    androidTestImplementation "androidx.test:core:$androidx_test"
+    androidTestImplementation "androidx.test:runner:$androidx_test"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androirx_test_espresso"
 }
 
 ext {

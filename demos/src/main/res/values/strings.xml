@@ -4,6 +4,8 @@
     <string name="activity_title_blur">Blur</string>
     <string name="title_activity_downloader">Downloader</string>
     <string name="title_activity_simple_downloader">Downloader - Simple</string>
+    <string name="title_activity_particle">Particle</string>
+    <string name="title_activity_particle_drop">Particle - Drop</string>
 
     <string name="scheme_key">Scheme:</string>
     <string name="scheme_java">JAVA</string>

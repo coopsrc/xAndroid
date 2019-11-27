@@ -30,12 +30,6 @@ class SimpleDownloadActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_simple_download)
-//
-//        segmentProgressBar.setFixedCountSegments(MemoryUnit.MEGA_BYTE.toBytes(200), 4)
-//        segmentProgressBar.setSegment(0, MemoryUnit.MEGA_BYTE.toBytes(30))
-//        segmentProgressBar.setSegment(1, MemoryUnit.MEGA_BYTE.toBytes(20))
-//        segmentProgressBar.setSegment(2, MemoryUnit.MEGA_BYTE.toBytes(5))
-//        segmentProgressBar.setSegment(3, MemoryUnit.MEGA_BYTE.toBytes(4))
         taskInfo = TaskInfo(url1)
         progress = Progress(taskInfo.tag)
 
@@ -69,9 +63,12 @@ class SimpleDownloadActivity : AppCompatActivity() {
 
     private fun updateProgress() {
         when (progress.status) {
-            Status.Suspend -> {
-                segmentProgressBar.setFixedCountSegments(progress.totalSize, 1)
+            Status.Suspend,Status.Idle -> {
+                segmentProgressBar.setFixedCountSegments(progress.totalSize, 4)
                 segmentProgressBar.setSegment(0, progress.downloadSize)
+                segmentProgressBar.setSegment(1, progress.downloadSize/4)
+                segmentProgressBar.setSegment(2, progress.downloadSize/4)
+                segmentProgressBar.setSegment(3, progress.downloadSize/4)
             }
             Status.Prepared -> {
                 segmentProgressBar.setFixedCountSegments(progress.totalSize, 1)

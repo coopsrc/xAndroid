@@ -71,8 +71,8 @@ public class SegmentProgressBar extends View {
     @SegmentMode
     private int mSegmentMode = FIXED_COUNT;
 
-    private long mMax = MAX_PROGRESS;// 64G
-    private long mProgress = MemoryUnit.MEGA_BYTE.toBytes(59);
+    private long mMax = 0L;// 64G
+    private long mProgress = 0L;
 
     private static final int TEXT_ALIGN_START = 0;
     private static final int TEXT_ALIGN_END = 1;
@@ -205,30 +205,36 @@ public class SegmentProgressBar extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
+        boolean invalid = mMax > 0 && mMax <= MAX_PROGRESS;
+
         // draw total progress
-        if (mShowProgress) {
+        if (mShowProgress && invalid) {
             float progressLength = getWidth() * mProgress / (mMax * 1.0f);
             canvas.drawRect(0, 0, progressLength, getHeight(), mProgressPaint);
         }
 
-        // draw segments
         int segmentWidth = getWidth() / mSegmentCount;
-        for (int i = 0; i <= mSegmentCount; i++) {
-            int segmentLeft = segmentWidth * i;
-            float segmentProgress = mSegments.get(i) / (mSegmentSize * 1.0f);
-            LogUtils.d("onDraw: index: %s[%s] --> %s", i, mSegments.get(i), segmentProgress);
-            int segmentSize = (int) (segmentWidth * segmentProgress);
-            canvas.drawRect(segmentLeft, 0, segmentLeft + segmentSize, getHeight(), mSegmentPaint);
+        // draw segments
+        if (invalid) {
+            for (int i = 0; i <= mSegmentCount; i++) {
+                int segmentLeft = segmentWidth * i;
+                float segmentProgress = mSegments.get(i) / (mSegmentSize * 1.0f);
+                LogUtils.d("onDraw: index: %s[%s] --> %s", i, mSegments.get(i), segmentProgress);
+                int segmentSize = (int) (segmentWidth * segmentProgress);
+                canvas.drawRect(segmentLeft, 0, segmentLeft + segmentSize, getHeight(), mSegmentPaint);
+            }
         }
 
         // draw segment split line.
-        for (int i = 0; i < mSegmentCount; i++) {
-            canvas.drawLine(segmentWidth * i, 0, segmentWidth * i, getHeight(), mDividerPaint);
+        if (invalid) {
+            for (int i = 0; i < mSegmentCount; i++) {
+                canvas.drawLine(segmentWidth * i, 0, segmentWidth * i, getHeight(), mDividerPaint);
+            }
         }
 
         // Draw the text.
 
-        if (mShowPercentText) {
+        if (mShowPercentText && invalid) {
             String percent = String.format(Locale.getDefault(), mPercentFormat, mProgress * 100 / (mMax * 1.0f)) + "%";
             float percentWidth = mTextPaint.measureText(percent);
             if (mPercentTextAlign == Gravity.START) {
@@ -244,7 +250,7 @@ public class SegmentProgressBar extends View {
             }
         }
 
-        if (mShowProgressText) {
+        if (mShowProgressText && invalid) {
             String progressText = String.format(Locale.getDefault(), mProgressFormat,
                     MemoryUnit.format(mProgress, mSizeFormat), MemoryUnit.format(mMax, mSizeFormat));
             float progressWidth = mTextPaint.measureText(progressText);

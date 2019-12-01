@@ -22,7 +22,7 @@ import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL;
 import javax.microedition.khronos.opengles.GL10;
 
-public class GlTextureView extends TextureView implements TextureView.SurfaceTextureListener {
+public class GLTextureView extends TextureView implements TextureView.SurfaceTextureListener {
     private final static String TAG = "GLTextureView";
     private final static boolean LOG_ATTACH_DETACH = false;
     private final static boolean LOG_THREADS = false;
@@ -60,7 +60,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
     public final static int DEBUG_CHECK_GL_ERROR = 1;
 
     /**
-     * Log GL calls to the system log at "verbose" level with tag "GLSurfaceView".
+     * Log GL calls to the system log at "verbose" level with tag "GLTextureView".
      *
      * @see #getDebugFlags
      * @see #setDebugFlags
@@ -71,7 +71,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
      * Standard View constructor. In order to render something, you
      * must call {@link #setRenderer} to register a renderer.
      */
-    public GlTextureView(Context context) {
+    public GLTextureView(Context context) {
         super(context);
         init();
     }
@@ -80,7 +80,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
      * Standard View constructor. In order to render something, you
      * must call {@link #setRenderer} to register a renderer.
      */
-    public GlTextureView(Context context, AttributeSet attrs) {
+    public GLTextureView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -144,17 +144,17 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
     }
 
     /**
-     * Control whether the EGL context is preserved when the GLSurfaceView is paused and
+     * Control whether the EGL context is preserved when the GLTextureView is paused and
      * resumed.
      * <p>
-     * If set to true, then the EGL context may be preserved when the GLSurfaceView is paused.
+     * If set to true, then the EGL context may be preserved when the GLTextureView is paused.
      * Whether the EGL context is actually preserved or not depends upon whether the
      * Android device that the program is running on can support an arbitrary number of EGL
      * contexts or not. Devices that can only support a limited number of EGL contexts must
      * release the  EGL context in order to allow multiple applications to share the GPU.
      * <p>
-     * If set to false, the EGL context will be released when the GLSurfaceView is paused,
-     * and recreated when the GLSurfaceView is resumed.
+     * If set to false, the EGL context will be released when the GLTextureView is paused,
+     * and recreated when the GLTextureView is resumed.
      * <p>
      * <p>
      * The default is false.
@@ -176,8 +176,8 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
      * Set the renderer associated with this view. Also starts the thread that
      * will call the renderer, which in turn causes the rendering to start.
      * <p>This method should be called once and only once in the life-cycle of
-     * a GLSurfaceView.
-     * <p>The following GLSurfaceView methods can only be called <em>before</em>
+     * a GLTextureView.
+     * <p>The following GLTextureView methods can only be called <em>before</em>
      * setRenderer is called:
      * <ul>
      * <li>{@link #setEGLConfigChooser(boolean)}
@@ -185,7 +185,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
      * <li>{@link #setEGLConfigChooser(int, int, int, int, int, int)}
      * </ul>
      * <p>
-     * The following GLSurfaceView methods can only be called <em>after</em>
+     * The following GLTextureView methods can only be called <em>after</em>
      * setRenderer is called:
      * <ul>
      * <li>{@link #getRenderMode()}
@@ -219,7 +219,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
     /**
      * Install a custom EGLContextFactory.
      * <p>If this method is
-     * called, it must be called before {@link #setRenderer(GLSurfaceView.Renderer)} }
+     * called, it must be called before {@link #setRenderer(GLSurfaceView.Renderer)}
      * is called.
      * <p>
      * If this method is not called, then by default
@@ -403,7 +403,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
 
     /**
      * This method is part of the SurfaceHolder.Callback interface, and is
-     * not normally called or subclassed by clients of GLSurfaceView.
+     * not normally called or subclassed by clients of GLTextureView.
      */
     public void on(SurfaceHolder holder) {
         mGLThread.surfaceCreated();
@@ -443,7 +443,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
 
     /**
      * This method is used as part of the View class and is not normally
-     * called or subclassed by clients of GLSurfaceView.
+     * called or subclassed by clients of GLTextureView.
      */
     @Override
     protected void onAttachedToWindow() {
@@ -467,7 +467,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
 
     /**
      * This method is used as part of the View class and is not normally
-     * called or subclassed by clients of GLSurfaceView.
+     * called or subclassed by clients of GLTextureView.
      * Must not be called before a renderer has been set.
      */
     @Override
@@ -520,7 +520,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
      * An interface for customizing the eglCreateContext and eglDestroyContext calls.
      * <p>
      * This interface must be implemented by clients wishing to call
-     * {@link GLSurfaceView#setEGLContextFactory(GLSurfaceView.EGLContextFactory)}
+     * {@link GLTextureView#setEGLContextFactory(EGLContextFactory)}
      */
     public interface EGLContextFactory {
         EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig);
@@ -555,7 +555,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
      * An interface for customizing the eglCreateWindowSurface and eglDestroySurface calls.
      * <p>
      * This interface must be implemented by clients wishing to call
-     * {@link GLSurfaceView#setEGLWindowSurfaceFactory(GLSurfaceView.EGLWindowSurfaceFactory)}
+     * {@link GLTextureView#setEGLWindowSurfaceFactory(EGLWindowSurfaceFactory)}
      */
     public interface EGLWindowSurfaceFactory {
         /**
@@ -597,7 +597,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
      * potential configurations.
      * <p>
      * This interface must be implemented by clients wishing to call
-     * {@link GLSurfaceView#setEGLConfigChooser(GLSurfaceView.EGLConfigChooser)}
+     * {@link GLTextureView#setEGLConfigChooser(EGLConfigChooser)}
      */
     public interface EGLConfigChooser {
         /**
@@ -751,7 +751,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
      */
 
     private static class EglHelper {
-        public EglHelper(WeakReference<GlTextureView> glTextureViewWeakRef) {
+        public EglHelper(WeakReference<GLTextureView> glTextureViewWeakRef) {
             mGLTextureViewWeakRef = glTextureViewWeakRef;
         }
 
@@ -783,7 +783,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
             if (!mEgl.eglInitialize(mEglDisplay, version)) {
                 throw new RuntimeException("eglInitialize failed");
             }
-            GlTextureView view = mGLTextureViewWeakRef.get();
+            GLTextureView view = mGLTextureViewWeakRef.get();
             if (view == null) {
                 mEglConfig = null;
                 mEglContext = null;
@@ -839,7 +839,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
             /*
              * Create an EGL surface we can render into.
              */
-            GlTextureView view = mGLTextureViewWeakRef.get();
+            GLTextureView view = mGLTextureViewWeakRef.get();
             if (view != null) {
                 mEglSurface = view.mEGLWindowSurfaceFactory.createWindowSurface(mEgl,
                         mEglDisplay, mEglConfig, view.getSurfaceTexture());
@@ -879,7 +879,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
         GL createGL() {
 
             GL gl = mEglContext.getGL();
-            GlTextureView view = mGLTextureViewWeakRef.get();
+            GLTextureView view = mGLTextureViewWeakRef.get();
             if (view != null) {
                 if (view.mGLWrapper != null) {
                     gl = view.mGLWrapper.wrap(gl);
@@ -924,7 +924,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
                 mEgl.eglMakeCurrent(mEglDisplay, EGL10.EGL_NO_SURFACE,
                         EGL10.EGL_NO_SURFACE,
                         EGL10.EGL_NO_CONTEXT);
-                GlTextureView view = mGLTextureViewWeakRef.get();
+                GLTextureView view = mGLTextureViewWeakRef.get();
                 if (view != null) {
                     view.mEGLWindowSurfaceFactory.destroySurface(mEgl, mEglDisplay, mEglSurface);
                 }
@@ -937,7 +937,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
                 Log.w("EglHelper", "finish() tid=" + Thread.currentThread().getId());
             }
             if (mEglContext != null) {
-                GlTextureView view = mGLTextureViewWeakRef.get();
+                GLTextureView view = mGLTextureViewWeakRef.get();
                 if (view != null) {
                     view.mEGLContextFactory.destroyContext(mEgl, mEglDisplay, mEglContext);
                 }
@@ -970,7 +970,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
             return function + " failed"; // + EGLLogWrapper.getErrorString(error);
         }
 
-        private WeakReference<GlTextureView> mGLTextureViewWeakRef;
+        private WeakReference<GLTextureView> mGLTextureViewWeakRef;
         EGL10 mEgl;
         EGLDisplay mEglDisplay;
         EGLSurface mEglSurface;
@@ -988,7 +988,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
      * sGLThreadManager object. This avoids multiple-lock ordering issues.
      */
     static class GLThread extends Thread {
-        GLThread(WeakReference<GlTextureView> glTextureViewWeakRef) {
+        GLThread(WeakReference<GLTextureView> glTextureViewWeakRef) {
             super();
             mWidth = 0;
             mHeight = 0;
@@ -1105,7 +1105,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
 
                             // When pausing, optionally release the EGL Context:
                             if (pausing && mHaveEglContext) {
-                                GlTextureView view = mGLTextureViewWeakRef.get();
+                                GLTextureView view = mGLTextureViewWeakRef.get();
                                 boolean preserveEglContextOnPause = view == null ?
                                         false : view.mPreserveEGLContextOnPause;
                                 if (!preserveEglContextOnPause || sGLThreadManager.shouldReleaseEGLContextWhenPausing()) {
@@ -1265,7 +1265,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
                         if (LOG_RENDERER) {
                             Log.w("GLThread", "onSurfaceCreated");
                         }
-                        GlTextureView view = mGLTextureViewWeakRef.get();
+                        GLTextureView view = mGLTextureViewWeakRef.get();
                         if (view != null) {
                             view.mRenderer.onSurfaceCreated(gl, mEglHelper.mEglConfig);
                         }
@@ -1276,7 +1276,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
                         if (LOG_RENDERER) {
                             Log.w("GLThread", "onSurfaceChanged(" + w + ", " + h + ")");
                         }
-                        GlTextureView view = mGLTextureViewWeakRef.get();
+                        GLTextureView view = mGLTextureViewWeakRef.get();
                         if (view != null) {
                             view.mRenderer.onSurfaceChanged(gl, w, h);
                         }
@@ -1287,7 +1287,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
                         Log.w("GLThread", "onDrawFrame tid=" + getId());
                     }
                     {
-                        GlTextureView view = mGLTextureViewWeakRef.get();
+                        GLTextureView view = mGLTextureViewWeakRef.get();
                         if (view != null) {
                             view.mRenderer.onDrawFrame(gl);
                         }
@@ -1531,10 +1531,10 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
 
         /**
          * Set once at thread construction time, nulled out when the parent view is garbage
-         * called. This weak reference allows the GLSurfaceView to be garbage collected while
+         * called. This weak reference allows the GLTextureView to be garbage collected while
          * the GLThread is still alive.
          */
-        private WeakReference<GlTextureView> mGLTextureViewWeakRef;
+        private WeakReference<GLTextureView> mGLTextureViewWeakRef;
 
     }
 
@@ -1564,7 +1564,7 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
 
         private void flushBuilder() {
             if (mBuilder.length() > 0) {
-                Log.v("GLSurfaceView", mBuilder.toString());
+                Log.v("GLTextureView", mBuilder.toString());
                 mBuilder.delete(0, mBuilder.length());
             }
         }
@@ -1697,8 +1697,8 @@ public class GlTextureView extends TextureView implements TextureView.SurfaceTex
 
     private static final GLThreadManager sGLThreadManager = new GLThreadManager();
 
-    private final WeakReference<GlTextureView> mThisWeakRef =
-            new WeakReference<GlTextureView>(this);
+    private final WeakReference<GLTextureView> mThisWeakRef =
+            new WeakReference<>(this);
     private GLThread mGLThread;
     private GLSurfaceView.Renderer mRenderer;
     private boolean mDetached;

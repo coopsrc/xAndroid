@@ -5,12 +5,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.coopsrc.android.particle.ParticleView;
+import com.coopsrc.android.particle.BaseParticleView;
 import com.coopsrc.xandroid.demos.R;
 
 public abstract class BaseRenderActivity extends AppCompatActivity {
 
-    protected ParticleView particleView;
+    protected BaseParticleView particleView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

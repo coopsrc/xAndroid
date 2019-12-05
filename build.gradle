@@ -37,8 +37,11 @@ ext {
 
     // A.BB.CCC
     // Major.Minor.Commit
-    versionCode = 106001
-    versionName = '1.6.1'
+    majorVersion = 1
+    minorVersion = 6
+    revisionVersion = 1
+    versionCode = generateVersionCode(majorVersion, minorVersion, revisionVersion)
+    versionName = generateVersionName(majorVersion, minorVersion, revisionVersion)
     versionNameAlpha = versionName + '-alpha'
 
     androidx_arch_core = "2.1.0"
@@ -66,4 +69,12 @@ ext {
     squareup_okhttp3 = "4.2.2"
     squareup_retrofit = "2.6.2"
     squareup_sqlbrite3 = "3.2.0"
+}
+
+static def generateVersionCode(def major, def minor, def revision) {
+    return major * 100000 + minor * 1000 + revision
+}
+
+static def generateVersionName(def major, def minor, def revision) {
+    return '' + major + '.' + minor + '.' + revision
 }

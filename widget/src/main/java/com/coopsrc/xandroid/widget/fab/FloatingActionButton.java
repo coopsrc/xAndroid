@@ -34,14 +34,13 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
-import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.coopsrc.xandroid.utils.DimensionUtils;
 import com.coopsrc.xandroid.widget.R;
 
-public class FloatingActionButton extends AppCompatImageButton {
+public class FloatingActionButton extends ImageButton {
 
     public static final int SIZE_NORMAL = 0;
     public static final int SIZE_MINI = 1;

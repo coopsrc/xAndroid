@@ -41,12 +41,9 @@ dependencies {
     api "com.squareup.okhttp3:logging-interceptor:$squareup_okhttp3"
     api "com.squareup.retrofit2:retrofit:$squareup_retrofit"
 
-    implementation "androidx.lifecycle:lifecycle-livedata:$androidx_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$androidx_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-reactivestreams:$androidx_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-core:$androidx_lifecycle"
 
-    debugImplementation project(path: ':utils')
-    releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
+    implementation project(path: ':utils')
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:core:$androidx_test"

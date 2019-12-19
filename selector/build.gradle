@@ -33,8 +33,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$androidx_appcompat"
 
-    debugImplementation project(path: ':utils')
-    releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
+    implementation project(path: ':utils')
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:core:$androidx_test"

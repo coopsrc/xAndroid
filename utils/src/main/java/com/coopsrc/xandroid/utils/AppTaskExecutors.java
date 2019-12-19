@@ -6,8 +6,6 @@ import androidx.annotation.Nullable;
 import com.coopsrc.xandroid.utils.executor.DefaultTaskExecutor;
 import com.coopsrc.xandroid.utils.executor.TaskExecutor;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.concurrent.Executor;
 
 /**
@@ -26,7 +24,7 @@ public class AppTaskExecutors extends TaskExecutor {
     @NonNull
     private static final Executor sMainThreadExecutor = new Executor() {
         @Override
-        public void execute(@NotNull Runnable command) {
+        public void execute(@NonNull Runnable command) {
             getInstance().postToMainThread(command);
         }
     };
@@ -34,7 +32,7 @@ public class AppTaskExecutors extends TaskExecutor {
     @NonNull
     private static final Executor sDiskIOThreadExecutor = new Executor() {
         @Override
-        public void execute(@NotNull Runnable command) {
+        public void execute(@NonNull Runnable command) {
             getInstance().executeOnDiskIO(command);
         }
     };
@@ -42,7 +40,7 @@ public class AppTaskExecutors extends TaskExecutor {
     @NonNull
     private static final Executor sNetworkIOThreadExecutor = new Executor() {
         @Override
-        public void execute(@NotNull Runnable command) {
+        public void execute(@NonNull Runnable command) {
             getInstance().executeOnNetworkIO(command);
         }
     };
@@ -50,7 +48,7 @@ public class AppTaskExecutors extends TaskExecutor {
     @NonNull
     private static final Executor sDatabaseIOThreadExecutor = new Executor() {
         @Override
-        public void execute(@NotNull Runnable command) {
+        public void execute(@NonNull Runnable command) {
             getInstance().executeOnDatabaseIO(command);
         }
     };

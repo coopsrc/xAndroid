@@ -31,16 +31,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat"
+    implementation "androidx.annotation:annotation:$androidx_annotation"
 
-    debugImplementation project(path: ':utils')
-    releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
-
-    testImplementation "junit:junit:$junit"
-    androidTestImplementation "androidx.test:core:$androidx_test"
-    androidTestImplementation "androidx.test:runner:$androidx_test"
-    androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$androirx_test_espresso"
+    implementation project(path: ':utils')
 }
 
 ext {

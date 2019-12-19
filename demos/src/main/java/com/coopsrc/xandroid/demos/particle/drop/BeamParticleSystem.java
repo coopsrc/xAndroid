@@ -28,7 +28,7 @@ public class BeamParticleSystem implements ParticleSystem {
 
     BeamParticleSystem(int width, int height) {
         this.width = width;
-        spawnY = 0.1f * height;
+        spawnY = 0.74f * height;
         maxLightY = 0.52f * height;
     }
 
@@ -76,9 +76,9 @@ public class BeamParticleSystem implements ParticleSystem {
             int size = MIN_SIZE + random.nextInt(MAX_SIZE - MIN_SIZE);
             int x = random.nextInt(width);
             float fade = 0.6f + 0.4f * (size / (float) MAX_SIZE);
-            float vy = (float) (MAX_Y_VELOCITY * pow(size / (float) MAX_SIZE, 2));
+            float vy = (float) (-MAX_Y_VELOCITY * pow(size / (float) MAX_SIZE, 2));
             float vr = -1f + random.nextFloat() * 2;
-            BeamParticle p = pool.obtain(size, x, spawnY - size, fade, vy, vr);
+            BeamParticle p = pool.obtain(size, x, spawnY + size, fade, vy, vr);
             p.setAlpha(0f);
             particles.add(p);
         }

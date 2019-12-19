@@ -48,12 +48,9 @@ dependencies {
     implementation "com.squareup.sqlbrite3:sqlbrite:$squareup_sqlbrite3"
     implementation "com.squareup.sqlbrite3:sqlbrite-kotlin:$squareup_sqlbrite3"
 
-    debugImplementation project(path: ':utils')
-    releaseImplementation "com.coopsrc.xandroid:common-utils:${versionName}"
-    debugImplementation project(path: ':http')
-    releaseImplementation "com.coopsrc.xandroid:common-http:${versionName}"
-    debugImplementation project(path: ':http-monitor')
-    releaseImplementation "com.coopsrc.xandroid:http-monitor:${versionName}"
+    implementation project(path: ':utils')
+    implementation project(path: ':http')
+    implementation project(path: ':http-monitor')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 

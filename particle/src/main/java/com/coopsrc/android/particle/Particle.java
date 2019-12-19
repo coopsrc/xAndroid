@@ -6,6 +6,7 @@ public class Particle {
 
     private int width;
     private int height;
+
     private float x;
     private float y;
     private float rotation;

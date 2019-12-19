@@ -5,9 +5,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.coopsrc.xandroid.utils.ContextProvider;
+import androidx.annotation.NonNull;
 
-import org.jetbrains.annotations.NotNull;
+import com.coopsrc.xandroid.utils.ContextProvider;
 
 public class LaunchProvider extends ContentProvider {
 
@@ -15,17 +15,17 @@ public class LaunchProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(@NotNull Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
-    public String getType(@NotNull Uri uri) {
+    public String getType(@NonNull Uri uri) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
-    public Uri insert(@NotNull Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -36,12 +36,12 @@ public class LaunchProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(@NotNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
-    public int update(@NotNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 

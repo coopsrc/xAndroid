@@ -13,7 +13,7 @@
         android:contentDescription="@null"
         android:scaleType="centerCrop" />
 
-    <com.coopsrc.android.particle.ParticleView
+    <com.coopsrc.android.particle.GLTextureParticleView
         android:id="@+id/particle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

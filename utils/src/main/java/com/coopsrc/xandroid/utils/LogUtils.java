@@ -3,9 +3,8 @@ package com.coopsrc.xandroid.utils;
 import android.os.Build;
 import android.util.Log;
 
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -24,14 +23,14 @@ public final class LogUtils {
     /**
      * Log a verbose message with optional format args.
      */
-    public static void v(@NonNls String message, Object... args) {
+    public static void v(@NonNull String message, Object... args) {
         LOGGER_OF_SOULS.v(message, args);
     }
 
     /**
      * Log a verbose exception and a message with optional format args.
      */
-    public static void v(Throwable t, @NonNls String message, Object... args) {
+    public static void v(Throwable t, @NonNull String message, Object... args) {
         LOGGER_OF_SOULS.v(t, message, args);
     }
 
@@ -45,14 +44,14 @@ public final class LogUtils {
     /**
      * Log a debug message with optional format args.
      */
-    public static void d(@NonNls String message, Object... args) {
+    public static void d(@NonNull String message, Object... args) {
         LOGGER_OF_SOULS.d(message, args);
     }
 
     /**
      * Log a debug exception and a message with optional format args.
      */
-    public static void d(Throwable t, @NonNls String message, Object... args) {
+    public static void d(Throwable t, @NonNull String message, Object... args) {
         LOGGER_OF_SOULS.d(t, message, args);
     }
 
@@ -66,14 +65,14 @@ public final class LogUtils {
     /**
      * Log an info message with optional format args.
      */
-    public static void i(@NonNls String message, Object... args) {
+    public static void i(@NonNull String message, Object... args) {
         LOGGER_OF_SOULS.i(message, args);
     }
 
     /**
      * Log an info exception and a message with optional format args.
      */
-    public static void i(Throwable t, @NonNls String message, Object... args) {
+    public static void i(Throwable t, @NonNull String message, Object... args) {
         LOGGER_OF_SOULS.i(t, message, args);
     }
 
@@ -87,14 +86,14 @@ public final class LogUtils {
     /**
      * Log a warning message with optional format args.
      */
-    public static void w(@NonNls String message, Object... args) {
+    public static void w(@NonNull String message, Object... args) {
         LOGGER_OF_SOULS.w(message, args);
     }
 
     /**
      * Log a warning exception and a message with optional format args.
      */
-    public static void w(Throwable t, @NonNls String message, Object... args) {
+    public static void w(Throwable t, @NonNull String message, Object... args) {
         LOGGER_OF_SOULS.w(t, message, args);
     }
 
@@ -108,14 +107,14 @@ public final class LogUtils {
     /**
      * Log an error message with optional format args.
      */
-    public static void e(@NonNls String message, Object... args) {
+    public static void e(@NonNull String message, Object... args) {
         LOGGER_OF_SOULS.e(message, args);
     }
 
     /**
      * Log an error exception and a message with optional format args.
      */
-    public static void e(Throwable t, @NonNls String message, Object... args) {
+    public static void e(Throwable t, @NonNull String message, Object... args) {
         LOGGER_OF_SOULS.e(t, message, args);
     }
 
@@ -129,14 +128,14 @@ public final class LogUtils {
     /**
      * Log an assert message with optional format args.
      */
-    public static void wtf(@NonNls String message, Object... args) {
+    public static void wtf(@NonNull String message, Object... args) {
         LOGGER_OF_SOULS.wtf(message, args);
     }
 
     /**
      * Log an assert exception and a message with optional format args.
      */
-    public static void wtf(Throwable t, @NonNls String message, Object... args) {
+    public static void wtf(Throwable t, @NonNull String message, Object... args) {
         LOGGER_OF_SOULS.wtf(t, message, args);
     }
 
@@ -150,14 +149,14 @@ public final class LogUtils {
     /**
      * Log at {@code priority} a message with optional format args.
      */
-    public static void log(int priority, @NonNls String message, Object... args) {
+    public static void log(int priority, @NonNull String message, Object... args) {
         LOGGER_OF_SOULS.log(priority, message, args);
     }
 
     /**
      * Log at {@code priority} an exception and a message with optional format args.
      */
-    public static void log(int priority, Throwable t, @NonNls String message, Object... args) {
+    public static void log(int priority, Throwable t, @NonNull String message, Object... args) {
         LOGGER_OF_SOULS.log(priority, t, message, args);
     }
 
@@ -172,7 +171,7 @@ public final class LogUtils {
      * A view into LogUtils's planted trees as a tree itself. This can be used for injecting a logger
      * instance rather than using static methods or to facilitate testing.
      */
-    @NotNull
+    @NonNull
     public static Logger asLogger() {
         return LOGGER_OF_SOULS;
     }
@@ -180,7 +179,7 @@ public final class LogUtils {
     /**
      * Set a one-time tag for use on the next logging call.
      */
-    @NotNull
+    @NonNull
     public static Logger tag(String tag) {
         Logger[] forest = forestAsArray;
         for (Logger logger : forest) {
@@ -193,7 +192,7 @@ public final class LogUtils {
      * Add a new logging logger.
      */
     @SuppressWarnings("ConstantConditions") // Validating public API contract.
-    public static void plant(@NotNull Logger logger) {
+    public static void plant(@NonNull Logger logger) {
         if (logger == null) {
             throw new NullPointerException("logger == null");
         }
@@ -210,7 +209,7 @@ public final class LogUtils {
      * Adds new logging loggers.
      */
     @SuppressWarnings("ConstantConditions") // Validating public API contract.
-    public static void plant(@NotNull Logger... loggers) {
+    public static void plant(@NonNull Logger... loggers) {
         if (loggers == null) {
             throw new NullPointerException("loggers == null");
         }
@@ -231,7 +230,7 @@ public final class LogUtils {
     /**
      * Remove a planted logger.
      */
-    public static void uproot(@NotNull Logger logger) {
+    public static void uproot(@NonNull Logger logger) {
         synchronized (FOREST) {
             if (!FOREST.remove(logger)) {
                 throw new IllegalArgumentException("Cannot uproot logger which is not planted: " + logger);
@@ -253,7 +252,7 @@ public final class LogUtils {
     /**
      * Return a copy of all planted {@linkplain Logger trees}.
      */
-    @NotNull
+    @NonNull
     public static List<Logger> forest() {
         synchronized (FOREST) {
             return Collections.unmodifiableList(new ArrayList<>(FOREST));
@@ -444,7 +443,7 @@ public final class LogUtils {
         }
 
         @Override
-        protected void log(int priority, String tag, @NotNull String message, Throwable t) {
+        protected void log(int priority, String tag, @NonNull String message, Throwable t) {
             throw new AssertionError("Missing override for log method.");
         }
     };
@@ -662,7 +661,7 @@ public final class LogUtils {
         /**
          * Formats a log message with optional arguments.
          */
-        protected String formatMessage(@NotNull String message, @NotNull Object[] args) {
+        protected String formatMessage(@NonNull String message, @NonNull Object[] args) {
             return String.format(message, args);
         }
 
@@ -684,7 +683,7 @@ public final class LogUtils {
          * @param message  Formatted log message. May be {@code null}, but then {@code t} will not be.
          * @param t        Accompanying exceptions. May be {@code null}, but then {@code message} will not be.
          */
-        protected abstract void log(int priority, @Nullable String tag, @NotNull String message, @Nullable Throwable t);
+        protected abstract void log(int priority, @Nullable String tag, @NonNull String message, @Nullable Throwable t);
     }
 
     /**
@@ -704,7 +703,7 @@ public final class LogUtils {
          * Note: This will not be called if a {@linkplain #tag(String) manual tag} was specified.
          */
         @Nullable
-        protected String createStackElementTag(@NotNull StackTraceElement element) {
+        protected String createStackElementTag(@NonNull StackTraceElement element) {
             String tag = element.getClassName();
             Matcher m = ANONYMOUS_CLASS.matcher(tag);
             if (m.find()) {
@@ -743,7 +742,7 @@ public final class LogUtils {
          * {@inheritDoc}
          */
         @Override
-        protected void log(int priority, String tag, @NotNull String message, Throwable t) {
+        protected void log(int priority, String tag, @NonNull String message, Throwable t) {
             if (message.length() < MAX_LOG_LENGTH) {
                 if (priority == Log.ASSERT) {
                     Log.wtf(tag, message);

@@ -39,7 +39,7 @@ ext {
     // Major.Minor.Revision
     majorVersion = 1
     minorVersion = 6
-    revisionVersion = 1
+    revisionVersion = 2
     versionCode = generateVersionCode(majorVersion, minorVersion, revisionVersion)
     versionName = generateVersionName(majorVersion, minorVersion, revisionVersion)
     versionNameAlpha = versionName + '-alpha'

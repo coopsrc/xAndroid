@@ -1,8 +1,15 @@
-package com.coopsrc.android.particle;
+package com.coopsrc.android.particle.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.widget.FrameLayout;
+
+import com.coopsrc.android.particle.ParticleRenderer;
+import com.coopsrc.android.particle.ParticleSystem;
+import com.coopsrc.android.particle.TextureAtlasFactory;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public abstract class BaseParticleView extends FrameLayout {
 
@@ -50,4 +57,10 @@ public abstract class BaseParticleView extends FrameLayout {
     public abstract void startRendering();
 
     public abstract void stopRendering();
+
+    protected LayoutParams getChildLayoutParams() {
+        LayoutParams layoutParams = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        layoutParams.gravity = Gravity.CENTER;
+        return layoutParams;
+    }
 }

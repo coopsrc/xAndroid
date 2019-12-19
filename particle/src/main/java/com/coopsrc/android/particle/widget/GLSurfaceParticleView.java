@@ -1,4 +1,4 @@
-package com.coopsrc.android.particle;
+package com.coopsrc.android.particle.widget;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
@@ -24,7 +24,7 @@ public class GLSurfaceParticleView extends BaseParticleView {
     @Override
     protected void attachDisplayView() {
         glSurfaceView = new GLSurfaceView(getContext());
-        glSurfaceView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        glSurfaceView.setLayoutParams(getChildLayoutParams());
         addView(glSurfaceView);
     }
 
@@ -33,7 +33,7 @@ public class GLSurfaceParticleView extends BaseParticleView {
         glSurfaceView.setEGLContextClientVersion(2);
         glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
         glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-//        glSurfaceView.setZOrderOnTop(true);
+        glSurfaceView.setZOrderOnTop(true);
         glSurfaceView.setRenderer(getRenderer());
         glSurfaceView.setRenderMode(GLTextureView.RENDERMODE_CONTINUOUSLY);
     }

@@ -1,4 +1,4 @@
-package com.coopsrc.android.particle;
+package com.coopsrc.android.particle.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -23,7 +23,7 @@ public class GLTextureParticleView extends BaseParticleView {
     @Override
     protected void attachDisplayView() {
         glTextureView = new GLTextureView(getContext());
-        glTextureView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        glTextureView.setLayoutParams(getChildLayoutParams());
         addView(glTextureView);
     }
 

@@ -1,9 +1,12 @@
 package com.coopsrc.android.particle;
 
 import android.graphics.Bitmap;
+import android.opengl.GLES31;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
+
+import com.coopsrc.android.particle.utils.ShaderUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -16,50 +19,8 @@ import java.util.List;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import static android.opengl.GLES20.GL_BLEND;
-import static android.opengl.GLES20.GL_CLAMP_TO_EDGE;
-import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
-import static android.opengl.GLES20.GL_DEPTH_BUFFER_BIT;
-import static android.opengl.GLES20.GL_FLOAT;
-import static android.opengl.GLES20.GL_FRAGMENT_SHADER;
-import static android.opengl.GLES20.GL_LINEAR;
-import static android.opengl.GLES20.GL_ONE_MINUS_SRC_ALPHA;
-import static android.opengl.GLES20.GL_SRC_ALPHA;
-import static android.opengl.GLES20.GL_TEXTURE0;
-import static android.opengl.GLES20.GL_TEXTURE_2D;
-import static android.opengl.GLES20.GL_TEXTURE_MAG_FILTER;
-import static android.opengl.GLES20.GL_TEXTURE_MIN_FILTER;
-import static android.opengl.GLES20.GL_TEXTURE_WRAP_S;
-import static android.opengl.GLES20.GL_TEXTURE_WRAP_T;
-import static android.opengl.GLES20.GL_TRIANGLES;
-import static android.opengl.GLES20.GL_UNSIGNED_SHORT;
-import static android.opengl.GLES20.GL_VERTEX_SHADER;
-import static android.opengl.GLES20.glActiveTexture;
-import static android.opengl.GLES20.glAttachShader;
-import static android.opengl.GLES20.glBindTexture;
-import static android.opengl.GLES20.glBlendFunc;
-import static android.opengl.GLES20.glClear;
-import static android.opengl.GLES20.glClearColor;
-import static android.opengl.GLES20.glCompileShader;
-import static android.opengl.GLES20.glCreateProgram;
-import static android.opengl.GLES20.glCreateShader;
-import static android.opengl.GLES20.glDisableVertexAttribArray;
-import static android.opengl.GLES20.glDrawElements;
-import static android.opengl.GLES20.glEnable;
-import static android.opengl.GLES20.glEnableVertexAttribArray;
-import static android.opengl.GLES20.glGenTextures;
-import static android.opengl.GLES20.glGetAttribLocation;
-import static android.opengl.GLES20.glGetUniformLocation;
-import static android.opengl.GLES20.glLinkProgram;
-import static android.opengl.GLES20.glShaderSource;
-import static android.opengl.GLES20.glTexParameteri;
-import static android.opengl.GLES20.glUniform1i;
-import static android.opengl.GLES20.glUniformMatrix4fv;
-import static android.opengl.GLES20.glUseProgram;
-import static android.opengl.GLES20.glVertexAttribPointer;
-import static android.opengl.GLES20.glViewport;
 
-class ParticleRenderer  implements GLSurfaceView.Renderer {
+public class ParticleRenderer implements GLSurfaceView.Renderer {
 
     private static final double NANOSECONDS = 1000000000;
 
@@ -90,41 +51,31 @@ class ParticleRenderer  implements GLSurfaceView.Renderer {
     }
 
     private void initGl() {
-        glClearColor(0f, 0f, 0f, 0f);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        GLES31.glClearColor(0f, 0f, 0f, 0f);
+        GLES31.glEnable(GLES31.GL_BLEND);
+        GLES31.glBlendFunc(GLES31.GL_SRC_ALPHA, GLES31.GL_ONE_MINUS_SRC_ALPHA);
     }
 
     private void initGlProgram() {
-        int vShaderRef = compileShader(GL_VERTEX_SHADER, Shaders.V_SHADER);
-        int fShaderRef = compileShader(GL_FRAGMENT_SHADER, Shaders.F_SHADER);
-        programRef = glCreateProgram();
-        glAttachShader(programRef, vShaderRef);
-        glAttachShader(programRef, fShaderRef);
-        glLinkProgram(programRef);
-        glUseProgram(programRef);
+        int vShaderRef = ShaderUtils.compileVertexShader(Shaders.V_SHADER);
+        int fShaderRef = ShaderUtils.compileFragmentShader(Shaders.F_SHADER);
+        programRef = ShaderUtils.linkProgram(vShaderRef, fShaderRef);
+        GLES31.glUseProgram(programRef);
     }
 
-    private int compileShader(int type, String shaderCode) {
-        int ref = glCreateShader(type);
-        glShaderSource(ref, shaderCode);
-        glCompileShader(ref);
-        return ref;
-    }
-
-    void setTextureAtlasFactory(TextureAtlasFactory factory) {
+    public void setTextureAtlasFactory(TextureAtlasFactory factory) {
         this.textureAtlasFactory = factory;
         textureAtlasNeedsSetup = true;
     }
 
-    void setParticleSystem(ParticleSystem system) {
+    public void setParticleSystem(ParticleSystem system) {
         this.particleSystem = system;
         particleSystemNeedsSetup = true;
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        glViewport(0, 0, width, height);
+        GLES31.glViewport(0, 0, width, height);
         surfaceHeight = height;
         initProjectionViewMatrix(width, height);
     }
@@ -164,14 +115,14 @@ class ParticleRenderer  implements GLSurfaceView.Renderer {
 
     private void setupTextures(TextureAtlas atlas) {
         int[] names = new int[1];
-        glGenTextures(1, names, 0);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, names[0]);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        GLUtils.texImage2D(GL_TEXTURE_2D, 0, Bitmap.createBitmap(atlas.getWidth(), atlas.getHeight(),
+        GLES31.glGenTextures(1, names, 0);
+        GLES31.glActiveTexture(GLES31.GL_TEXTURE0);
+        GLES31.glBindTexture(GLES31.GL_TEXTURE_2D, names[0]);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MIN_FILTER, GLES31.GL_LINEAR);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MAG_FILTER, GLES31.GL_LINEAR);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_S, GLES31.GL_CLAMP_TO_EDGE);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_T, GLES31.GL_CLAMP_TO_EDGE);
+        GLUtils.texImage2D(GLES31.GL_TEXTURE_2D, 0, Bitmap.createBitmap(atlas.getWidth(), atlas.getHeight(),
                 Bitmap.Config.ARGB_8888), 0);
 
         List<TextureAtlas.Region> regions = atlas.getRegions();
@@ -181,7 +132,7 @@ class ParticleRenderer  implements GLSurfaceView.Renderer {
         float atlasHeight = atlas.getHeight();
         for (int i = 0; i < regions.size(); i++) {
             TextureAtlas.Region r = regions.get(i);
-            GLUtils.texSubImage2D(GL_TEXTURE_2D, 0, r.x, r.y, r.bitmap);
+            GLUtils.texSubImage2D(GLES31.GL_TEXTURE_2D, 0, r.x, r.y, r.bitmap);
             float x0 = r.x / atlasWidth;
             float y0 = r.y / atlasHeight;
             float x1 = x0 + r.bitmap.getWidth() / atlasWidth;
@@ -263,31 +214,31 @@ class ParticleRenderer  implements GLSurfaceView.Renderer {
     }
 
     private void render(int count) {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        GLES31.glClear(GLES31.GL_COLOR_BUFFER_BIT | GLES31.GL_DEPTH_BUFFER_BIT);
 
-        int matrixHandle = glGetUniformLocation(programRef, "uMvpMatrix");
-        glUniformMatrix4fv(matrixHandle, 1, false, projectionViewM, 0);
+        int matrixHandle = GLES31.glGetUniformLocation(programRef, "uMvpMatrix");
+        GLES31.glUniformMatrix4fv(matrixHandle, 1, false, projectionViewM, 0);
 
-        int positionHandle = glGetAttribLocation(programRef, "aPosition");
-        glEnableVertexAttribArray(positionHandle);
-        glVertexAttribPointer(positionHandle, 2, GL_FLOAT, false, 0, vertexBuffer);
+        int positionHandle = GLES31.glGetAttribLocation(programRef, "aPosition");
+        GLES31.glEnableVertexAttribArray(positionHandle);
+        GLES31.glVertexAttribPointer(positionHandle, 2, GLES31.GL_FLOAT, false, 0, vertexBuffer);
 
-        int textureHandle = glGetUniformLocation(programRef, "uTexture");
-        glUniform1i(textureHandle, 0);
+        int textureHandle = GLES31.glGetUniformLocation(programRef, "uTexture");
+        GLES31.glUniform1i(textureHandle, 0);
 
-        int textureCoordsHandle = glGetAttribLocation(programRef, "aTextureCoords");
-        glEnableVertexAttribArray(textureCoordsHandle);
-        glVertexAttribPointer(textureCoordsHandle, 2, GL_FLOAT, false, 0, textureCoordsBuffer);
+        int textureCoordsHandle = GLES31.glGetAttribLocation(programRef, "aTextureCoords");
+        GLES31.glEnableVertexAttribArray(textureCoordsHandle);
+        GLES31.glVertexAttribPointer(textureCoordsHandle, 2, GLES31.GL_FLOAT, false, 0, textureCoordsBuffer);
 
-        int alphaHandle = glGetAttribLocation(programRef, "aAlpha");
-        glEnableVertexAttribArray(alphaHandle);
-        glVertexAttribPointer(alphaHandle, 1, GL_FLOAT, false, 0, alphaBuffer);
+        int alphaHandle = GLES31.glGetAttribLocation(programRef, "aAlpha");
+        GLES31.glEnableVertexAttribArray(alphaHandle);
+        GLES31.glVertexAttribPointer(alphaHandle, 1, GLES31.GL_FLOAT, false, 0, alphaBuffer);
 
-        glDrawElements(GL_TRIANGLES, count * 6, GL_UNSIGNED_SHORT, drawListBuffer);
+        GLES31.glDrawElements(GLES31.GL_TRIANGLES, count * 6, GLES31.GL_UNSIGNED_SHORT, drawListBuffer);
 
-        glDisableVertexAttribArray(positionHandle);
-        glDisableVertexAttribArray(alphaHandle);
-        glDisableVertexAttribArray(textureCoordsHandle);
+        GLES31.glDisableVertexAttribArray(positionHandle);
+        GLES31.glDisableVertexAttribArray(alphaHandle);
+        GLES31.glDisableVertexAttribArray(textureCoordsHandle);
     }
 
 }

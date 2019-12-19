@@ -7,8 +7,6 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
@@ -31,7 +29,7 @@ public class DefaultTaskExecutor extends TaskExecutor {
         private final AtomicInteger mThreadId = new AtomicInteger(0);
 
         @Override
-        public Thread newThread(@NotNull Runnable runnable) {
+        public Thread newThread(@NonNull Runnable runnable) {
             Thread thread = new Thread(runnable);
             thread.setName(String.format(Locale.getDefault(), THREAD_NAME_STEM, mThreadId.getAndIncrement()));
             return thread;
@@ -44,7 +42,7 @@ public class DefaultTaskExecutor extends TaskExecutor {
         private final AtomicInteger mThreadId = new AtomicInteger(0);
 
         @Override
-        public Thread newThread(@NotNull Runnable runnable) {
+        public Thread newThread(@NonNull Runnable runnable) {
             Thread thread = new Thread(runnable);
             thread.setName(String.format(Locale.getDefault(), THREAD_NAME_STEM, mThreadId.getAndIncrement()));
             return thread;
@@ -55,7 +53,7 @@ public class DefaultTaskExecutor extends TaskExecutor {
         private static final String THREAD_NAME_STEM = "x_database_io";
 
         @Override
-        public Thread newThread(@NotNull Runnable runnable) {
+        public Thread newThread(@NonNull Runnable runnable) {
             Thread thread = new Thread(runnable);
             thread.setName(THREAD_NAME_STEM);
             return thread;
@@ -66,7 +64,7 @@ public class DefaultTaskExecutor extends TaskExecutor {
     private volatile Handler mMainHandler;
 
     @Override
-    public void executeOnDiskIO(@NotNull Runnable runnable) {
+    public void executeOnDiskIO(@NonNull Runnable runnable) {
         mDiskIO.execute(runnable);
     }
 
@@ -81,7 +79,7 @@ public class DefaultTaskExecutor extends TaskExecutor {
     }
 
     @Override
-    public void postToMainThread(@NotNull Runnable runnable) {
+    public void postToMainThread(@NonNull Runnable runnable) {
         if (mMainHandler == null) {
             synchronized (mLock) {
                 if (mMainHandler == null) {

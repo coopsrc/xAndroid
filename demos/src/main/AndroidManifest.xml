@@ -14,13 +14,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".framesequence.FrameSequenceActivity"
+            android:label="@string/title_activity_frame_sequence"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".particle.drop.DropParticleActivity"
             android:label="@string/title_activity_particle_drop"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".particle.ParticleActivity"
             android:label="@string/title_activity_particle"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".downloader.simple.SimpleDownloadActivity"
             android:label="@string/title_activity_simple_downloader" />

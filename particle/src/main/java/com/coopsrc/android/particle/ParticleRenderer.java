@@ -1,6 +1,7 @@
 package com.coopsrc.android.particle;
 
 import android.graphics.Bitmap;
+import android.graphics.Shader;
 import android.opengl.GLES31;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
@@ -57,9 +58,9 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
     }
 
     private void initGlProgram() {
-        int vShaderRef = ShaderUtils.compileVertexShader(Shaders.V_SHADER);
-        int fShaderRef = ShaderUtils.compileFragmentShader(Shaders.F_SHADER);
-        programRef = ShaderUtils.linkProgram(vShaderRef, fShaderRef);
+        int vertexShader = ShaderUtils.compileVertexShader(R.raw.particle_vertex_shader);
+        int fragmentShader = ShaderUtils.compileFragmentShader(R.raw.particle_fragment_shader);
+        programRef = ShaderUtils.linkProgram(vertexShader, fragmentShader);
         GLES31.glUseProgram(programRef);
     }
 

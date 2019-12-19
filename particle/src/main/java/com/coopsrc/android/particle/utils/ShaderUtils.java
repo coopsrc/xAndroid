@@ -1,6 +1,16 @@
 package com.coopsrc.android.particle.utils;
 
+import android.content.res.Resources;
 import android.opengl.GLES31;
+import android.util.Log;
+
+import com.coopsrc.xandroid.utils.ContextProvider;
+import com.coopsrc.xandroid.utils.LogUtils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @author tingkuo
@@ -10,8 +20,18 @@ import android.opengl.GLES31;
 public class ShaderUtils {
     private static final String TAG = "ShaderUtils";
 
+    public static int compileVertexShader(int resId) {
+        String code = loadShaderCodeFromRaw(resId);
+        return compileVertexShader(code);
+    }
+
     public static int compileVertexShader(String code) {
         return compileShader(GLES31.GL_VERTEX_SHADER, code);
+    }
+
+    public static int compileFragmentShader(int resId) {
+        String code = loadShaderCodeFromRaw(resId);
+        return compileFragmentShader(code);
     }
 
     public static int compileFragmentShader(String code) {
@@ -29,7 +49,7 @@ public class ShaderUtils {
             GLES31.glGetShaderiv(shader, GLES31.GL_COMPILE_STATUS, compileStatus, 0);
             if (compileStatus[0] == 0) {
                 String shaderInfoLog = GLES31.glGetShaderInfoLog(shader);
-                System.err.println(shaderInfoLog);
+                LogUtils.e("compileShader: %s", shaderInfoLog);
 
                 GLES31.glDeleteShader(shader);
                 return 0;
@@ -39,6 +59,13 @@ public class ShaderUtils {
         } else {
             return 0;
         }
+    }
+
+    public static int linkProgram(String vertexShaderCode, String fragmentShaderCode) {
+        return linkProgram(
+                compileVertexShader(vertexShaderCode),
+                compileFragmentShader(fragmentShaderCode)
+        );
     }
 
     public static int linkProgram(int vertexShader, int fragmentShader) {
@@ -53,7 +80,7 @@ public class ShaderUtils {
 
             if (linkStatus[0] == 0) {
                 String programInfoLog = GLES31.glGetProgramInfoLog(program);
-                System.err.println(programInfoLog);
+                LogUtils.e("linkProgram: %s", programInfoLog);
                 GLES31.glDeleteProgram(program);
                 return 0;
             }
@@ -62,5 +89,23 @@ public class ShaderUtils {
         } else {
             return 0;
         }
+    }
+
+    public static String loadShaderCodeFromRaw(int resId) {
+        StringBuilder builder = new StringBuilder();
+        try {
+            InputStream inputStream = ContextProvider.getAppContext().getResources().openRawResource(resId);
+            InputStreamReader streamReader = new InputStreamReader(inputStream);
+
+            BufferedReader bufferedReader = new BufferedReader(streamReader);
+            String textLine;
+            while ((textLine = bufferedReader.readLine()) != null) {
+                builder.append(textLine);
+                builder.append("\n");
+            }
+        } catch (IOException | Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+        return builder.toString();
     }
 }

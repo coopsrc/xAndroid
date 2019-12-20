@@ -6,8 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import com.coopsrc.android.particle.TextureAtlas;
-import com.coopsrc.android.particle.TextureAtlasFactory;
+import com.coopsrc.android.particle.texture.TextureAtlas;
+import com.coopsrc.android.particle.texture.TextureAtlasFactory;
 import com.coopsrc.xandroid.demos.R;
 import com.coopsrc.xandroid.demos.particle.base.BaseRenderActivity;
 

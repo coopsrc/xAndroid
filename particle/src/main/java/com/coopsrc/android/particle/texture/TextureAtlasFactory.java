@@ -1,4 +1,4 @@
-package com.coopsrc.android.particle;
+package com.coopsrc.android.particle.texture;
 
 public interface TextureAtlasFactory {
     TextureAtlas createTextureAtlas();

@@ -1,12 +1,14 @@
 package com.coopsrc.android.particle;
 
 import android.graphics.Bitmap;
-import android.graphics.Shader;
 import android.opengl.GLES31;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
 
+import com.coopsrc.android.particle.texture.Region;
+import com.coopsrc.android.particle.texture.TextureAtlas;
+import com.coopsrc.android.particle.texture.TextureAtlasFactory;
 import com.coopsrc.android.particle.utils.ShaderUtils;
 
 import java.nio.ByteBuffer;
@@ -126,13 +128,13 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
         GLUtils.texImage2D(GLES31.GL_TEXTURE_2D, 0, Bitmap.createBitmap(atlas.getWidth(), atlas.getHeight(),
                 Bitmap.Config.ARGB_8888), 0);
 
-        List<TextureAtlas.Region> regions = atlas.getRegions();
+        List<Region> regions = atlas.getRegions();
         textureCoordsCacheArray = new float[regions.size() * 8];
         final int k = 8;
         float atlasWidth = atlas.getWidth();
         float atlasHeight = atlas.getHeight();
         for (int i = 0; i < regions.size(); i++) {
-            TextureAtlas.Region r = regions.get(i);
+            Region r = regions.get(i);
             GLUtils.texSubImage2D(GLES31.GL_TEXTURE_2D, 0, r.x, r.y, r.bitmap);
             float x0 = r.x / atlasWidth;
             float y0 = r.y / atlasHeight;

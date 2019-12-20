@@ -30,12 +30,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.annotation:annotation:$androidx_annotation"
+
+    implementation project(path: ':utils')
 }
 
 ext {
     releaseArtifact = 'particle'
     releaseDescription = 'The Android particle system.'
-    versionName = rootProject.ext.versionNameAlpha
 }
 
 apply from: '../publish.gradle'

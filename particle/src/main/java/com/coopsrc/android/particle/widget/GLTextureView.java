@@ -1,4 +1,4 @@
-package com.coopsrc.android.particle;
+package com.coopsrc.android.particle.widget;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;

@@ -1,4 +1,4 @@
-package com.coopsrc.android.particle;
+package com.coopsrc.android.particle.texture;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -11,14 +11,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class SimpleTextureAtlasPacker {
+public class SimpleTexturePacker {
 
     private static final int PADDING = 1;
 
     private Matrix rotationMatrix = new Matrix();
     private List<Rect> freeRects = new ArrayList<>();
 
-    public SimpleTextureAtlasPacker() {
+    public SimpleTexturePacker() {
         rotationMatrix.postRotate(90);
     }
 

@@ -2,15 +2,17 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply from: '../constants.gradle'
+
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -40,8 +42,8 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle"
 
-    implementation project(path: ':utils')
-    implementation project(path: ':http')
+    api project(path: ':utils')
+    compileOnly project(path: ':http')
 
     implementation "androidx.room:room-runtime:$androidx_room"
     annotationProcessor "androidx.room:room-compiler:$androidx_room"

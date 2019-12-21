@@ -2,15 +2,17 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply from: '../constants.gradle'
+
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
         applicationId "com.coopsrc.xandroid.demos"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -37,7 +39,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidx_appcompat"
     implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout"
     implementation "com.google.android.material:material:$google_android_material"
-
 
     implementation project(path: ':utils')
     implementation project(path: ':androlua')

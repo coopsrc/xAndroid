@@ -8,8 +8,8 @@ project.ext {
     // Major.Minor.Revision
     majorVersion = 1
     minorVersion = 6
-    revisionVersion = 3
-    snapshotVersion = 0
+    revisionVersion = 4
+    snapshotVersion = 1
     versionCode = generateVersionCode(majorVersion, minorVersion, revisionVersion)
     versionNameBase = generateVersionName(majorVersion, minorVersion, revisionVersion)
     versionNameAlpha = versionNameBase + '-alpha' + snapshotVersion
@@ -43,7 +43,7 @@ project.ext {
 
     modulePrefix = ":"
     if (gradle.ext.has('xandroidModulePrefix')) {
-        modulePrefix += gradle.ext.exoplayerModulePrefix
+        modulePrefix += gradle.ext.xandroidModulePrefix
     }
 }
 

@@ -3,12 +3,14 @@ package com.coopsrc.xandroid.http.monitor
 import android.content.Context
 import android.text.TextUtils
 import com.coopsrc.xandroid.http.interceptor.BaseMonitorInterceptor
+import com.coopsrc.xandroid.http.logging.HttpLogger
 import com.coopsrc.xandroid.http.monitor.common.IMonitor
 import com.coopsrc.xandroid.http.monitor.common.Monitor
 import com.coopsrc.xandroid.http.monitor.model.HttpInfo
 import com.coopsrc.xandroid.http.monitor.model.RequestInfo
 import com.coopsrc.xandroid.http.monitor.model.ResponseInfo
 import com.coopsrc.xandroid.http.monitor.utils.MonitorUtils
+import com.coopsrc.xandroid.utils.ContextProvider
 import com.coopsrc.xandroid.utils.LogUtils
 import okhttp3.*
 import okhttp3.internal.http.promisesBody
@@ -26,30 +28,35 @@ import java.util.concurrent.TimeUnit
  *
  * Datetime: 2019-09-23 10:32
  */
-open class MonitorInterceptor(context: Context) : BaseMonitorInterceptor() {
-
-    var httpInfo = HttpInfo(RequestInfo(), ResponseInfo())
-    var startTime = System.nanoTime()
+open class MonitorInterceptor : BaseMonitorInterceptor {
 
     private val monitor: IMonitor
 
-    private val monitorBody: Boolean
-    private val monitorHeaders: Boolean
-
-    init {
+    constructor() : super() {
         monitor = Monitor(context)
-        monitorBody = level === Level.BODY
-        monitorHeaders = monitorBody || level === Level.HEADERS
+    }
+
+    constructor(level: Level) : super(level) {
+        monitor = Monitor(context)
+    }
+
+    constructor(monitor: IMonitor) : super() {
+        this.monitor = monitor
+    }
+
+    constructor(level: Level, monitor: IMonitor) : super(level) {
+        this.monitor = monitor
     }
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        httpInfo = HttpInfo(RequestInfo(), ResponseInfo())
-        return super.intercept(chain)
-    }
+        val httpInfo = HttpInfo(RequestInfo(), ResponseInfo())
+        val request = chain.request()
 
-    @Throws(IOException::class)
-    override fun onRequest(request: Request, connection: Connection?) {
+        if (level == Level.NONE) {
+            return super.intercept(chain)
+        }
+
         val monitorBody = level === Level.BODY
         val monitorHeaders = monitorBody || level === Level.HEADERS
 
@@ -57,6 +64,7 @@ open class MonitorInterceptor(context: Context) : BaseMonitorInterceptor() {
         httpInfo.requestInfo.date = Date()
         httpInfo.requestInfo.method = request.method
         httpInfo.requestInfo.url = request.url
+        val connection = chain.connection()
         if (connection != null) {
             httpInfo.requestInfo.protocol = connection.protocol()
         }
@@ -107,84 +115,89 @@ open class MonitorInterceptor(context: Context) : BaseMonitorInterceptor() {
         }
         // insert to db
         httpInfo.id = insert(httpInfo)
-        startTime = System.nanoTime()
-    }
+        val startTime = System.nanoTime()
 
-    @Throws(IOException::class)
-    override fun onResponse(response: Response) {
-        val monitorBody = level === Level.BODY
-        val monitorHeaders = monitorBody || level === Level.HEADERS
-        val responseBody = response.body
-        httpInfo.responseInfo.date = Date()
-        httpInfo.responseInfo.duration =
-            TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime)
-        httpInfo.responseInfo.protocol = response.protocol
-        httpInfo.responseInfo.code = response.code
-        httpInfo.responseInfo.message = response.message
-        if (responseBody != null) {
-            httpInfo.responseInfo.contentLength = responseBody.contentLength()
-            httpInfo.responseInfo.contentType = responseBody.contentType()
-        }
-        if (monitorHeaders) {
-            httpInfo.responseInfo.headers = response.headers
-            if (!monitorBody || !response.promisesBody()) {
-                httpInfo.responseInfo.extra = "END HTTP"
-            } else if (bodyHasUnknownEncoding(response.headers)) {
-                httpInfo.responseInfo.extra = "END HTTP (encoded body omitted)"
-            } else {
-                if (responseBody != null) {
-                    val source = responseBody.source()
-                    source.request(Long.MAX_VALUE)
-                    var buffer = source.buffer
-                    var gzippedLength: Long? = null
-                    if ("gzip".equals(response.headers["Content-Encoding"], ignoreCase = true)) {
-                        gzippedLength = buffer.size
-                        val gzipSource = GzipSource(buffer.clone())
-                        buffer = Buffer()
-                        buffer.writeAll(gzipSource)
-                    }
-                    val contentType = responseBody.contentType()
-                    var charset: Charset? = null
-                    if (contentType != null) {
-                        charset = contentType.charset(StandardCharsets.UTF_8)
-                    }
-                    if (charset == null) {
-                        charset = StandardCharsets.UTF_8
-                    }
-                    if (!MonitorUtils.isProbablyUtf8(buffer)) {
-                        httpInfo.responseInfo.extra = String.format(
-                            "END HTTP (binary %s-byte body omitted)",
-                            buffer.size
-                        )
-                        update(httpInfo)
-                        return
-                    }
-                    if (responseBody.contentLength() != 0L) {
-                        httpInfo.responseInfo.body = buffer.clone().readString(charset!!)
-                    }
-                    if (gzippedLength != null) {
-                        httpInfo.responseInfo.contentLength = gzippedLength
-                        httpInfo.responseInfo.extra = String.format(
-                            "END HTTP (binary %s-byte, %s-gzipped-byte body)",
-                            buffer.size,
-                            gzippedLength
-                        )
-                    } else {
-                        httpInfo.responseInfo.contentLength = buffer.size
-                        httpInfo.responseInfo.extra = String.format(
-                            "END HTTP (binary %s-byte body)",
-                            buffer.size
-                        )
+        try {
+            val response = chain.proceed(request)
+
+            val responseBody = response.body
+            httpInfo.responseInfo.date = Date()
+            httpInfo.responseInfo.duration =
+                TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime)
+            httpInfo.responseInfo.protocol = response.protocol
+            httpInfo.responseInfo.code = response.code
+            httpInfo.responseInfo.message = response.message
+            if (responseBody != null) {
+                httpInfo.responseInfo.contentLength = responseBody.contentLength()
+                httpInfo.responseInfo.contentType = responseBody.contentType()
+            }
+            if (monitorHeaders) {
+                httpInfo.responseInfo.headers = response.headers
+                if (!monitorBody || !response.promisesBody()) {
+                    httpInfo.responseInfo.extra = "END HTTP"
+                } else if (bodyHasUnknownEncoding(response.headers)) {
+                    httpInfo.responseInfo.extra = "END HTTP (encoded body omitted)"
+                } else {
+                    if (responseBody != null) {
+                        val source = responseBody.source()
+                        source.request(Long.MAX_VALUE)
+                        var buffer = source.buffer
+                        var gzippedLength: Long? = null
+                        if ("gzip".equals(
+                                response.headers["Content-Encoding"],
+                                ignoreCase = true
+                            )
+                        ) {
+                            gzippedLength = buffer.size
+                            val gzipSource = GzipSource(buffer.clone())
+                            buffer = Buffer()
+                            buffer.writeAll(gzipSource)
+                        }
+                        val contentType = responseBody.contentType()
+                        var charset: Charset? = null
+                        if (contentType != null) {
+                            charset = contentType.charset(StandardCharsets.UTF_8)
+                        }
+                        if (charset == null) {
+                            charset = StandardCharsets.UTF_8
+                        }
+                        if (!MonitorUtils.isProbablyUtf8(buffer)) {
+                            httpInfo.responseInfo.extra = String.format(
+                                "END HTTP (binary %s-byte body omitted)",
+                                buffer.size
+                            )
+                            update(httpInfo)
+                            return response
+                        }
+                        if (responseBody.contentLength() != 0L) {
+                            httpInfo.responseInfo.body = buffer.clone().readString(charset!!)
+                        }
+                        if (gzippedLength != null) {
+                            httpInfo.responseInfo.contentLength = gzippedLength
+                            httpInfo.responseInfo.extra = String.format(
+                                "END HTTP (binary %s-byte, %s-gzipped-byte body)",
+                                buffer.size,
+                                gzippedLength
+                            )
+                        } else {
+                            httpInfo.responseInfo.contentLength = buffer.size
+                            httpInfo.responseInfo.extra = String.format(
+                                "END HTTP (binary %s-byte body)",
+                                buffer.size
+                            )
+                        }
                     }
                 }
             }
-        }
-        update(httpInfo)
-    }
+            update(httpInfo)
 
-    override fun onException(exception: Exception) {
-        httpInfo.responseInfo.error = exception.toString()
-        update(httpInfo)
+            return response
+        } catch (exception: Exception) {
+            httpInfo.responseInfo.error = exception.toString()
+            update(httpInfo)
+            LogUtils.e(exception)
+            return super.intercept(chain)
+        }
     }
 
     private fun bodyHasUnknownEncoding(headers: Headers): Boolean {
@@ -206,4 +219,7 @@ open class MonitorInterceptor(context: Context) : BaseMonitorInterceptor() {
         LogUtils.i("update: %s", httpInfo)
         monitor.update(httpInfo)
     }
+
+    private val context: Context
+        get() = ContextProvider.getAppContext()
 }

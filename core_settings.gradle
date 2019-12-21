@@ -2,13 +2,14 @@ def rootDir = gradle.ext.xandroidRoot
 
 def modulePrefix = ":"
 if (gradle.ext.has('xandroidModulePrefix')) {
-    modulePrefix += gradle.ext.exoplayerModulePrefix
+    modulePrefix += gradle.ext.xandroidModulePrefix
 }
 
 include modulePrefix + 'particle'
 include modulePrefix + 'dewdrops'
 include modulePrefix + 'downloader'
 include modulePrefix + 'http-monitor'
+include modulePrefix + 'http-monitor-noop'
 include modulePrefix + 'http'
 include modulePrefix + 'androlua'
 include modulePrefix + 'selector'

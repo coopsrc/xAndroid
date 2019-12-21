@@ -2,7 +2,7 @@ gradle.ext.xandroidRoot = settingsDir
 
 def modulePrefix = ":"
 if (gradle.ext.has('xandroidModulePrefix')) {
-    modulePrefix += gradle.ext.exoplayerModulePrefix
+    modulePrefix += gradle.ext.xandroidModulePrefix
 }
 
 include modulePrefix + 'demos'

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 apply from: '../constants.gradle'
 
@@ -10,28 +12,16 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
-        versionName project.ext.versionNameAlpha
+        versionName project.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
-
-        externalNativeBuild {
-            cmake {
-                cppFlags "-std=c++11 -frtti -fexceptions -fPIC"
-            }
-        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
         }
     }
 
@@ -44,21 +34,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.annotation:annotation:${androidx_annotation}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    api project(path: ':utils')
-
-    testImplementation "junit:junit:$junit"
-    androidTestImplementation "androidx.test:core:$androidx_test"
-    androidTestImplementation "androidx.test:runner:$androidx_test"
-    androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$androirx_test_espresso"
+    compileOnly project(path: ':http')
 }
 
 ext {
-    releaseArtifact = 'androlua'
-    releaseDescription = 'The lua api for android.'
-    versionName = project.ext.versionNameAlpha
+    releaseArtifact = 'http-monitor-noop'
+    releaseDescription = 'The Android common http monitor request module.'
 }
 
 apply from: '../publish.gradle'

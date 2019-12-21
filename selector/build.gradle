@@ -1,14 +1,16 @@
 apply plugin: 'com.android.library'
 
+apply from: '../constants.gradle'
+
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionNameAlpha
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionNameAlpha
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -33,7 +35,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$androidx_appcompat"
 
-    implementation project(path: ':utils')
+    api project(path: ':utils')
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:core:$androidx_test"
@@ -45,7 +47,6 @@ dependencies {
 ext {
     releaseArtifact = 'selector'
     releaseDescription = 'The Android file selector module.'
-    versionName = rootProject.ext.versionNameAlpha
 }
 
 apply from: '../publish.gradle'

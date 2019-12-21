@@ -1,14 +1,12 @@
-include ':demos'
+gradle.ext.xandroidRoot = settingsDir
 
-include ':particle'
-include ':dewdrops'
-include ':downloader'
-include ':http-monitor'
-include ':http'
-include ':androlua'
-include ':selector'
-include ':adaptive'
-include ':widget'
-include ':utils'
+def modulePrefix = ":"
+if (gradle.ext.has('xandroidModulePrefix')) {
+    modulePrefix += gradle.ext.exoplayerModulePrefix
+}
+
+include modulePrefix + 'demos'
 
 rootProject.name = 'xAndroid'
+
+apply from: 'core_settings.gradle'

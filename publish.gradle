@@ -35,8 +35,8 @@ def getBintrayRepo() {
 
 static void addLicense(File pom) {
     def licenseNode = new Node(null, "license")
-    licenseNode.append(new Node(null, "name", "The MIT License"))
-    licenseNode.append(new Node(null, "url", "https://zhang-tingkuo.mit-license.org/2015/license.txt"))
+    licenseNode.append(new Node(null, "name", "The MIT License (MIT)"))
+    licenseNode.append(new Node(null, "url", "https://coopsrc.mit-license.org/2015/license.txt"))
     licenseNode.append(new Node(null, "distribution", "repo"))
     def licensesNode = new Node(null, "licenses")
     licensesNode.append(licenseNode)

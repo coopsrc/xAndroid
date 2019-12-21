@@ -12,7 +12,7 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
-        versionName project.ext.versionName
+        versionName project.ext.versionNameAlpha
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -58,6 +58,7 @@ dependencies {
 ext {
     releaseArtifact = 'http-monitor'
     releaseDescription = 'The Android common http monitor request module.'
+    versionName = project.ext.versionNameAlpha
 }
 
 apply from: '../publish.gradle'

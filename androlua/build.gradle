@@ -10,7 +10,7 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
-        versionName project.ext.versionName
+        versionName project.ext.versionNameAlpha
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -58,6 +58,7 @@ dependencies {
 ext {
     releaseArtifact = 'androlua'
     releaseDescription = 'The lua api for android.'
+    versionName = project.ext.versionNameAlpha
 }
 
 apply from: '../publish.gradle'

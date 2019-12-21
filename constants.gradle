@@ -43,7 +43,7 @@ project.ext {
 
     modulePrefix = ":"
     if (gradle.ext.has('xandroidModulePrefix')) {
-        modulePrefix += gradle.ext.exoplayerModulePrefix
+        modulePrefix += gradle.ext.xandroidModulePrefix
     }
 }
 

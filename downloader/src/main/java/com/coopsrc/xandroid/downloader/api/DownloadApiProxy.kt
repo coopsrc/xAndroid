@@ -5,8 +5,6 @@ import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.utils.Logger
 import com.coopsrc.xandroid.http.api.BaseApiProxy
 import com.coopsrc.xandroid.http.config.HttpClientConfig
-import com.coopsrc.xandroid.http.interceptor.BaseMonitorInterceptor
-import com.coopsrc.xandroid.http.monitor.MonitorInterceptor
 import io.reactivex.Maybe
 import okhttp3.ResponseBody
 import retrofit2.CallAdapter

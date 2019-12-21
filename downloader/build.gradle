@@ -52,7 +52,6 @@ dependencies {
 
     api project(path: ':utils')
     api project(path: ':http')
-    api project(path: ':http-monitor')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 

@@ -1,14 +1,16 @@
 apply plugin: 'com.android.library'
 
+apply from: '../constants.gradle'
+
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionNameAlpha
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionNameAlpha
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -44,7 +46,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.annotation:annotation:${androidx_annotation}"
 
-    implementation project(path: ':utils')
+    api project(path: ':utils')
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:core:$androidx_test"
@@ -56,7 +58,7 @@ dependencies {
 ext {
     releaseArtifact = 'androlua'
     releaseDescription = 'The lua api for android.'
-    versionName = rootProject.ext.versionNameAlpha
+    versionName = project.ext.versionNameAlpha
 }
 
 apply from: '../publish.gradle'

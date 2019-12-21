@@ -4,15 +4,17 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply from: '../constants.gradle'
+
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -48,9 +50,9 @@ dependencies {
     implementation "com.squareup.sqlbrite3:sqlbrite:$squareup_sqlbrite3"
     implementation "com.squareup.sqlbrite3:sqlbrite-kotlin:$squareup_sqlbrite3"
 
-    implementation project(path: ':utils')
-    implementation project(path: ':http')
-    implementation project(path: ':http-monitor')
+    api project(path: ':utils')
+    api project(path: ':http')
+    api project(path: ':http-monitor')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 

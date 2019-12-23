@@ -50,4 +50,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_downloader" />
+
+    <Button
+        android:id="@+id/button_framesequence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="openFrameSequence"
+        android:text="@string/title_activity_frame_sequence"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_particle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

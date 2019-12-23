@@ -6,6 +6,7 @@
     <string name="title_activity_simple_downloader">Downloader - Simple</string>
     <string name="title_activity_particle">Particle</string>
     <string name="title_activity_particle_drop">Particle - Drop</string>
+    <string name="title_activity_frame_sequence">FrameSequence</string>
 
     <string name="scheme_key">Scheme:</string>
     <string name="scheme_java">JAVA</string>
@@ -19,4 +20,11 @@
     <string name="radius_key">Radius:</string>
     <string name="sample_key">Sample:</string>
     <string name="scale_key">Scale:</string>
+
+    <string name="framesequence_start" translatable="false">start</string>
+    <string name="framesequence_stop" translatable="false">stop</string>
+    <string name="framesequence_vis" translatable="false">vis</string>
+    <string name="framesequence_invis" translatable="false">invis</string>
+
+    <string name="framesequence_circle_mask" translatable="false">Toggle Circle Mask</string>
 </resources>

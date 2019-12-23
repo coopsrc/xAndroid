@@ -5,6 +5,7 @@ if (gradle.ext.has('xandroidModulePrefix')) {
     modulePrefix += gradle.ext.xandroidModulePrefix
 }
 
+include modulePrefix + 'framesequence'
 include modulePrefix + 'particle'
 include modulePrefix + 'dewdrops'
 include modulePrefix + 'downloader'

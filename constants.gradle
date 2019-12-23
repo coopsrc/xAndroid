@@ -7,9 +7,9 @@ project.ext {
     // A.BB.CCC
     // Major.Minor.Revision
     majorVersion = 1
-    minorVersion = 6
-    revisionVersion = 4
-    snapshotVersion = 1
+    minorVersion = 7
+    revisionVersion = 0
+    snapshotVersion = 3
     versionCode = generateVersionCode(majorVersion, minorVersion, revisionVersion)
     versionNameBase = generateVersionName(majorVersion, minorVersion, revisionVersion)
     versionNameAlpha = versionNameBase + '-alpha' + snapshotVersion
@@ -40,6 +40,8 @@ project.ext {
     squareup_okhttp3 = "4.2.2"
     squareup_retrofit = "2.7.0"
     squareup_sqlbrite3 = "3.2.0"
+
+    glide = "4.10.0"
 
     modulePrefix = ":"
     if (gradle.ext.has('xandroidModulePrefix')) {

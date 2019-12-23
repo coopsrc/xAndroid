@@ -7,13 +7,13 @@ project.ext {
     // A.BB.CCC
     // Major.Minor.Revision
     majorVersion = 1
-    minorVersion = 6
-    revisionVersion = 4
-    snapshotVersion = 1
+    minorVersion = 7
+    revisionVersion = 0
+    snapshotVersion = 0
     versionCode = generateVersionCode(majorVersion, minorVersion, revisionVersion)
     versionNameBase = generateVersionName(majorVersion, minorVersion, revisionVersion)
     versionNameAlpha = versionNameBase + '-alpha' + snapshotVersion
-    versionName = versionNameBase
+    versionName = versionNameAlpha
 
     androidx_arch_core = "2.1.0"
     androidx_core = "1.1.0"

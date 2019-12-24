@@ -26,6 +26,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class ParticleRenderer implements GLSurfaceView.Renderer {
 
+    private static final double NANOSECONDS = TimeUnit.SECONDS.toNanos(1);
+
     private volatile ParticleSystem particleSystem;
     private volatile boolean particleSystemNeedsSetup;
 
@@ -120,7 +122,7 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
         if (lastUpdateTime == 0) {
             lastUpdateTime = updateTime;
         }
-        List<? extends Particle> particles = particleSystem.update(TimeUnit.NANOSECONDS.toSeconds(updateTime - lastUpdateTime));
+        List<? extends Particle> particles = particleSystem.update((updateTime - lastUpdateTime) / NANOSECONDS);
         lastUpdateTime = updateTime;
         updateBuffers(particles);
         render(particles.size());

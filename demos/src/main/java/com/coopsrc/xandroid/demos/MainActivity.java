@@ -1,10 +1,10 @@
 package com.coopsrc.xandroid.demos;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.coopsrc.xandroid.demos.androlua.AndroluaActivity;
 import com.coopsrc.xandroid.demos.blur.BlurActivity;

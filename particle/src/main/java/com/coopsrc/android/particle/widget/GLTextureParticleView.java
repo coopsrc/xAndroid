@@ -2,7 +2,6 @@ package com.coopsrc.android.particle.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
 
 public class GLTextureParticleView extends BaseParticleView {
     private GLTextureView glTextureView;

@@ -1,16 +1,15 @@
 package com.coopsrc.xandroid.demos.downloader.simple
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.coopsrc.xandroid.demos.R
 import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Status
 import com.coopsrc.xandroid.downloader.model.TaskInfo
 import com.coopsrc.xandroid.downloader.utils.DownloaderUtils
-import com.coopsrc.xandroid.utils.MemoryUnit
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_simple_download.*

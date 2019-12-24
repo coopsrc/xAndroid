@@ -3,11 +3,10 @@ package com.coopsrc.xandroid.demos.particle
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.coopsrc.xandroid.demos.R
 import com.coopsrc.xandroid.demos.particle.drop.DropParticleActivity
-
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_particle.*
 
 class ParticleActivity : AppCompatActivity() {

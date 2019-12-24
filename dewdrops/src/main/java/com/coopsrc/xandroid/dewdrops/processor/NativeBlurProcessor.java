@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import androidx.core.util.Preconditions;
 
 import com.coopsrc.xandroid.dewdrops.blur.NativeBlur;
-import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
 
 /**
  * @author tingkuo

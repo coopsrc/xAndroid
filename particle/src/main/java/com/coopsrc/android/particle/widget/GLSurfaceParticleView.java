@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
 
 public class GLSurfaceParticleView extends BaseParticleView {
     private GLSurfaceView glSurfaceView;

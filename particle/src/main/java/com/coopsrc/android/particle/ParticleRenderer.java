@@ -18,6 +18,7 @@ import java.nio.ShortBuffer;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -25,23 +26,31 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class ParticleRenderer implements GLSurfaceView.Renderer {
 
-    private static final double NANOSECONDS = 1000000000;
-
     private volatile ParticleSystem particleSystem;
     private volatile boolean particleSystemNeedsSetup;
+
     private volatile TextureAtlasFactory textureAtlasFactory;
     private volatile boolean textureAtlasNeedsSetup;
+
+    private int surfaceWidth;
     private int surfaceHeight;
-    private int programRef;
+
+    private int program;
+
     private float[] projectionViewM = new float[16];
+
     private ShortBuffer drawListBuffer;
+
     private float[] vertexArray;
     private FloatBuffer vertexBuffer;
+
     private float[] alphaArray;
     private FloatBuffer alphaBuffer;
+
     private float[] textureCoordsCacheArray;
     private float[] textureCoordsArray;
     private FloatBuffer textureCoordsBuffer;
+
     private long lastUpdateTime;
 
     @Override
@@ -62,8 +71,8 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
     private void initGlProgram() {
         int vertexShader = ShaderUtils.compileVertexShader(R.raw.particle_vertex_shader);
         int fragmentShader = ShaderUtils.compileFragmentShader(R.raw.particle_fragment_shader);
-        programRef = ShaderUtils.linkProgram(vertexShader, fragmentShader);
-        GLES31.glUseProgram(programRef);
+        program = ShaderUtils.linkProgram(vertexShader, fragmentShader);
+        GLES31.glUseProgram(program);
     }
 
     public void setTextureAtlasFactory(TextureAtlasFactory factory) {
@@ -79,6 +88,7 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         GLES31.glViewport(0, 0, width, height);
+        surfaceWidth = width;
         surfaceHeight = height;
         initProjectionViewMatrix(width, height);
     }
@@ -101,47 +111,46 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
             particleSystemNeedsSetup = false;
         }
         if (textureAtlasNeedsSetup) {
-            TextureAtlas atlas = textureAtlasFactory.createTextureAtlas();
-            atlas.setEditable(false);
-            setupTextures(atlas);
+            TextureAtlas textureAtlas = textureAtlasFactory.createTextureAtlas();
+            textureAtlas.setEditable(false);
+            setupTextures(textureAtlas);
             textureAtlasNeedsSetup = false;
         }
-        long time = System.nanoTime();
+        long updateTime = System.nanoTime();
         if (lastUpdateTime == 0) {
-            lastUpdateTime = time;
+            lastUpdateTime = updateTime;
         }
-        List<? extends Particle> particles = particleSystem.update((time - lastUpdateTime) / NANOSECONDS);
-        lastUpdateTime = time;
+        List<? extends Particle> particles = particleSystem.update(TimeUnit.NANOSECONDS.toSeconds(updateTime - lastUpdateTime));
+        lastUpdateTime = updateTime;
         updateBuffers(particles);
         render(particles.size());
     }
 
-    private void setupTextures(TextureAtlas atlas) {
-        int[] names = new int[1];
-        GLES31.glGenTextures(1, names, 0);
+    private void setupTextures(TextureAtlas textureAtlas) {
+        int[] textures = new int[1];
+        GLES31.glGenTextures(1, textures, 0);
         GLES31.glActiveTexture(GLES31.GL_TEXTURE0);
-        GLES31.glBindTexture(GLES31.GL_TEXTURE_2D, names[0]);
+        GLES31.glBindTexture(GLES31.GL_TEXTURE_2D, textures[0]);
         GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MIN_FILTER, GLES31.GL_LINEAR);
         GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MAG_FILTER, GLES31.GL_LINEAR);
         GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_S, GLES31.GL_CLAMP_TO_EDGE);
         GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_T, GLES31.GL_CLAMP_TO_EDGE);
-        GLUtils.texImage2D(GLES31.GL_TEXTURE_2D, 0, Bitmap.createBitmap(atlas.getWidth(), atlas.getHeight(),
-                Bitmap.Config.ARGB_8888), 0);
+        GLUtils.texImage2D(GLES31.GL_TEXTURE_2D, 0, createBitmap(textureAtlas), 0);
 
-        List<Region> regions = atlas.getRegions();
+        List<Region> regions = textureAtlas.getRegions();
         textureCoordsCacheArray = new float[regions.size() * 8];
         final int k = 8;
-        float atlasWidth = atlas.getWidth();
-        float atlasHeight = atlas.getHeight();
+        float atlasWidth = textureAtlas.getWidth();
+        float atlasHeight = textureAtlas.getHeight();
         for (int i = 0; i < regions.size(); i++) {
-            Region r = regions.get(i);
-            GLUtils.texSubImage2D(GLES31.GL_TEXTURE_2D, 0, r.x, r.y, r.bitmap);
-            float x0 = r.x / atlasWidth;
-            float y0 = r.y / atlasHeight;
-            float x1 = x0 + r.bitmap.getWidth() / atlasWidth;
-            float y1 = y0 + r.bitmap.getHeight() / atlasHeight;
+            Region region = regions.get(i);
+            GLUtils.texSubImage2D(GLES31.GL_TEXTURE_2D, 0, region.x, region.y, region.bitmap);
+            float x0 = region.x / atlasWidth;
+            float y0 = region.y / atlasHeight;
+            float x1 = x0 + region.bitmap.getWidth() / atlasWidth;
+            float y1 = y0 + region.bitmap.getHeight() / atlasHeight;
             List<Float> coords = Arrays.asList(x0, y0, x0, y1, x1, y1, x1, y0);
-            if (r.cwRotated) {
+            if (region.cwRotated) {
                 Collections.rotate(coords, 2);
             }
             for (int j = 0; j < coords.size(); j++) {
@@ -150,27 +159,31 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
         }
     }
 
+    private Bitmap createBitmap(TextureAtlas textureAtlas) {
+        return Bitmap.createBitmap(textureAtlas.getWidth(), textureAtlas.getHeight(), Bitmap.Config.ARGB_8888);
+    }
+
     private void setupBuffers() {
         int maxCount = particleSystem.getMaxCount();
 
-        ByteBuffer b = ByteBuffer.allocateDirect(maxCount * 8 * 4);
-        b.order(ByteOrder.nativeOrder());
-        vertexBuffer = b.asFloatBuffer();
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(maxCount * 8 * 4);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        vertexBuffer = byteBuffer.asFloatBuffer();
         vertexArray = new float[maxCount * 8];
 
-        b = ByteBuffer.allocateDirect(maxCount * 8 * 4);
-        b.order(ByteOrder.nativeOrder());
-        textureCoordsBuffer = b.asFloatBuffer();
+        byteBuffer = ByteBuffer.allocateDirect(maxCount * 8 * 4);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        textureCoordsBuffer = byteBuffer.asFloatBuffer();
         textureCoordsArray = new float[maxCount * 8];
 
-        b = ByteBuffer.allocateDirect(maxCount * 4 * 4);
-        b.order(ByteOrder.nativeOrder());
-        alphaBuffer = b.asFloatBuffer();
+        byteBuffer = ByteBuffer.allocateDirect(maxCount * 4 * 4);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        alphaBuffer = byteBuffer.asFloatBuffer();
         alphaArray = new float[maxCount * 4];
 
-        b = ByteBuffer.allocateDirect(maxCount * 6 * 2);
-        b.order(ByteOrder.nativeOrder());
-        drawListBuffer = b.asShortBuffer();
+        byteBuffer = ByteBuffer.allocateDirect(maxCount * 6 * 2);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        drawListBuffer = byteBuffer.asShortBuffer();
         fillDrawListBuffer(maxCount);
         drawListBuffer.position(0);
     }
@@ -191,22 +204,22 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
         final int k1 = 8;
         final int k2 = 4;
         for (int i = 0, count = particles.size(); i < count; i++) {
-            Particle p = particles.get(i);
-            vertexArray[i * k1] = p.getX() - p.getDx2();
-            vertexArray[i * k1 + 1] = surfaceHeight - p.getY() + p.getDy2();
-            vertexArray[i * k1 + 2] = p.getX() - p.getDx1();
-            vertexArray[i * k1 + 3] = surfaceHeight - p.getY() - p.getDy1();
-            vertexArray[i * k1 + 4] = p.getX() + p.getDx2();
-            vertexArray[i * k1 + 5] = surfaceHeight - p.getY() - p.getDy2();
-            vertexArray[i * k1 + 6] = p.getX() + p.getDx1();
-            vertexArray[i * k1 + 7] = surfaceHeight - p.getY() + p.getDy1();
+            Particle particle = particles.get(i);
+            vertexArray[i * k1] = particle.getX() - particle.getDx2();
+            vertexArray[i * k1 + 1] = surfaceHeight - particle.getY() + particle.getDy2();
+            vertexArray[i * k1 + 2] = particle.getX() - particle.getDx1();
+            vertexArray[i * k1 + 3] = surfaceHeight - particle.getY() - particle.getDy1();
+            vertexArray[i * k1 + 4] = particle.getX() + particle.getDx2();
+            vertexArray[i * k1 + 5] = surfaceHeight - particle.getY() - particle.getDy2();
+            vertexArray[i * k1 + 6] = particle.getX() + particle.getDx1();
+            vertexArray[i * k1 + 7] = surfaceHeight - particle.getY() + particle.getDy1();
 
-            System.arraycopy(textureCoordsCacheArray, p.getTextureIndex() * k1, textureCoordsArray, i * k1, k1);
+            System.arraycopy(textureCoordsCacheArray, particle.getTextureIndex() * k1, textureCoordsArray, i * k1, k1);
 
-            alphaArray[i * k2] = p.getAlpha();
-            alphaArray[i * k2 + 1] = p.getAlpha();
-            alphaArray[i * k2 + 2] = p.getAlpha();
-            alphaArray[i * k2 + 3] = p.getAlpha();
+            alphaArray[i * k2] = particle.getAlpha();
+            alphaArray[i * k2 + 1] = particle.getAlpha();
+            alphaArray[i * k2 + 2] = particle.getAlpha();
+            alphaArray[i * k2 + 3] = particle.getAlpha();
         }
         vertexBuffer.put(vertexArray);
         textureCoordsBuffer.put(textureCoordsArray);
@@ -219,21 +232,21 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
     private void render(int count) {
         GLES31.glClear(GLES31.GL_COLOR_BUFFER_BIT | GLES31.GL_DEPTH_BUFFER_BIT);
 
-        int matrixHandle = GLES31.glGetUniformLocation(programRef, "uMvpMatrix");
+        int matrixHandle = GLES31.glGetUniformLocation(program, "uMvpMatrix");
         GLES31.glUniformMatrix4fv(matrixHandle, 1, false, projectionViewM, 0);
 
-        int positionHandle = GLES31.glGetAttribLocation(programRef, "aPosition");
+        int positionHandle = GLES31.glGetAttribLocation(program, "aPosition");
         GLES31.glEnableVertexAttribArray(positionHandle);
         GLES31.glVertexAttribPointer(positionHandle, 2, GLES31.GL_FLOAT, false, 0, vertexBuffer);
 
-        int textureHandle = GLES31.glGetUniformLocation(programRef, "uTexture");
+        int textureHandle = GLES31.glGetUniformLocation(program, "uTexture");
         GLES31.glUniform1i(textureHandle, 0);
 
-        int textureCoordsHandle = GLES31.glGetAttribLocation(programRef, "aTextureCoords");
+        int textureCoordsHandle = GLES31.glGetAttribLocation(program, "aTextureCoords");
         GLES31.glEnableVertexAttribArray(textureCoordsHandle);
         GLES31.glVertexAttribPointer(textureCoordsHandle, 2, GLES31.GL_FLOAT, false, 0, textureCoordsBuffer);
 
-        int alphaHandle = GLES31.glGetAttribLocation(programRef, "aAlpha");
+        int alphaHandle = GLES31.glGetAttribLocation(program, "aAlpha");
         GLES31.glEnableVertexAttribArray(alphaHandle);
         GLES31.glVertexAttribPointer(alphaHandle, 1, GLES31.GL_FLOAT, false, 0, alphaBuffer);
 

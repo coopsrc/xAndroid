@@ -1,13 +1,43 @@
 cmake_minimum_required(VERSION 3.6.0)
 
-add_compile_options(-DDLUA_DL_DLOPEN)
-add_compile_options(-DLUA_COMPAT_5_1)
-add_compile_options(-DLUA_COMPAT_5_2)
+set(LUA_SOURCE_FILES
+        src/lapi.c
+        src/lcode.c
+        src/ldebug.c
+        src/lgc.c
+        src/lmathlib.c
+        src/lopcodes.c
+        src/lstring.c
+        src/ltm.c
+        src/lutf8lib.c
+        src/lauxlib.c
+        src/lcorolib.c
+        src/ldo.c
+        src/linit.c
+        src/lmem.c
+        src/loslib.c
+        src/lstrlib.c
+        src/lvm.c
+        src/lbaselib.c
+        src/lctype.c
+        src/ldump.c
+        src/liolib.c
+        src/loadlib.c
+        src/lparser.c
+        src/ltable.c
+        src/lzio.c
+        src/lbitlib.c
+        src/ldblib.c
+        src/lfunc.c
+        src/llex.c
+        src/lobject.c
+        src/lstate.c
+        src/ltablib.c
+        src/lundump.c
+        )
 
-set(LUA_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-include_directories(${LUA_SRC_DIR})
-aux_source_directory(${LUA_SRC_DIR} LUA_SRC)
-list(REMOVE_ITEM LUA_SRC "${LUA_SRC_DIR}/lua.c")
-list(REMOVE_ITEM LUA_SRC "${LUA_SRC_DIR}/luac.c")
-add_library(lua SHARED ${LUA_SRC})
+add_library(lua SHARED ${LUA_SOURCE_FILES})
+
+target_include_directories(lua PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
 target_link_libraries(lua)

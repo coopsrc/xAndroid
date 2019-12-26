@@ -1,14 +1,14 @@
-package com.coopsrc.android.particle;
+package com.coopsrc.android.particle.render;
 
 import android.graphics.Bitmap;
 import android.opengl.GLES31;
-import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
 
+import com.coopsrc.android.particle.Particle;
+import com.coopsrc.android.particle.R;
 import com.coopsrc.android.particle.texture.Region;
 import com.coopsrc.android.particle.texture.TextureAtlas;
-import com.coopsrc.android.particle.texture.TextureAtlasFactory;
 import com.coopsrc.android.particle.utils.ShaderUtils;
 
 import java.nio.ByteBuffer;
@@ -24,15 +24,9 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 
-public class ParticleRenderer implements GLSurfaceView.Renderer {
+public class ParticleRenderer extends BaseParticleRenderer {
 
     private static final double NANOSECONDS = TimeUnit.SECONDS.toNanos(1);
-
-    private volatile ParticleSystem particleSystem;
-    private volatile boolean particleSystemNeedsSetup;
-
-    private volatile TextureAtlasFactory textureAtlasFactory;
-    private volatile boolean textureAtlasNeedsSetup;
 
     private int surfaceWidth;
     private int surfaceHeight;
@@ -77,15 +71,6 @@ public class ParticleRenderer implements GLSurfaceView.Renderer {
         GLES31.glUseProgram(program);
     }
 
-    public void setTextureAtlasFactory(TextureAtlasFactory factory) {
-        this.textureAtlasFactory = factory;
-        textureAtlasNeedsSetup = true;
-    }
-
-    public void setParticleSystem(ParticleSystem system) {
-        this.particleSystem = system;
-        particleSystemNeedsSetup = true;
-    }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {

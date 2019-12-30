@@ -40,3 +40,4 @@ task clean(type: Delete) {
     delete project.buildDir
 }
 
+apply from: 'constants.gradle'

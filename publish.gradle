@@ -4,12 +4,12 @@ if (project.ext.has("xandroidPublishEnabled") && project.ext.xandroidPublishEnab
         artifactId = releaseArtifact
         desc = releaseDescription
         publishVersion = versionName
-        repoName = getBintrayRepo()
-        userOrg = 'coopsrc'
-        groupId = 'com.coopsrc.xandroid'
-        website = 'https://github.com/coopsrc/xAndroid'
-        bintrayUser = System.getenv('BINTRAY_USER')
-        bintrayKey = System.getenv('BINTRAY_KEY')
+        repoName = "xAndroid"
+        userOrg = "coopsrc"
+        groupId = "com.coopsrc.xandroid"
+        website = "https://github.com/coopsrc/xAndroid"
+        bintrayUser = System.getenv("BINTRAY_USER")
+        bintrayKey = System.getenv("BINTRAY_KEY")
     }
 
     gradle.taskGraph.whenReady { taskGraph ->
@@ -26,11 +26,6 @@ if (project.ext.has("xandroidPublishEnabled") && project.ext.xandroidPublishEnab
             }
         }
     }
-}
-
-def getBintrayRepo() {
-    boolean publicRepo = hasProperty('publicRepo') && property('publicRepo').toBoolean()
-    return publicRepo ? 'xAndroid' : 'xAndroid'
 }
 
 static void addLicense(File pom) {

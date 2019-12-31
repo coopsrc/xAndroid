@@ -27,6 +27,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    splits {
+        abi {
+            enable true
+            universalApk true
+        }
+    }
+
 }
 
 dependencies {

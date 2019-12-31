@@ -1,13 +1,13 @@
 package com.coopsrc.xandroid.demos.blur;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.coopsrc.xandroid.demos.R;
 import com.coopsrc.xandroid.dewdrops.DewdropsBlur;

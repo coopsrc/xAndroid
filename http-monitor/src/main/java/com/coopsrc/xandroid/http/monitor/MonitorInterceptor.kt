@@ -3,7 +3,6 @@ package com.coopsrc.xandroid.http.monitor
 import android.content.Context
 import android.text.TextUtils
 import com.coopsrc.xandroid.http.interceptor.BaseMonitorInterceptor
-import com.coopsrc.xandroid.http.logging.HttpLogger
 import com.coopsrc.xandroid.http.monitor.common.IMonitor
 import com.coopsrc.xandroid.http.monitor.common.Monitor
 import com.coopsrc.xandroid.http.monitor.model.HttpInfo
@@ -12,7 +11,9 @@ import com.coopsrc.xandroid.http.monitor.model.ResponseInfo
 import com.coopsrc.xandroid.http.monitor.utils.MonitorUtils
 import com.coopsrc.xandroid.utils.ContextProvider
 import com.coopsrc.xandroid.utils.LogUtils
-import okhttp3.*
+import okhttp3.Headers
+import okhttp3.Interceptor
+import okhttp3.Response
 import okhttp3.internal.http.promisesBody
 import okio.Buffer
 import okio.GzipSource

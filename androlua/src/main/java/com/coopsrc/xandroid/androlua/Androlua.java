@@ -11,11 +11,27 @@ public class Androlua {
         System.loadLibrary("androlua");
     }
 
-    public static native String getLuaVersion();
+    public static String getLuaVersion() {
+        return _getLuaVersion();
+    }
 
-    public static native String getLuaRelease();
+    public static String getLuaRelease() {
+        return _getLuaRelease();
+    }
 
-    public static native String getLuaCopyright();
+    public static String getLuaCopyright() {
+        return _getLuaCopyright();
+    }
 
-    public static native String getLuaAuthors();
+    public static String getLuaAuthors() {
+        return _getLuaAuthors();
+    }
+
+    private static native String _getLuaVersion();
+
+    private static native String _getLuaRelease();
+
+    private static native String _getLuaCopyright();
+
+    private static native String _getLuaAuthors();
 }

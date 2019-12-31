@@ -17,9 +17,9 @@
 package android.support.rastermill;
 
 import android.graphics.Bitmap;
-import java.nio.ByteBuffer;
 
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 
 public class FrameSequence {
     static {

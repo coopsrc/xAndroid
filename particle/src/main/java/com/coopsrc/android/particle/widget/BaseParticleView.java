@@ -5,15 +5,16 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 
-import com.coopsrc.android.particle.ParticleRenderer;
 import com.coopsrc.android.particle.ParticleSystem;
+import com.coopsrc.android.particle.render.BaseParticleRenderer;
+import com.coopsrc.android.particle.render.ParticleRenderer;
 import com.coopsrc.android.particle.texture.TextureAtlasFactory;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public abstract class BaseParticleView extends FrameLayout {
 
-    private ParticleRenderer renderer;
+    private BaseParticleRenderer renderer;
 
     public BaseParticleView(Context context) {
         this(context, null);
@@ -36,13 +37,17 @@ public abstract class BaseParticleView extends FrameLayout {
 
     protected abstract void attachDisplayView();
 
-    private void initParticleRenderer() {
-        renderer = new ParticleRenderer();
+    protected void initParticleRenderer() {
+        setRenderer(new ParticleRenderer());
     }
 
     protected abstract void setupDisplayView();
 
-    protected final ParticleRenderer getRenderer() {
+    protected final void setRenderer(BaseParticleRenderer renderer) {
+        this.renderer = renderer;
+    }
+
+    protected final BaseParticleRenderer getRenderer() {
         return renderer;
     }
 

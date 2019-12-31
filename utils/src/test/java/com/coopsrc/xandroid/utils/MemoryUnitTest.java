@@ -1,7 +1,5 @@
 package com.coopsrc.xandroid.utils;
 
-import com.coopsrc.xandroid.utils.MemoryUnit;
-
 import org.junit.Test;
 
 /**

@@ -1,5 +1,7 @@
 package com.coopsrc.android.particle;
 
+import com.coopsrc.xandroid.utils.LogUtils;
+
 public class Particle {
 
     private static final double PI_4 = Math.PI / 4;
@@ -9,7 +11,7 @@ public class Particle {
 
     private float x;
     private float y;
-    private float rotation;
+    private double rotation;
     private float alpha = 1f;
     private short textureIndex;
     private float halfDiagonal;
@@ -41,6 +43,7 @@ public class Particle {
         dy1 = (float) (Math.sin(PI_4 + rotation) * halfDiagonal);
         dx2 = (float) (Math.cos(PI_4 - rotation) * halfDiagonal);
         dy2 = (float) (Math.sin(PI_4 - rotation) * halfDiagonal);
+        LogUtils.w("updateCorners: [%.2f,%.2f] ==> [%.2f,%.2f],[%.2f,%.2f]", width, height, dx1, dy1, dx2, dy2);
     }
 
     public float getWidth() {
@@ -59,7 +62,7 @@ public class Particle {
         return y;
     }
 
-    public float getRotation() {
+    public double getRotation() {
         return rotation;
     }
 
@@ -71,20 +74,27 @@ public class Particle {
         return textureIndex;
     }
 
-    float getDx1() {
+    public float getDx1() {
         return dx1;
     }
 
-    float getDy1() {
+    public float getDy1() {
         return dy1;
     }
 
-    float getDx2() {
+    public float getDx2() {
         return dx2;
     }
 
-    float getDy2() {
+    public float getDy2() {
         return dy2;
+    }
+
+    public void setSize(int width,int height ){
+        this.width = width;
+        this.height = height;
+        updateDiagonal();
+        updateCorners();
     }
 
     public void setWidth(int width) {
@@ -107,7 +117,7 @@ public class Particle {
         this.y = y;
     }
 
-    public void setRotation(float rotation) {
+    public void setRotation(double rotation) {
         this.rotation = rotation;
         updateCorners();
     }

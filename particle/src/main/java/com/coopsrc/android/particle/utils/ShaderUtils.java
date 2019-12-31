@@ -2,7 +2,6 @@ package com.coopsrc.android.particle.utils;
 
 import android.content.res.Resources;
 import android.opengl.GLES31;
-import android.util.Log;
 
 import com.coopsrc.xandroid.utils.ContextProvider;
 import com.coopsrc.xandroid.utils.LogUtils;

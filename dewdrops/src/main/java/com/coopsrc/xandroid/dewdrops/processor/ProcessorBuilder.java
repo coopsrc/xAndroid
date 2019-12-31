@@ -2,7 +2,6 @@ package com.coopsrc.xandroid.dewdrops.processor;
 
 import android.content.Context;
 
-import com.coopsrc.xandroid.dewdrops.annotation.Direction;
 import com.coopsrc.xandroid.dewdrops.annotation.Mode;
 import com.coopsrc.xandroid.dewdrops.annotation.Scheme;
 import com.coopsrc.xandroid.dewdrops.config.BlurConfig;

@@ -8,8 +8,7 @@ public class BeamParticle extends Particle {
     float vr;
 
     void setup(int size, float x, float y, float fade, float vy, float vr) {
-        setWidth(size);
-        setHeight(size);
+        setSize(size * 2, size);
         setX(x);
         setY(y);
         this.fade = fade;

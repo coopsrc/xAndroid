@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 public class HttpConstants {
 
-    public static final String BASE_URL = "http://127.0.0.1/";
+    public static final String TEMP_BASE_URL = "http://127.0.0.1/";
 
     public static final String ACCESS_TOKEN = "access_token";
 

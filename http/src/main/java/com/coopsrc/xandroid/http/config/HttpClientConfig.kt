@@ -17,7 +17,7 @@ abstract class HttpClientConfig : IHttpClientConfig {
     }
 
     override fun getPrimaryHost(): String {
-        return HttpConstants.BASE_URL
+        return HttpConstants.TEMP_BASE_URL
     }
 
     override fun httpClientCache(): Cache {

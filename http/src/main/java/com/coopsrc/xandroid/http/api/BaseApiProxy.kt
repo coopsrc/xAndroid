@@ -2,6 +2,7 @@ package com.coopsrc.xandroid.http.api
 
 import com.coopsrc.xandroid.http.RetrofitManager
 import com.coopsrc.xandroid.http.config.HttpClientConfig
+import okhttp3.OkHttpClient
 
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
@@ -39,6 +40,14 @@ abstract class BaseApiProxy<T> protected constructor() {
 
     fun updateBaseUrl(baseUrl: String) {
         retrofit = retrofit.newBuilder().baseUrl(baseUrl).build()
+    }
+
+    fun getHttpClient(): OkHttpClient {
+        return retrofit.callFactory() as OkHttpClient
+    }
+
+    fun updateHttpClient(httpClient: OkHttpClient) {
+        retrofit = retrofit.newBuilder().client(httpClient).build()
     }
 
     protected open class BaseApiClientConfig : HttpClientConfig()

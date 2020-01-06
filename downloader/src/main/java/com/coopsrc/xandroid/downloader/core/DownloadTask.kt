@@ -31,7 +31,8 @@ import java.util.concurrent.Semaphore
  */
 internal class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semaphore) {
 
-    private val mProgressProcessor: FlowableProcessor<Progress> = BehaviorProcessor.create<Progress>().toSerialized()
+    private val mProgressProcessor: FlowableProcessor<Progress> =
+        BehaviorProcessor.create<Progress>().toSerialized()
 
     private var disposable: Disposable? = null
     private lateinit var downloader: Downloader
@@ -65,39 +66,39 @@ internal class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semap
         Logger.i(tag, "createFlowable")
 
         mDownloadFlowable = Flowable.just(Constants.any)
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe {
-                    emitStatus(Status.Waiting)
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                emitStatus(Status.Waiting)
 
-                    if (!databaseAction.exist(taskInfo)) {
-                        databaseAction.create(taskInfo)
-                    }
-
-                    semaphore.acquire()
-                    semaphoreRequired = true
-                }.subscribeOn(Schedulers.newThread())
-                .flatMap {
-                    detectAndDownload()
-                }.doOnError {
-                    Logger.e(tag, "Download task error! ${it.message}")
-                    emitStatus(Status.Failed)
-                }.doOnCancel {
-                    Logger.d(tag, "Download task cancel!")
-                    if (taskInfo.progress.status != Status.Complete) {
-                        emitStatus(Status.Suspend)
-                    }
-                }.doOnComplete {
-                    Logger.d(tag, "Download task complete!")
-                    emitStatus(Status.Complete)
-                }.doFinally {
-                    Logger.d("DownloadTask", "Download task finally!")
-                    databaseAction.update(taskInfo)
-                    disposable = null
-                    if (semaphoreRequired) {
-                        semaphore.release()
-                        semaphoreRequired = false
-                    }
+                if (!databaseAction.exist(taskInfo)) {
+                    databaseAction.create(taskInfo)
                 }
+
+                semaphore.acquire()
+                semaphoreRequired = true
+            }.subscribeOn(Schedulers.newThread())
+            .flatMap {
+                detectAndDownload()
+            }.doOnError {
+                Logger.e(tag, "Download task error! ${it.message}")
+                emitStatus(Status.Failed)
+            }.doOnCancel {
+                Logger.d(tag, "Download task cancel!")
+                if (taskInfo.progress.status != Status.Complete) {
+                    emitStatus(Status.Suspend)
+                }
+            }.doOnComplete {
+                Logger.d(tag, "Download task complete!")
+                emitStatus(Status.Complete)
+            }.doFinally {
+                Logger.d("DownloadTask", "Download task finally!")
+                databaseAction.update(taskInfo)
+                disposable = null
+                if (semaphoreRequired) {
+                    semaphore.release()
+                    semaphoreRequired = false
+                }
+            }
     }
 
     private fun detectAndDownload(): Flowable<Progress> {

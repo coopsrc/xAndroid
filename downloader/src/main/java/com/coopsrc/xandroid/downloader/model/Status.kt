@@ -38,7 +38,7 @@ enum class Status {
         return !isWorking() && this != Complete
     }
 
-    fun canStop():Boolean{
+    fun canStop(): Boolean {
         return isWorking()
     }
 }

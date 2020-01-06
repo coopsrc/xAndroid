@@ -84,7 +84,8 @@ internal class SegmentsAction(private val briteDatabase: BriteDatabase) : Databa
 
         return briteDatabase.insert(
             SegmentColumns.TABLE_NAME,
-                SQLiteDatabase.CONFLICT_REPLACE, provideValues(data))
+            SQLiteDatabase.CONFLICT_REPLACE, provideValues(data)
+        )
     }
 
     override fun read(data: Segment): Boolean {
@@ -121,8 +122,9 @@ internal class SegmentsAction(private val briteDatabase: BriteDatabase) : Databa
 
         return briteDatabase.update(
             SegmentColumns.TABLE_NAME,
-                SQLiteDatabase.CONFLICT_REPLACE, provideValues(segment),
-                SegmentColumns.DELETE_CLAUSE, *whereArgs)
+            SQLiteDatabase.CONFLICT_REPLACE, provideValues(segment),
+            SegmentColumns.DELETE_CLAUSE, *whereArgs
+        )
     }
 
     fun delete(tag: String): Int {
@@ -138,7 +140,8 @@ internal class SegmentsAction(private val briteDatabase: BriteDatabase) : Databa
 
         return briteDatabase.delete(
             SegmentColumns.TABLE_NAME,
-                SegmentColumns.DELETE_CLAUSE, *whereArgs)
+            SegmentColumns.DELETE_CLAUSE, *whereArgs
+        )
     }
 
     override fun clear(): Int {
@@ -150,8 +153,8 @@ internal class SegmentsAction(private val briteDatabase: BriteDatabase) : Databa
     private fun provideValues(segment: Segment): ContentValues {
         Logger.v(tag, "provideValues: $segment")
         return ValuesBuilder()
-                .segment(segment)
-                .build()
+            .segment(segment)
+            .build()
     }
 
     private inner class ValuesBuilder(private val values: ContentValues = ContentValues()) {
@@ -184,10 +187,10 @@ internal class SegmentsAction(private val briteDatabase: BriteDatabase) : Databa
         fun segment(segment: Segment): ValuesBuilder {
 
             return this.tag(segment.tag)
-                    .index(segment.index)
-                    .start(segment.start)
-                    .position(segment.position)
-                    .end(segment.end)
+                .index(segment.index)
+                .start(segment.start)
+                .position(segment.position)
+                .end(segment.end)
         }
 
         fun build(): ContentValues {

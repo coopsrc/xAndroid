@@ -69,7 +69,10 @@ internal abstract class DownloaderProxy(protected val downloadTask: DownloadTask
         return targetFile.exists() && targetFile.isFile
     }
 
-    internal abstract fun saveTargetFile(response: Response<ResponseBody>, vararg args: Any): Flowable<Any>
+    internal abstract fun saveTargetFile(
+        response: Response<ResponseBody>,
+        vararg args: Any
+    ): Flowable<Any>
 
     internal fun cleanWorkspace() {
         Logger.i(tag, "cleanWorkspace: ")

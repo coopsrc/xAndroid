@@ -195,27 +195,33 @@ public class BlurActivity extends AppCompatActivity {
 
     private String getSchemeText(@Scheme int scheme) {
         if (radioGroupScheme != null) {
-            return (String) ((RadioButton) radioGroupScheme.findViewById(radioGroupScheme.getCheckedRadioButtonId())).getText();
+            return getSelectedText(radioGroupScheme);
         }
         return String.valueOf(scheme);
     }
 
     private String getModeText(@Mode int mode) {
         if (radioGroupAlgorithm != null) {
-            return (String) ((RadioButton) radioGroupAlgorithm.findViewById(radioGroupAlgorithm.getCheckedRadioButtonId())).getText();
+            return getSelectedText(radioGroupAlgorithm);
         }
         return String.valueOf(mode);
+    }
+
+    private String getSelectedText(RadioGroup radioGroup) {
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        RadioButton radioButton = radioGroup.findViewById(selectedId);
+        return (String) radioButton.getText();
     }
 
     private void updateBlurProcessor() {
 
         if (blurringView != null) {
             blurringView.setBlurProcessor(DewdropsBlur.with(this)
-                    .scheme(scheme)
-                    .mode(mode)
-                    .radius(radius)
-                    .sampleFactor(sampleFactor)
-                    .build());
+                                                      .scheme(scheme)
+                                                      .mode(mode)
+                                                      .radius(radius)
+                                                      .sampleFactor(sampleFactor)
+                                                      .build());
             blurringView.setScale(blurScale);
         }
     }

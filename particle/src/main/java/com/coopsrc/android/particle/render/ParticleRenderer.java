@@ -11,7 +11,6 @@ import com.coopsrc.android.particle.R;
 import com.coopsrc.android.particle.texture.Region;
 import com.coopsrc.android.particle.texture.TextureAtlas;
 import com.coopsrc.android.particle.utils.ShaderUtils;
-import com.coopsrc.xandroid.utils.LogUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

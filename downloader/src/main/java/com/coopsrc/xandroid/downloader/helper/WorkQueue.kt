@@ -18,9 +18,11 @@ import java.util.concurrent.TimeUnit
  * Date: 2018-08-20
  * Time: 17:38
  */
-class WorkQueue<T>(private val period: Long,
-                   private val unit: TimeUnit = TimeUnit.SECONDS,
-                   private val action: (data: T) -> Unit) {
+class WorkQueue<T>(
+    private val period: Long,
+    private val unit: TimeUnit = TimeUnit.SECONDS,
+    private val action: (data: T) -> Unit
+) {
 
     private val tag = "WorkQueue"
 

@@ -52,9 +52,9 @@ internal class RangeDownloaderProxy(downloadTask: DownloadTask) : DownloaderProx
                     var readLength = source.read(buffer)
                     while (readLength != -1 && !emitter.isCancelled) {
                         val cacheBuffer = cacheChannel.map(
-                                FileChannel.MapMode.READ_WRITE,
-                                segment.position,
-                                readLength.toLong()
+                            FileChannel.MapMode.READ_WRITE,
+                            segment.position,
+                            readLength.toLong()
                         )
                         cacheBuffer.put(buffer, 0, readLength)
 

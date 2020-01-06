@@ -13,7 +13,13 @@ internal class Segment {
     var position: Long
     var end: Long
 
-    constructor(tag: String, index: Long, start: Long, end: Long) : this(tag, index, start, start, end)
+    constructor(tag: String, index: Long, start: Long, end: Long) : this(
+        tag,
+        index,
+        start,
+        start,
+        end
+    )
 
     constructor(tag: String, index: Long, start: Long, position: Long, end: Long) {
         this.tag = tag

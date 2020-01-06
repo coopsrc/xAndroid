@@ -60,9 +60,9 @@ internal class SingleDownloaderProxy(downloadTask: DownloadTask) : DownloaderPro
 
                         while (readLength != -1 && !emitter.isCancelled) {
                             byteBuffer = cacheChannel.map(
-                                    FileChannel.MapMode.READ_WRITE,
-                                    downloadSize,
-                                    readLength.toLong()
+                                FileChannel.MapMode.READ_WRITE,
+                                downloadSize,
+                                readLength.toLong()
                             )
                             byteBuffer.put(buffer, 0, readLength)
 

@@ -1,4 +1,4 @@
-#parse("File License.java")
+#parse("License.txt")
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME}
 
 #end

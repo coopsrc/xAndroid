@@ -30,12 +30,15 @@ import java.io.StringWriter;
  * Datetime: 2020-01-08 11:54
  */
 public abstract class Logger implements ILogger {
-    public final ThreadLocal<String> explicitTag = new ThreadLocal<>();
+    private final ThreadLocal<String> explicitTag = new ThreadLocal<>();
+    private final ThreadLocal<Boolean> pretty = new ThreadLocal<>();
+
+    private static final Formatter defaultFormatter = new DefaultFormatter();
 
     final Formatter formatter;
 
     public Logger() {
-        formatter = new DefaultFormatter();
+        formatter = defaultFormatter;
     }
 
     public Logger(Formatter formatter) {
@@ -225,7 +228,7 @@ public abstract class Logger implements ILogger {
         return isLoggable(priority);
     }
 
-    private void prepareLog(int priority, Throwable t, String message, Object... args) {
+    private void prepareLog(int priority, Throwable throwable, String message, Object... args) {
         // Consume tag even when message is not loggable so that next message is correctly tagged.
         String tag = getTag();
 
@@ -236,20 +239,20 @@ public abstract class Logger implements ILogger {
             message = null;
         }
         if (message == null) {
-            if (t == null) {
+            if (throwable == null) {
                 return; // Swallow message if it's null and there's no throwable.
             }
-            message = getStackTraceString(t);
+            message = getStackTraceString(throwable);
         } else {
             if (args != null && args.length > 0) {
                 message = formatMessage(message, args);
             }
-            if (t != null) {
-                message += "\n" + getStackTraceString(t);
+            if (throwable != null) {
+                message += "\n" + getStackTraceString(throwable);
             }
         }
 
-        log(priority, tag, message, t);
+        log(priority, tag, message, throwable);
     }
 
     /**
@@ -269,6 +272,14 @@ public abstract class Logger implements ILogger {
         return sw.toString();
     }
 
+    public ThreadLocal<String> getExplicitTag() {
+        return explicitTag;
+    }
+
+    public ThreadLocal<Boolean> getPretty() {
+        return pretty;
+    }
+
     @Nullable
     protected String getTag() {
         String tag = explicitTag.get();
@@ -276,6 +287,17 @@ public abstract class Logger implements ILogger {
             explicitTag.remove();
         }
         return tag;
+    }
+
+    protected boolean isPretty() {
+        Boolean isPretty = pretty.get();
+        if (isPretty != null) {
+            pretty.set(false);
+
+            return isPretty;
+        }
+
+        return false;
     }
 
     /**

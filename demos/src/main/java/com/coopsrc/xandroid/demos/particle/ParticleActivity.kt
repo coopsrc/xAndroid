@@ -49,16 +49,23 @@ class ParticleActivity : AppCompatActivity() {
 //        LogUtils.i(exception, "testLogUtils: [%d, %d]", 1920, 1080)
 //
 //        LogUtils.w(exception)
-        LogUtils.w("testLogUtils: [%d, %d]", 1920, 1080)
+        LogUtils.pretty().w(
+            "testLogUtils: [%d, %d] kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+            1920,
+            1080
+        )
 //        LogUtils.w(exception, "testLogUtils: [%d, %d]", 1920, 1080)
 //
-//        LogUtils.e(exception)
+        LogUtils.e(exception)
         LogUtils.e("testLogUtils: [%d, %d]", 1920, 1080)
-//        LogUtils.e(exception, "testLogUtils: [%d, %d]", 1920, 1080)
+        LogUtils.pretty().e(exception, "testLogUtils: [%d, %d]", 1920, 1080)
 //
 //        LogUtils.wtf(exception)
         LogUtils.wtf("testLogUtils: [%d, %d]", 1920, 1080)
 //        LogUtils.wtf(exception, "testLogUtils: [%d, %d]", 1920, 1080)
+
+        LogUtils.pretty().w("testLogUtils: [%d, %d]", 1920, 1080)
+        LogUtils.pretty("Particle").w("testLogUtils: [%d, %d]", 1920, 1080)
     }
 
 }

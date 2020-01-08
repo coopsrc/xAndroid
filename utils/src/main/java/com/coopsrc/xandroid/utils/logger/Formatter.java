@@ -23,14 +23,14 @@ import java.util.regex.Pattern;
  * <p>
  * Datetime: 2020-01-08 15:15
  */
-abstract class Formatter implements IPrinter {
+public abstract class Formatter implements IPrinter {
 
-    final IPrinter printer;
+    protected final IPrinter printer;
 
-    private static final int MAX_LOG_LENGTH = 4000;
-    private static final int MAX_TAG_LENGTH = 23;
-    private static final int CALL_STACK_INDEX = 5;
-    private static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
+    static final int MAX_LOG_LENGTH = 4000;
+    static final int MAX_TAG_LENGTH = 23;
+    static final int CALL_STACK_INDEX = 5;
+    static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
 
     public Formatter() {
         printer = new LogcatPrinter();

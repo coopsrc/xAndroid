@@ -19,16 +19,12 @@ package com.coopsrc.xandroid.utils.logger;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.regex.Pattern;
-
 /**
  * @author tingkuo
  * <p>
  * Datetime: 2020-01-08 15:13
  */
 final class DefaultFormatter extends Formatter {
-
-    private static final int MAX_LOG_LENGTH = 4000;
 
     public DefaultFormatter() {
         super();

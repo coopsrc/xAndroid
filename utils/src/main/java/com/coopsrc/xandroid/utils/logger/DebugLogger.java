@@ -36,12 +36,10 @@ public class DebugLogger extends Logger {
     private static final int CALL_STACK_INDEX = 5;
     private static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
 
+    private static final Formatter prettyFormatter = new PrettyFormatter();
+
     public DebugLogger() {
         super();
-    }
-
-    public DebugLogger(Formatter formatter) {
-        super(formatter);
     }
 
     @Nullable
@@ -85,6 +83,10 @@ public class DebugLogger extends Logger {
      */
     @Override
     public void log(int priority, String tag, @NonNull String message, Throwable t) {
-        formatter.println(priority, tag, message);
+        if (isPretty()) {
+            prettyFormatter.println(priority, tag, message);
+        } else {
+            formatter.println(priority, tag, message);
+        }
     }
 }

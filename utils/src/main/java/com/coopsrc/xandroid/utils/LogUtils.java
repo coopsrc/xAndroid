@@ -200,9 +200,26 @@ public final class LogUtils {
      */
     @NonNull
     public static Logger tag(String tag) {
-        Logger[] forest = sLoggers;
-        for (Logger logger : forest) {
-            logger.explicitTag.set(tag);
+        Logger[] loggers = sLoggers;
+        for (Logger logger : loggers) {
+            logger.getExplicitTag().set(tag);
+        }
+        return PROXY;
+    }
+
+    public static Logger pretty() {
+        Logger[] loggers = sLoggers;
+        for (Logger logger : loggers) {
+            logger.getPretty().set(true);
+        }
+        return PROXY;
+    }
+
+    public static Logger pretty(String tag) {
+        Logger[] loggers = sLoggers;
+        for (Logger logger : loggers) {
+            logger.getExplicitTag().set(tag);
+            logger.getPretty().set(true);
         }
         return PROXY;
     }

@@ -9,7 +9,7 @@ rootProject.ext {
     majorVersion = 1
     minorVersion = 7
     revisionVersion = 2
-    snapshotVersion = 1
+    snapshotVersion = 2
     versionCode = generateVersionCode(majorVersion, minorVersion, revisionVersion)
     versionNameBase = generateVersionName(majorVersion, minorVersion, revisionVersion)
     versionNameAlpha = versionNameBase + '-alpha' + snapshotVersion

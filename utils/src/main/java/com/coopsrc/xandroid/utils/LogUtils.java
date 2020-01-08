@@ -16,19 +16,13 @@
 
 package com.coopsrc.xandroid.utils;
 
-import android.os.Build;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import com.coopsrc.xandroid.utils.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author tingkuo
@@ -36,151 +30,160 @@ import java.util.regex.Pattern;
  * Date: 2019-08-30 16:40
  */
 public final class LogUtils {
+
+    private static final Logger[] LOGGER_ARRAY_EMPTY = new Logger[0];
+    private static final List<Logger> LOGGER_LIST = new ArrayList<>();
+    private static volatile Logger[] sLoggers = LOGGER_ARRAY_EMPTY;
+
+    private LogUtils() {
+        throw new AssertionError("No instances.");
+    }
+
     /**
      * Log a verbose message with optional format args.
      */
     public static void v(@NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.v(message, args);
+        PROXY.v(message, args);
     }
 
     /**
      * Log a verbose exception and a message with optional format args.
      */
     public static void v(Throwable t, @NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.v(t, message, args);
+        PROXY.v(t, message, args);
     }
 
     /**
      * Log a verbose exception.
      */
     public static void v(Throwable t) {
-        LOGGER_OF_SOULS.v(t);
+        PROXY.v(t);
     }
 
     /**
      * Log a debug message with optional format args.
      */
     public static void d(@NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.d(message, args);
+        PROXY.d(message, args);
     }
 
     /**
      * Log a debug exception and a message with optional format args.
      */
     public static void d(Throwable t, @NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.d(t, message, args);
+        PROXY.d(t, message, args);
     }
 
     /**
      * Log a debug exception.
      */
     public static void d(Throwable t) {
-        LOGGER_OF_SOULS.d(t);
+        PROXY.d(t);
     }
 
     /**
      * Log an info message with optional format args.
      */
     public static void i(@NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.i(message, args);
+        PROXY.i(message, args);
     }
 
     /**
      * Log an info exception and a message with optional format args.
      */
     public static void i(Throwable t, @NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.i(t, message, args);
+        PROXY.i(t, message, args);
     }
 
     /**
      * Log an info exception.
      */
     public static void i(Throwable t) {
-        LOGGER_OF_SOULS.i(t);
+        PROXY.i(t);
     }
 
     /**
      * Log a warning message with optional format args.
      */
     public static void w(@NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.w(message, args);
+        PROXY.w(message, args);
     }
 
     /**
      * Log a warning exception and a message with optional format args.
      */
     public static void w(Throwable t, @NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.w(t, message, args);
+        PROXY.w(t, message, args);
     }
 
     /**
      * Log a warning exception.
      */
     public static void w(Throwable t) {
-        LOGGER_OF_SOULS.w(t);
+        PROXY.w(t);
     }
 
     /**
      * Log an error message with optional format args.
      */
     public static void e(@NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.e(message, args);
+        PROXY.e(message, args);
     }
 
     /**
      * Log an error exception and a message with optional format args.
      */
     public static void e(Throwable t, @NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.e(t, message, args);
+        PROXY.e(t, message, args);
     }
 
     /**
      * Log an error exception.
      */
     public static void e(Throwable t) {
-        LOGGER_OF_SOULS.e(t);
+        PROXY.e(t);
     }
 
     /**
      * Log an assert message with optional format args.
      */
     public static void wtf(@NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.wtf(message, args);
+        PROXY.wtf(message, args);
     }
 
     /**
      * Log an assert exception and a message with optional format args.
      */
     public static void wtf(Throwable t, @NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.wtf(t, message, args);
+        PROXY.wtf(t, message, args);
     }
 
     /**
      * Log an assert exception.
      */
     public static void wtf(Throwable t) {
-        LOGGER_OF_SOULS.wtf(t);
+        PROXY.wtf(t);
     }
 
     /**
      * Log at {@code priority} a message with optional format args.
      */
     public static void log(int priority, @NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.log(priority, message, args);
+        PROXY.log(priority, message, args);
     }
 
     /**
      * Log at {@code priority} an exception and a message with optional format args.
      */
     public static void log(int priority, Throwable t, @NonNull String message, Object... args) {
-        LOGGER_OF_SOULS.log(priority, t, message, args);
+        PROXY.log(priority, t, message, args);
     }
 
     /**
      * Log at {@code priority} an exception.
      */
     public static void log(int priority, Throwable t) {
-        LOGGER_OF_SOULS.log(priority, t);
+        PROXY.log(priority, t);
     }
 
     /**
@@ -189,7 +192,7 @@ public final class LogUtils {
      */
     @NonNull
     public static Logger asLogger() {
-        return LOGGER_OF_SOULS;
+        return PROXY;
     }
 
     /**
@@ -197,35 +200,50 @@ public final class LogUtils {
      */
     @NonNull
     public static Logger tag(String tag) {
-        Logger[] forest = forestAsArray;
-        for (Logger logger : forest) {
-            logger.explicitTag.set(tag);
+        Logger[] loggers = sLoggers;
+        for (Logger logger : loggers) {
+            logger.getExplicitTag().set(tag);
         }
-        return LOGGER_OF_SOULS;
+        return PROXY;
+    }
+
+    public static Logger pretty() {
+        Logger[] loggers = sLoggers;
+        for (Logger logger : loggers) {
+            logger.getPretty().set(true);
+        }
+        return PROXY;
+    }
+
+    public static Logger pretty(String tag) {
+        Logger[] loggers = sLoggers;
+        for (Logger logger : loggers) {
+            logger.getExplicitTag().set(tag);
+            logger.getPretty().set(true);
+        }
+        return PROXY;
     }
 
     /**
      * Add a new logging logger.
      */
-    @SuppressWarnings("ConstantConditions") // Validating public API contract.
-    public static void plant(@NonNull Logger logger) {
+    public static void register(@NonNull Logger logger) {
         if (logger == null) {
             throw new NullPointerException("logger == null");
         }
-        if (logger == LOGGER_OF_SOULS) {
-            throw new IllegalArgumentException("Cannot plant LogUtils into itself.");
+        if (logger == PROXY) {
+            throw new IllegalArgumentException("Cannot register LogUtils into itself.");
         }
-        synchronized (FOREST) {
-            FOREST.add(logger);
-            forestAsArray = FOREST.toArray(new Logger[FOREST.size()]);
+        synchronized (LOGGER_LIST) {
+            LOGGER_LIST.add(logger);
+            sLoggers = LOGGER_LIST.toArray(new Logger[0]);
         }
     }
 
     /**
      * Adds new logging loggers.
      */
-    @SuppressWarnings("ConstantConditions") // Validating public API contract.
-    public static void plant(@NonNull Logger... loggers) {
+    public static void register(@NonNull Logger... loggers) {
         if (loggers == null) {
             throw new NullPointerException("loggers == null");
         }
@@ -233,66 +251,65 @@ public final class LogUtils {
             if (logger == null) {
                 throw new NullPointerException("loggers contains null");
             }
-            if (logger == LOGGER_OF_SOULS) {
-                throw new IllegalArgumentException("Cannot plant LogUtils into itself.");
+            if (logger == PROXY) {
+                throw new IllegalArgumentException("Cannot register LogUtils into itself.");
             }
         }
-        synchronized (FOREST) {
-            Collections.addAll(FOREST, loggers);
-            forestAsArray = FOREST.toArray(new Logger[FOREST.size()]);
+        synchronized (LOGGER_LIST) {
+            Collections.addAll(LOGGER_LIST, loggers);
+            sLoggers = LOGGER_LIST.toArray(new Logger[0]);
         }
     }
 
     /**
-     * Remove a planted logger.
+     * Remove a registered logger.
      */
-    public static void uproot(@NonNull Logger logger) {
-        synchronized (FOREST) {
-            if (!FOREST.remove(logger)) {
-                throw new IllegalArgumentException("Cannot uproot logger which is not planted: " + logger);
+    public static void unregister(@NonNull Logger logger) {
+        synchronized (LOGGER_LIST) {
+            if (!LOGGER_LIST.remove(logger)) {
+                throw new IllegalArgumentException("Cannot unregister logger which is not planted: " + logger);
             }
-            forestAsArray = FOREST.toArray(new Logger[FOREST.size()]);
+            sLoggers = LOGGER_LIST.toArray(new Logger[0]);
         }
     }
 
     /**
-     * Remove all planted trees.
+     * Remove all registered trees.
      */
-    public static void uprootAll() {
-        synchronized (FOREST) {
-            FOREST.clear();
-            forestAsArray = LOGGER_ARRAY_EMPTY;
+    public static void unregisterAll() {
+        synchronized (LOGGER_LIST) {
+            LOGGER_LIST.clear();
+            sLoggers = LOGGER_ARRAY_EMPTY;
         }
     }
 
     /**
-     * Return a copy of all planted {@linkplain Logger trees}.
+     * Return a copy of all registered {@linkplain Logger LOGGER_LIST}.
      */
     @NonNull
-    public static List<Logger> forest() {
-        synchronized (FOREST) {
-            return Collections.unmodifiableList(new ArrayList<>(FOREST));
+    public static List<Logger> loggerList() {
+        synchronized (LOGGER_LIST) {
+            return Collections.unmodifiableList(new ArrayList<>(LOGGER_LIST));
         }
     }
 
-    public static int treeCount() {
-        synchronized (FOREST) {
-            return FOREST.size();
-        }
-    }
-
-    private static final Logger[] LOGGER_ARRAY_EMPTY = new Logger[0];
-    // Both fields guarded by 'FOREST'.
-    private static final List<Logger> FOREST = new ArrayList<>();
-    static volatile Logger[] forestAsArray = LOGGER_ARRAY_EMPTY;
 
     /**
-     * A {@link Logger} that delegates to all planted trees in the {@linkplain #FOREST forest}.
+     * Return a copy of all registered {@linkplain Logger}.
      */
-    private static final Logger LOGGER_OF_SOULS = new Logger() {
+    public static int loggerCount() {
+        synchronized (LOGGER_LIST) {
+            return LOGGER_LIST.size();
+        }
+    }
+
+    /**
+     * A {@link Logger} that delegates to all registered loggers in the {@linkplain #LOGGER_LIST}.
+     */
+    private static final Logger PROXY = new Logger() {
         @Override
         public void v(String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.v(message, args);
             }
@@ -300,7 +317,7 @@ public final class LogUtils {
 
         @Override
         public void v(Throwable t, String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.v(t, message, args);
             }
@@ -308,7 +325,7 @@ public final class LogUtils {
 
         @Override
         public void v(Throwable t) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.v(t);
             }
@@ -316,7 +333,7 @@ public final class LogUtils {
 
         @Override
         public void d(String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.d(message, args);
             }
@@ -324,7 +341,7 @@ public final class LogUtils {
 
         @Override
         public void d(Throwable t, String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.d(t, message, args);
             }
@@ -332,7 +349,7 @@ public final class LogUtils {
 
         @Override
         public void d(Throwable t) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.d(t);
             }
@@ -340,7 +357,7 @@ public final class LogUtils {
 
         @Override
         public void i(String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.i(message, args);
             }
@@ -348,7 +365,7 @@ public final class LogUtils {
 
         @Override
         public void i(Throwable t, String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.i(t, message, args);
             }
@@ -356,7 +373,7 @@ public final class LogUtils {
 
         @Override
         public void i(Throwable t) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.i(t);
             }
@@ -364,7 +381,7 @@ public final class LogUtils {
 
         @Override
         public void w(String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.w(message, args);
             }
@@ -372,7 +389,7 @@ public final class LogUtils {
 
         @Override
         public void w(Throwable t, String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.w(t, message, args);
             }
@@ -380,7 +397,7 @@ public final class LogUtils {
 
         @Override
         public void w(Throwable t) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.w(t);
             }
@@ -388,7 +405,7 @@ public final class LogUtils {
 
         @Override
         public void e(String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.e(message, args);
             }
@@ -396,7 +413,7 @@ public final class LogUtils {
 
         @Override
         public void e(Throwable t, String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.e(t, message, args);
             }
@@ -404,7 +421,7 @@ public final class LogUtils {
 
         @Override
         public void e(Throwable t) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.e(t);
             }
@@ -412,7 +429,7 @@ public final class LogUtils {
 
         @Override
         public void wtf(String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.wtf(message, args);
             }
@@ -420,7 +437,7 @@ public final class LogUtils {
 
         @Override
         public void wtf(Throwable t, String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.wtf(t, message, args);
             }
@@ -428,7 +445,7 @@ public final class LogUtils {
 
         @Override
         public void wtf(Throwable t) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.wtf(t);
             }
@@ -436,7 +453,7 @@ public final class LogUtils {
 
         @Override
         public void log(int priority, String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.log(priority, message, args);
             }
@@ -444,7 +461,7 @@ public final class LogUtils {
 
         @Override
         public void log(int priority, Throwable t, String message, Object... args) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.log(priority, t, message, args);
             }
@@ -452,337 +469,16 @@ public final class LogUtils {
 
         @Override
         public void log(int priority, Throwable t) {
-            Logger[] forest = forestAsArray;
+            Logger[] forest = sLoggers;
             for (Logger logger : forest) {
                 logger.log(priority, t);
             }
         }
 
         @Override
-        protected void log(int priority, String tag, @NonNull String message, Throwable t) {
+        public void log(int priority, String tag, @NonNull String message, Throwable t) {
             throw new AssertionError("Missing override for log method.");
         }
     };
 
-    private LogUtils() {
-        throw new AssertionError("No instances.");
-    }
-
-    /**
-     * A facade for handling logging calls. Install instances via {@link #plant LogUtils.plant()}.
-     */
-    public static abstract class Logger {
-        final ThreadLocal<String> explicitTag = new ThreadLocal<>();
-
-        @Nullable
-        String getTag() {
-            String tag = explicitTag.get();
-            if (tag != null) {
-                explicitTag.remove();
-            }
-            return tag;
-        }
-
-        /**
-         * Log a verbose message with optional format args.
-         */
-        public void v(String message, Object... args) {
-            prepareLog(Log.VERBOSE, null, message, args);
-        }
-
-        /**
-         * Log a verbose exception and a message with optional format args.
-         */
-        public void v(Throwable t, String message, Object... args) {
-            prepareLog(Log.VERBOSE, t, message, args);
-        }
-
-        /**
-         * Log a verbose exception.
-         */
-        public void v(Throwable t) {
-            prepareLog(Log.VERBOSE, t, null);
-        }
-
-        /**
-         * Log a debug message with optional format args.
-         */
-        public void d(String message, Object... args) {
-            prepareLog(Log.DEBUG, null, message, args);
-        }
-
-        /**
-         * Log a debug exception and a message with optional format args.
-         */
-        public void d(Throwable t, String message, Object... args) {
-            prepareLog(Log.DEBUG, t, message, args);
-        }
-
-        /**
-         * Log a debug exception.
-         */
-        public void d(Throwable t) {
-            prepareLog(Log.DEBUG, t, null);
-        }
-
-        /**
-         * Log an info message with optional format args.
-         */
-        public void i(String message, Object... args) {
-            prepareLog(Log.INFO, null, message, args);
-        }
-
-        /**
-         * Log an info exception and a message with optional format args.
-         */
-        public void i(Throwable t, String message, Object... args) {
-            prepareLog(Log.INFO, t, message, args);
-        }
-
-        /**
-         * Log an info exception.
-         */
-        public void i(Throwable t) {
-            prepareLog(Log.INFO, t, null);
-        }
-
-        /**
-         * Log a warning message with optional format args.
-         */
-        public void w(String message, Object... args) {
-            prepareLog(Log.WARN, null, message, args);
-        }
-
-        /**
-         * Log a warning exception and a message with optional format args.
-         */
-        public void w(Throwable t, String message, Object... args) {
-            prepareLog(Log.WARN, t, message, args);
-        }
-
-        /**
-         * Log a warning exception.
-         */
-        public void w(Throwable t) {
-            prepareLog(Log.WARN, t, null);
-        }
-
-        /**
-         * Log an error message with optional format args.
-         */
-        public void e(String message, Object... args) {
-            prepareLog(Log.ERROR, null, message, args);
-        }
-
-        /**
-         * Log an error exception and a message with optional format args.
-         */
-        public void e(Throwable t, String message, Object... args) {
-            prepareLog(Log.ERROR, t, message, args);
-        }
-
-        /**
-         * Log an error exception.
-         */
-        public void e(Throwable t) {
-            prepareLog(Log.ERROR, t, null);
-        }
-
-        /**
-         * Log an assert message with optional format args.
-         */
-        public void wtf(String message, Object... args) {
-            prepareLog(Log.ASSERT, null, message, args);
-        }
-
-        /**
-         * Log an assert exception and a message with optional format args.
-         */
-        public void wtf(Throwable t, String message, Object... args) {
-            prepareLog(Log.ASSERT, t, message, args);
-        }
-
-        /**
-         * Log an assert exception.
-         */
-        public void wtf(Throwable t) {
-            prepareLog(Log.ASSERT, t, null);
-        }
-
-        /**
-         * Log at {@code priority} a message with optional format args.
-         */
-        public void log(int priority, String message, Object... args) {
-            prepareLog(priority, null, message, args);
-        }
-
-        /**
-         * Log at {@code priority} an exception and a message with optional format args.
-         */
-        public void log(int priority, Throwable t, String message, Object... args) {
-            prepareLog(priority, t, message, args);
-        }
-
-        /**
-         * Log at {@code priority} an exception.
-         */
-        public void log(int priority, Throwable t) {
-            prepareLog(priority, t, null);
-        }
-
-        /**
-         * Return whether a message at {@code priority} should be logged.
-         *
-         * @deprecated use {@link #isLoggable(String, int)} instead.
-         */
-        protected boolean isLoggable(int priority) {
-            return true;
-        }
-
-        /**
-         * Return whether a message at {@code priority} or {@code tag} should be logged.
-         */
-        protected boolean isLoggable(@Nullable String tag, int priority) {
-            //noinspection deprecation
-            return isLoggable(priority);
-        }
-
-        private void prepareLog(int priority, Throwable t, String message, Object... args) {
-            // Consume tag even when message is not loggable so that next message is correctly tagged.
-            String tag = getTag();
-
-            if (!isLoggable(tag, priority)) {
-                return;
-            }
-            if (message != null && message.length() == 0) {
-                message = null;
-            }
-            if (message == null) {
-                if (t == null) {
-                    return; // Swallow message if it's null and there's no throwable.
-                }
-                message = getStackTraceString(t);
-            } else {
-                if (args != null && args.length > 0) {
-                    message = formatMessage(message, args);
-                }
-                if (t != null) {
-                    message += "\n" + getStackTraceString(t);
-                }
-            }
-
-            log(priority, tag, message, t);
-        }
-
-        /**
-         * Formats a log message with optional arguments.
-         */
-        protected String formatMessage(@NonNull String message, @NonNull Object[] args) {
-            return String.format(message, args);
-        }
-
-        private String getStackTraceString(Throwable t) {
-            // Don't replace this with Log.getStackTraceString() - it hides
-            // UnknownHostException, which is not what we want.
-            StringWriter sw = new StringWriter(256);
-            PrintWriter pw = new PrintWriter(sw, false);
-            t.printStackTrace(pw);
-            pw.flush();
-            return sw.toString();
-        }
-
-        /**
-         * Write a log message to its destination. Called for all level-specific methods by default.
-         *
-         * @param priority Log level. See {@link Log} for constants.
-         * @param tag      Explicit or inferred tag. May be {@code null}.
-         * @param message  Formatted log message. May be {@code null}, but then {@code t} will not be.
-         * @param t        Accompanying exceptions. May be {@code null}, but then {@code message} will not be.
-         */
-        protected abstract void log(int priority, @Nullable String tag, @NonNull String message, @Nullable Throwable t);
-    }
-
-    /**
-     * A {@link Logger Logger} for debug builds. Automatically infers the tag from the calling class.
-     */
-    public static class DebugLogger extends Logger {
-        private static final int MAX_LOG_LENGTH = 4000;
-        private static final int MAX_TAG_LENGTH = 23;
-        private static final int CALL_STACK_INDEX = 5;
-        private static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
-
-        /**
-         * Extract the tag which should be used for the message from the {@code element}. By default
-         * this will use the class name without any anonymous class suffixes (e.g., {@code Foo$1}
-         * becomes {@code Foo}).
-         * <p>
-         * Note: This will not be called if a {@linkplain #tag(String) manual tag} was specified.
-         */
-        @Nullable
-        protected String createStackElementTag(@NonNull StackTraceElement element) {
-            String tag = element.getClassName();
-            Matcher m = ANONYMOUS_CLASS.matcher(tag);
-            if (m.find()) {
-                tag = m.replaceAll("");
-            }
-            tag = tag.substring(tag.lastIndexOf('.') + 1);
-            // Tag length limit was removed in API 24.
-            if (tag.length() <= MAX_TAG_LENGTH || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return tag;
-            }
-            return tag.substring(0, MAX_TAG_LENGTH);
-        }
-
-        @Override
-        final String getTag() {
-            String tag = super.getTag();
-            if (tag != null) {
-                return tag;
-            }
-
-            // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
-            // because Robolectric runs them on the JVM but on Android the elements are different.
-            StackTraceElement[] stackTrace = new Throwable().getStackTrace();
-            if (stackTrace.length <= CALL_STACK_INDEX) {
-                throw new IllegalStateException(
-                        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
-            }
-            return createStackElementTag(stackTrace[CALL_STACK_INDEX]);
-        }
-
-        /**
-         * Break up {@code message} into maximum-length chunks (if needed) and send to either
-         * {@link Log#println(int, String, String) Log.println()} or
-         * {@link Log#wtf(String, String) Log.wtf()} for logging.
-         * <p>
-         * {@inheritDoc}
-         */
-        @Override
-        protected void log(int priority, String tag, @NonNull String message, Throwable t) {
-            if (message.length() < MAX_LOG_LENGTH) {
-                if (priority == Log.ASSERT) {
-                    Log.wtf(tag, message);
-                } else {
-                    Log.println(priority, tag, message);
-                }
-                return;
-            }
-
-            // Split by line, then ensure each line can fit into Log's maximum length.
-            for (int i = 0, length = message.length(); i < length; i++) {
-                int newline = message.indexOf('\n', i);
-                newline = newline != -1 ? newline : length;
-                do {
-                    int end = Math.min(newline, i + MAX_LOG_LENGTH);
-                    String part = message.substring(i, end);
-                    if (priority == Log.ASSERT) {
-                        Log.wtf(tag, part);
-                    } else {
-                        Log.println(priority, tag, part);
-                    }
-                    i = end;
-                } while (i < newline);
-            }
-        }
-    }
 }

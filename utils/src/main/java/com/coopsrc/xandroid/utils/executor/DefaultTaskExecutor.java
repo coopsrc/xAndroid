@@ -101,7 +101,7 @@ public class DefaultTaskExecutor extends TaskExecutor {
             return Handler.createAsync(looper);
         }
         try {
-            return Handler.class.getDeclaredConstructor(Looper.class, Handler.Callback.class,boolean.class)
+            return Handler.class.getDeclaredConstructor(Looper.class, Handler.Callback.class, boolean.class)
                     .newInstance(looper, null, true);
         } catch (IllegalAccessException | InstantiationException | NoSuchMethodException ignored) {
         } catch (InvocationTargetException e) {

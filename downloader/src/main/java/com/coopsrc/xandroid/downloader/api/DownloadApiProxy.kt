@@ -11,7 +11,7 @@ import retrofit2.CallAdapter
 import retrofit2.Response
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
-internal object DownloadApiProxy : BaseApiProxy<DownloadApiService >() {
+internal object DownloadApiProxy : BaseApiProxy<DownloadApiService>() {
 
     private const val tag = "DownloadApiImpl"
 

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.opengl.GLES31;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import com.coopsrc.android.particle.Particle;
 import com.coopsrc.android.particle.R;
@@ -25,6 +26,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 
 public class ParticleRenderer extends BaseParticleRenderer {
+    private static final String TAG = "ParticleRenderer";
 
     private static final double NANOSECONDS = TimeUnit.SECONDS.toNanos(1);
 
@@ -113,45 +115,9 @@ public class ParticleRenderer extends BaseParticleRenderer {
         render(particles.size());
     }
 
-    private void setupTextures(TextureAtlas textureAtlas) {
-        int[] textures = new int[1];
-        GLES31.glGenTextures(1, textures, 0);
-        GLES31.glActiveTexture(GLES31.GL_TEXTURE0);
-        GLES31.glBindTexture(GLES31.GL_TEXTURE_2D, textures[0]);
-        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MIN_FILTER, GLES31.GL_LINEAR);
-        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MAG_FILTER, GLES31.GL_LINEAR);
-        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_S, GLES31.GL_CLAMP_TO_EDGE);
-        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_T, GLES31.GL_CLAMP_TO_EDGE);
-        GLUtils.texImage2D(GLES31.GL_TEXTURE_2D, 0, createBitmap(textureAtlas), 0);
-
-        List<Region> regions = textureAtlas.getRegions();
-        textureCoordsCacheArray = new float[regions.size() * 8];
-        final int k = 8;
-        float atlasWidth = textureAtlas.getWidth();
-        float atlasHeight = textureAtlas.getHeight();
-        for (int i = 0; i < regions.size(); i++) {
-            Region region = regions.get(i);
-            GLUtils.texSubImage2D(GLES31.GL_TEXTURE_2D, 0, region.x, region.y, region.bitmap);
-            float x0 = region.x / atlasWidth;
-            float y0 = region.y / atlasHeight;
-            float x1 = x0 + region.bitmap.getWidth() / atlasWidth;
-            float y1 = y0 + region.bitmap.getHeight() / atlasHeight;
-            List<Float> coords = Arrays.asList(x0, y0, x0, y1, x1, y1, x1, y0);
-            if (region.cwRotated) {
-                Collections.rotate(coords, 2);
-            }
-            for (int j = 0; j < coords.size(); j++) {
-                textureCoordsCacheArray[i * k + j] = coords.get(j);
-            }
-        }
-    }
-
-    private Bitmap createBitmap(TextureAtlas textureAtlas) {
-        return Bitmap.createBitmap(textureAtlas.getWidth(), textureAtlas.getHeight(), Bitmap.Config.ARGB_8888);
-    }
-
     private void setupBuffers() {
         int maxCount = particleSystem.getMaxCount();
+        Log.i(TAG, "setupBuffers: maxCount=" + maxCount);
 
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(maxCount * 8 * 4);
         byteBuffer.order(ByteOrder.nativeOrder());
@@ -187,6 +153,47 @@ public class ParticleRenderer extends BaseParticleRenderer {
         }
     }
 
+    private void setupTextures(TextureAtlas textureAtlas) {
+        int[] textures = new int[1];
+        GLES31.glGenTextures(1, textures, 0);
+        GLES31.glActiveTexture(GLES31.GL_TEXTURE0);
+        GLES31.glBindTexture(GLES31.GL_TEXTURE_2D, textures[0]);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MIN_FILTER, GLES31.GL_LINEAR);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MAG_FILTER, GLES31.GL_LINEAR);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_S, GLES31.GL_CLAMP_TO_EDGE);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_T, GLES31.GL_CLAMP_TO_EDGE);
+        GLUtils.texImage2D(GLES31.GL_TEXTURE_2D, 0, createBitmap(textureAtlas), 0);
+
+        List<Region> regions = textureAtlas.getRegions();
+        textureCoordsCacheArray = new float[regions.size() * 8];
+        final int k = 8;
+        float atlasWidth = textureAtlas.getWidth();
+        float atlasHeight = textureAtlas.getHeight();
+        for (int i = 0; i < regions.size(); i++) {
+            Region region = regions.get(i);
+            GLUtils.texSubImage2D(GLES31.GL_TEXTURE_2D, 0, region.x, region.y, region.bitmap);
+            float x0 = region.x / atlasWidth;
+            float y0 = region.y / atlasHeight;
+            float x1 = x0 + region.bitmap.getWidth() / atlasWidth;
+            float y1 = y0 + region.bitmap.getHeight() / atlasHeight;
+            List<Float> coords = Arrays.asList(x0, y0, x0, y1, x1, y1, x1, y0);
+            if (region.cwRotated) {
+                Collections.rotate(coords, 2);
+            }
+            for (int j = 0; j < coords.size(); j++) {
+                textureCoordsCacheArray[i * k + j] = coords.get(j);
+            }
+        }
+    }
+
+    private Bitmap createBitmap(TextureAtlas textureAtlas) {
+        return createBitmap(textureAtlas.getWidth(), textureAtlas.getHeight());
+    }
+
+    private Bitmap createBitmap(int width, int height) {
+        return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+    }
+
     private void updateBuffers(List<? extends Particle> particles) {
         final int k1 = 8;
         final int k2 = 4;
@@ -217,6 +224,7 @@ public class ParticleRenderer extends BaseParticleRenderer {
     }
 
     private void render(int count) {
+        Log.v(TAG, "render: " + count);
         GLES31.glClear(GLES31.GL_COLOR_BUFFER_BIT | GLES31.GL_DEPTH_BUFFER_BIT);
 
         int matrixHandle = GLES31.glGetUniformLocation(program, "uMvpMatrix");
@@ -225,9 +233,6 @@ public class ParticleRenderer extends BaseParticleRenderer {
         int positionHandle = GLES31.glGetAttribLocation(program, "aPosition");
         GLES31.glEnableVertexAttribArray(positionHandle);
         GLES31.glVertexAttribPointer(positionHandle, 2, GLES31.GL_FLOAT, false, 0, vertexBuffer);
-
-        int textureHandle = GLES31.glGetUniformLocation(program, "uTexture");
-        GLES31.glUniform1i(textureHandle, 0);
 
         int textureCoordsHandle = GLES31.glGetAttribLocation(program, "aTextureCoords");
         GLES31.glEnableVertexAttribArray(textureCoordsHandle);

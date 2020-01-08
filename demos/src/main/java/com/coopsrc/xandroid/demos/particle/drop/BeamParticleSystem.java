@@ -13,7 +13,7 @@ import static java.lang.Math.pow;
 
 public class BeamParticleSystem implements ParticleSystem {
 
-    private static final int INTENSITY = 8;
+    private static final int INTENSITY = 12;
     private static final int MIN_SIZE = 4;
     private static final int MAX_SIZE = 48;
     private static final float MAX_Y_VELOCITY = 300f;

@@ -37,8 +37,9 @@ internal class RangeDownloader(downloadTask: DownloadTask) : Downloader(download
         downloaderProxy = RangeDownloaderProxy(downloadTask)
 
         if (segmentsAction.exist(downloadTask.taskInfo.tag)
-                && !downloaderProxy.isTargetDelete()
-                && !downloaderProxy.isCacheDelete()) {
+            && !downloaderProxy.isTargetDelete()
+            && !downloaderProxy.isCacheDelete()
+        ) {
             segments.clear()
             segments.addAll(segmentsAction.list(downloadTask.taskInfo.tag))
         } else {
@@ -74,14 +75,14 @@ internal class RangeDownloader(downloadTask: DownloadTask) : Downloader(download
         }
 
         return Flowable.mergeDelayError(segmentFlowList, maxRange)
-                .doOnNext {
-                    segmentsAction.update(it)
-                    updateProgress(it)
-                }.map {
-                    downloadTask.taskInfo.progress
-                }.doOnComplete {
-                    downloaderProxy.doOnComplete()
-                }
+            .doOnNext {
+                segmentsAction.update(it)
+                updateProgress(it)
+            }.map {
+                downloadTask.taskInfo.progress
+            }.doOnComplete {
+                downloaderProxy.doOnComplete()
+            }
     }
 
     override fun checkLastModified() {

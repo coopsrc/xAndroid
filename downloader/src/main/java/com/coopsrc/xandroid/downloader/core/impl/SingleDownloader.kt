@@ -45,17 +45,17 @@ internal class SingleDownloader(downloadTask: DownloadTask) : Downloader(downloa
         downloaderProxy.initWorkspace()
 
         return Maybe.just(Constants.any)
-                .flatMap {
-                    DownloadApiProxy.download(downloadTask.taskInfo.url, provideRange())
-                }.flatMapPublisher {
-                    downloaderProxy.saveTargetFile(it)
-                }.map {
-                    it as Progress
-                }
+            .flatMap {
+                DownloadApiProxy.download(downloadTask.taskInfo.url, provideRange())
+            }.flatMapPublisher {
+                downloaderProxy.saveTargetFile(it)
+            }.map {
+                it as Progress
+            }
     }
 
     override fun checkLastModified() {
-        if (downloadTask.taskInfo.progress.hasUpdate()){
+        if (downloadTask.taskInfo.progress.hasUpdate()) {
             downloaderProxy.cleanWorkspace()
         }
     }

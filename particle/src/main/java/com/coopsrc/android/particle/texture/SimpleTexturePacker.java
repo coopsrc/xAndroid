@@ -26,6 +26,7 @@ public class SimpleTexturePacker {
      * Generates TextureAtlas from a list of drawables. You also need to provide its width and height because
      * current implementation can't calculate it automatically. Texture indices match with the order of textures in
      * the list.
+     *
      * @return generated TextureAtlas
      */
     public TextureAtlas pack(List<Integer> drawableIds, Resources res, int atlasWidth, int atlasHeight) {
@@ -40,6 +41,7 @@ public class SimpleTexturePacker {
      * Generates TextureAtlas from a list of bitmaps. You also need to provide its width and height because
      * current implementation can't calculate it automatically. Texture indices match with the order of textures in
      * the list.
+     *
      * @return generated TextureAtlas
      */
     public TextureAtlas pack(List<Bitmap> bitmaps, int atlasWidth, int atlasHeight) {
@@ -157,7 +159,7 @@ public class SimpleTexturePacker {
     }
 
     private void cleanUpFreeRects() {
-        for (int i = 0; i < freeRects.size(); i++)
+        for (int i = 0; i < freeRects.size(); i++) {
             for (int j = i + 1; j < freeRects.size(); j++) {
                 if (freeRects.get(j).contains(freeRects.get(i))) {
                     freeRects.remove(i--);
@@ -167,6 +169,7 @@ public class SimpleTexturePacker {
                     freeRects.remove(j--);
                 }
             }
+        }
     }
 
     private class Region {

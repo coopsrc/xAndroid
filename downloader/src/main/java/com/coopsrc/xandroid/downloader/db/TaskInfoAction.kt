@@ -65,7 +65,8 @@ internal class TaskInfoAction(private val briteDatabase: BriteDatabase) : Databa
 
         return briteDatabase.insert(
             TaskInfoColumns.TABLE_NAME,
-                SQLiteDatabase.CONFLICT_REPLACE, provideValues(data))
+            SQLiteDatabase.CONFLICT_REPLACE, provideValues(data)
+        )
     }
 
     override fun read(data: TaskInfo): Boolean {
@@ -99,8 +100,9 @@ internal class TaskInfoAction(private val briteDatabase: BriteDatabase) : Databa
 
         return briteDatabase.update(
             TaskInfoColumns.TABLE_NAME,
-                SQLiteDatabase.CONFLICT_REPLACE, provideValues(taskInfo),
-            TaskInfoColumns.UD_CLAUSE, taskInfo.tag)
+            SQLiteDatabase.CONFLICT_REPLACE, provideValues(taskInfo),
+            TaskInfoColumns.UD_CLAUSE, taskInfo.tag
+        )
     }
 
     private fun updateProgress(progress: Progress): Int {
@@ -108,8 +110,9 @@ internal class TaskInfoAction(private val briteDatabase: BriteDatabase) : Databa
 
         return briteDatabase.update(
             TaskInfoColumns.TABLE_NAME,
-                SQLiteDatabase.CONFLICT_REPLACE, provideValues(progress),
-            TaskInfoColumns.UD_CLAUSE, progress.tag)
+            SQLiteDatabase.CONFLICT_REPLACE, provideValues(progress),
+            TaskInfoColumns.UD_CLAUSE, progress.tag
+        )
     }
 
     override fun delete(data: TaskInfo): Int {
@@ -117,7 +120,8 @@ internal class TaskInfoAction(private val briteDatabase: BriteDatabase) : Databa
 
         return briteDatabase.delete(
             TaskInfoColumns.TABLE_NAME,
-            TaskInfoColumns.UD_CLAUSE, data.tag)
+            TaskInfoColumns.UD_CLAUSE, data.tag
+        )
     }
 
     override fun clear(): Int {
@@ -128,15 +132,15 @@ internal class TaskInfoAction(private val briteDatabase: BriteDatabase) : Databa
     private fun provideValues(taskInfo: TaskInfo): ContentValues {
         Logger.v(tag, "provideValues: $taskInfo")
         return ValuesBuilder()
-                .taskInfo(taskInfo)
-                .build()
+            .taskInfo(taskInfo)
+            .build()
     }
 
     private fun provideValues(progress: Progress): ContentValues {
         Logger.v(tag, "provideValues: $progress")
         return ValuesBuilder()
-                .downloadInfo(progress)
-                .build()
+            .downloadInfo(progress)
+            .build()
     }
 
     private inner class ValuesBuilder(private val values: ContentValues = ContentValues()) {
@@ -189,19 +193,19 @@ internal class TaskInfoAction(private val briteDatabase: BriteDatabase) : Databa
         fun taskInfo(taskInfo: TaskInfo): ValuesBuilder {
 
             return url(taskInfo.url)
-                    .saveName(taskInfo.saveName)
-                    .savePath(taskInfo.savePath)
-                    .type(taskInfo.type)
-                    .tag(taskInfo.tag)
-                    .downloadInfo(taskInfo.progress)
+                .saveName(taskInfo.saveName)
+                .savePath(taskInfo.savePath)
+                .type(taskInfo.type)
+                .tag(taskInfo.tag)
+                .downloadInfo(taskInfo.progress)
         }
 
         fun downloadInfo(progress: Progress): ValuesBuilder {
             return tag(progress.tag)
-                    .downloadSize(progress.downloadSize)
-                    .totalSize(progress.totalSize)
-                    .lastModified(progress.lastModified)
-                    .status(progress.status)
+                .downloadSize(progress.downloadSize)
+                .totalSize(progress.totalSize)
+                .lastModified(progress.lastModified)
+                .status(progress.status)
         }
 
         fun build(): ContentValues {

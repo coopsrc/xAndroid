@@ -35,7 +35,9 @@ public class FrameSequenceActivity extends AppCompatActivity {
 
         @Override
         public void releaseBitmap(Bitmap bitmap) {
-            if (!mBitmaps.contains(bitmap)) throw new IllegalStateException();
+            if (!mBitmaps.contains(bitmap)) {
+                throw new IllegalStateException();
+            }
             mBitmaps.remove(bitmap);
             bitmap.recycle();
         }
@@ -114,7 +116,9 @@ public class FrameSequenceActivity extends AppCompatActivity {
         View drawableView = findViewById(R.id.drawableview);
 
         frameSequenceDrawable.destroy();
-        if (!mProvider.isEmpty()) throw new IllegalStateException("All bitmaps not recycled");
+        if (!mProvider.isEmpty()) {
+            throw new IllegalStateException("All bitmaps not recycled");
+        }
 
         frameSequenceDrawable = null;
         drawableView.setBackground(null);

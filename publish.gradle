@@ -7,9 +7,10 @@ if (project.ext.has("xandroidPublishEnabled") && project.ext.xandroidPublishEnab
         repoName = "xAndroid"
         userOrg = "coopsrc"
         groupId = "com.coopsrc.xandroid"
-        website = "https://github.com/coopsrc/xAndroid"
+        website = "https://github.com/coopsrc"
         bintrayUser = System.getenv("BINTRAY_USER")
         bintrayKey = System.getenv("BINTRAY_KEY")
+        dryRun = false
     }
 
     gradle.taskGraph.whenReady { taskGraph ->

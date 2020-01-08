@@ -42,14 +42,14 @@ internal class DatabaseModule private constructor() {
 
     private fun createDatabase(context: Context): BriteDatabase {
         val sqlBrite = SqlBrite.Builder()
-                .logger(SqlLogger())
-                .build()
+            .logger(SqlLogger())
+            .build()
 
         val configuration = SupportSQLiteOpenHelper.Configuration
-                .builder(context.applicationContext)
-                .name(DatabaseCallback.DB_NAME)
-                .callback(DatabaseCallback())
-                .build()
+            .builder(context.applicationContext)
+            .name(DatabaseCallback.DB_NAME)
+            .callback(DatabaseCallback())
+            .build()
 
         val databaseHelper = FrameworkSQLiteOpenHelperFactory().create(configuration)
         val briteDatabase = sqlBrite.wrapDatabaseHelper(databaseHelper, Schedulers.io())

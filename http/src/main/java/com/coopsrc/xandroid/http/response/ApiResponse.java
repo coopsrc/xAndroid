@@ -47,7 +47,7 @@ public class ApiResponse<T> {
         }
     }
 
-    public boolean isSuccessful(){
+    public boolean isSuccessful() {
         return code >= 200 && code < 300;
     }
 

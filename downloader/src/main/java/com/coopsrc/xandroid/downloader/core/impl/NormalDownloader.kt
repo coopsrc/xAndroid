@@ -45,13 +45,13 @@ internal class NormalDownloader(downloadTask: DownloadTask) : Downloader(downloa
         downloaderProxy.initWorkspace()
 
         return Maybe.just(Constants.any)
-                .flatMap {
-                    DownloadApiProxy.download(downloadTask.taskInfo.url)
-                }.flatMapPublisher {
-                    downloaderProxy.saveTargetFile(it)
-                }.map {
-                    it as Progress
-                }
+            .flatMap {
+                DownloadApiProxy.download(downloadTask.taskInfo.url)
+            }.flatMapPublisher {
+                downloaderProxy.saveTargetFile(it)
+            }.map {
+                it as Progress
+            }
 
     }
 

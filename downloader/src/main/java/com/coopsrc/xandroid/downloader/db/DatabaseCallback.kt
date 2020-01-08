@@ -34,18 +34,19 @@ internal class DatabaseCallback : SupportSQLiteOpenHelper.Callback(DB_VERSION) {
         private const val SIZE_DEFAULT = " NOT NULL DEFAULT 0"
         private const val COMMA_SEP = ","
 
-        private const val SQL_CREATE_TASK_INFO = "CREATE TABLE " + TaskInfoColumns.TABLE_NAME + " (" +
-                TaskInfoColumns.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
-                TaskInfoColumns.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
-                TaskInfoColumns.COLUMN_NAME_PATH + TEXT_TYPE + COMMA_SEP +
-                TaskInfoColumns.COLUMN_NAME_TYPE + TEXT_TYPE + COMMA_SEP +
-                TaskInfoColumns.COLUMN_NAME_URL + TEXT_TYPE + COMMA_SEP +
-                TaskInfoColumns.COLUMN_NAME_DOWNLOAD + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
-                TaskInfoColumns.COLUMN_NAME_TOTAL_SIZE + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
-                TaskInfoColumns.COLUMN_NAME_TAG + TEXT_TYPE + COMMA_SEP +
-                TaskInfoColumns.COLUMN_NAME_MODIFIED + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
-                TaskInfoColumns.COLUMN_NAME_STATUS + TEXT_TYPE +
-                " )"
+        private const val SQL_CREATE_TASK_INFO =
+            "CREATE TABLE " + TaskInfoColumns.TABLE_NAME + " (" +
+                    TaskInfoColumns.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
+                    TaskInfoColumns.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
+                    TaskInfoColumns.COLUMN_NAME_PATH + TEXT_TYPE + COMMA_SEP +
+                    TaskInfoColumns.COLUMN_NAME_TYPE + TEXT_TYPE + COMMA_SEP +
+                    TaskInfoColumns.COLUMN_NAME_URL + TEXT_TYPE + COMMA_SEP +
+                    TaskInfoColumns.COLUMN_NAME_DOWNLOAD + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
+                    TaskInfoColumns.COLUMN_NAME_TOTAL_SIZE + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
+                    TaskInfoColumns.COLUMN_NAME_TAG + TEXT_TYPE + COMMA_SEP +
+                    TaskInfoColumns.COLUMN_NAME_MODIFIED + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
+                    TaskInfoColumns.COLUMN_NAME_STATUS + TEXT_TYPE +
+                    " )"
 
         private const val SQL_CREATE_SEGMENTS = "CREATE TABLE " + SegmentColumns.TABLE_NAME + " (" +
                 SegmentColumns.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +

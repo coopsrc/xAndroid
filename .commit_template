@@ -1,0 +1,14 @@
+<type>[<scope>]: <subject>
+
+    - <description>
+
+Type: <type>
+Scope: <scope>
+
+
+# type
+#   feature
+#   refactor
+#   release
+#   bugfix
+#   config

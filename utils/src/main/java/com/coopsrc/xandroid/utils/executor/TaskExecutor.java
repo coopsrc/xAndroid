@@ -14,12 +14,14 @@ public abstract class TaskExecutor {
      * @param runnable The runnable to run in the disk IO thread pool.
      */
     public abstract void executeOnDiskIO(@NonNull Runnable runnable);
+
     /**
      * Executes the given task in the network IO thread pool.
      *
      * @param runnable The runnable to run in the disk IO thread pool.
      */
     public abstract void executeOnNetworkIO(@NonNull Runnable runnable);
+
     /**
      * Executes the given task in the database IO thread pool.
      *

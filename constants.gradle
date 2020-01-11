@@ -41,7 +41,7 @@ rootProject.ext {
     squareup_retrofit = "2.7.0"
     squareup_sqlbrite3 = "3.2.0"
 
-    glide = "4.10.0"
+    glide = "4.11.0"
 
     modulePrefix = ":"
     if (gradle.ext.has('xandroidModulePrefix')) {

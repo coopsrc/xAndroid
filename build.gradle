@@ -26,14 +26,6 @@ allprojects {
     project.ext {
         xandroidPublishEnabled = true
     }
-
-    if (it.hasProperty('externalBuildDir')){
-        if (!new File(externalBuildDir).isAbsolute()){
-            externalBuildDir = new File(rootDir, externalBuildDir)
-        }
-        buildDir = "${externalBuildDir}/${project.name}"
-    }
-    group = "com.coopsrc.xandroid"
 }
 
 task clean(type: Delete) {

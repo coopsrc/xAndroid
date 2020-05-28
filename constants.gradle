@@ -9,22 +9,22 @@ rootProject.ext {
     majorVersion = 1
     minorVersion = 7
     revisionVersion = 3
-    snapshotVersion = 0
+    snapshotVersion = 1
     versionCode = generateVersionCode(majorVersion, minorVersion, revisionVersion)
     versionNameBase = generateVersionName(majorVersion, minorVersion, revisionVersion)
     versionNameAlpha = versionNameBase + '-alpha' + snapshotVersion
     versionName = versionNameAlpha
 
     androidx_arch_core = "2.1.0"
-    androidx_core = "1.1.0"
-    androidx_lifecycle = "2.1.0"
-    androidx_room = '2.2.3'
+    androidx_core = "1.3.0"
+    androidx_lifecycle = "2.2.0"
+    androidx_room = '2.2.5'
     androidx_constraintlayout = "1.1.3"
     androidx_annotation = "1.1.0"
     androidx_appcompat = "1.1.0"
-    androidx_sqlite = "2.0.1"
+    androidx_sqlite = "2.1.0"
 
-    google_android_material = "1.0.0"
+    google_android_material = "1.1.0"
     google_code_gson = "2.8.6"
 
     junit = "4.12"

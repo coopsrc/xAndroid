@@ -2,16 +2,15 @@ package com.coopsrc.xandroid.dewdrops.processor;
 
 import android.graphics.Bitmap;
 
-import androidx.core.util.Preconditions;
-
 import com.coopsrc.xandroid.dewdrops.blur.NativeBlur;
+import com.coopsrc.xandroid.dewdrops.utils.Preconditions;
 
 /**
  * @author tingkuo
  * <p>
  * Datetime: 2019-10-09 10:17
  */
- class NativeBlurProcessor extends AbsBlurProcessor {
+class NativeBlurProcessor extends AbsBlurProcessor {
     NativeBlurProcessor(ProcessorBuilder processorBuilder) {
         super(processorBuilder);
     }

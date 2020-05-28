@@ -71,7 +71,7 @@ public class OverviewFragment extends BaseFragment {
         tv_requestSize = view.findViewById(R.id.tv_request_size);
         tv_responseSize = view.findViewById(R.id.tv_response_size);
 
-        monitorViewModel.getHttpInfoLiveData().observe(this, new Observer<HttpInfo>() {
+        monitorViewModel.getHttpInfoLiveData().observe(getViewLifecycleOwner(), new Observer<HttpInfo>() {
             @Override
             public void onChanged(HttpInfo httpInfo) {
                 if (httpInfo != null) {

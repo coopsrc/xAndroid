@@ -13,15 +13,15 @@ import com.coopsrc.xandroid.downloader.utils.Logger
  */
 internal class DatabaseCallback : SupportSQLiteOpenHelper.Callback(DB_VERSION) {
 
-    override fun onCreate(db: SupportSQLiteDatabase?) {
+    override fun onCreate(db: SupportSQLiteDatabase) {
         Logger.i("DatabaseCallback", "onCreate: $db, $SQL_CREATE_TASK_INFO")
         Logger.i("DatabaseCallback", "onCreate: $db, $SQL_CREATE_SEGMENTS")
-        db?.execSQL(SQL_CREATE_TASK_INFO)
-        db?.execSQL(SQL_CREATE_SEGMENTS)
+        db.execSQL(SQL_CREATE_TASK_INFO)
+        db.execSQL(SQL_CREATE_SEGMENTS)
     }
 
-    override fun onUpgrade(db: SupportSQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-
+    override fun onUpgrade(db: SupportSQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        TODO("Not yet implemented")
     }
 
     companion object {

@@ -3,12 +3,11 @@ package com.coopsrc.xandroid.dewdrops.processor;
 import android.graphics.Bitmap;
 import android.view.View;
 
-import androidx.core.util.Preconditions;
-
 import com.coopsrc.xandroid.dewdrops.annotation.Mode;
 import com.coopsrc.xandroid.dewdrops.annotation.Scheme;
 import com.coopsrc.xandroid.dewdrops.task.TaskCallback;
 import com.coopsrc.xandroid.dewdrops.utils.BitmapUtils;
+import com.coopsrc.xandroid.dewdrops.utils.Preconditions;
 
 import java.util.concurrent.Future;
 

@@ -70,7 +70,7 @@ public class MonitorFragment extends Fragment implements MonitorAdapter.OnItemCl
         HttpMonitorDatabase database = HttpMonitorDatabase.getInstance(getContext());
 
         monitorViewModel = MonitorViewModelFactory.getInstance(database).create(MonitorViewModel.class);
-        monitorViewModel.getListLiveData().observe(this, new Observer<List<HttpInfo>>() {
+        monitorViewModel.getListLiveData().observe(getViewLifecycleOwner(), new Observer<List<HttpInfo>>() {
             @Override
             public void onChanged(List<HttpInfo> httpInfos) {
                 Log.i(TAG, "onChanged: " + httpInfos);

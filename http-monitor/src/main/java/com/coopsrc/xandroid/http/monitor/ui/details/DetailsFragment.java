@@ -82,7 +82,7 @@ public class DetailsFragment extends BaseFragment {
         tvHeaders = view.findViewById(R.id.tvHeaders);
         tvBody = view.findViewById(R.id.tvBody);
 
-        monitorViewModel.getHttpInfoLiveData().observe(this, new Observer<HttpInfo>() {
+        monitorViewModel.getHttpInfoLiveData().observe(getViewLifecycleOwner(), new Observer<HttpInfo>() {
             @Override
             public void onChanged(HttpInfo httpInfo) {
                 LogUtils.w("onChanged: %s", httpInfo);

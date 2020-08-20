@@ -2,14 +2,13 @@ package com.coopsrc.xandroid.dewdrops.task;
 
 import android.graphics.Bitmap;
 
-import androidx.core.util.Preconditions;
-
 import com.coopsrc.xandroid.dewdrops.annotation.Direction;
 import com.coopsrc.xandroid.dewdrops.annotation.Mode;
 import com.coopsrc.xandroid.dewdrops.annotation.Scheme;
 import com.coopsrc.xandroid.dewdrops.blur.NativeBlur;
 import com.coopsrc.xandroid.dewdrops.blur.OriginalBlur;
 import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
+import com.coopsrc.xandroid.dewdrops.utils.Preconditions;
 
 import java.util.concurrent.Callable;
 

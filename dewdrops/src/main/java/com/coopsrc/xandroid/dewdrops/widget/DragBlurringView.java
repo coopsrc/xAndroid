@@ -10,11 +10,11 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.core.math.MathUtils;
 
 import com.coopsrc.xandroid.dewdrops.DewdropsBlur;
 import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
 import com.coopsrc.xandroid.dewdrops.processor.BlurProcessor;
+import com.coopsrc.xandroid.dewdrops.utils.MathUtils;
 
 /**
  * @author tingkuo

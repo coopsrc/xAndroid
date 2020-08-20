@@ -1,9 +1,8 @@
 package com.coopsrc.xandroid.dewdrops.blur;
 
-import androidx.core.math.MathUtils;
-
 import com.coopsrc.xandroid.dewdrops.annotation.Direction;
 import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
+import com.coopsrc.xandroid.dewdrops.utils.MathUtils;
 
 /**
  * @author tingkuo

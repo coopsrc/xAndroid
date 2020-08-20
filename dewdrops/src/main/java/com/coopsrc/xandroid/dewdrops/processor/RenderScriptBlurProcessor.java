@@ -8,8 +8,8 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 
-import androidx.core.math.MathUtils;
-import androidx.core.util.Preconditions;
+import com.coopsrc.xandroid.dewdrops.utils.MathUtils;
+import com.coopsrc.xandroid.dewdrops.utils.Preconditions;
 
 import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
 import com.coopsrc.xandroid.dewdrops.renderscript.ScriptC_BoxBlur;

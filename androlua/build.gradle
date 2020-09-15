@@ -57,7 +57,6 @@ dependencies {
 ext {
     releaseArtifact = 'androlua'
     releaseDescription = 'The lua api for android.'
-    versionName = rootProject.ext.versionNameAlpha
     xandroidPublishEnabled = false
 }
 

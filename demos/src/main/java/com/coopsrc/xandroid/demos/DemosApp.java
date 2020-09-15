@@ -15,13 +15,5 @@ public class DemosApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        ExDownloader.INSTANCE.init(new DownloaderConfig.Builder()
-                .rangeMode(RangeMode.Companion.fixed(4))
-                .maxRange(4)
-                .maxTask(3)
-                .build());
-
-
     }
 }

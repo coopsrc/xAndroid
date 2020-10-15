@@ -43,7 +43,7 @@ public class MonitorNotification {
 
     private static final String NOTIFICATION_TITLE = "Http Monitor";
 
-    private static final int NOTIFICATION_ID = BuildConfig.VERSION_CODE;
+    private static final int NOTIFICATION_ID = 10800;
 
     private static volatile MonitorNotification instance;
 

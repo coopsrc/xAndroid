@@ -14,7 +14,7 @@ public class ContextProvider {
     @SuppressLint("StaticFieldLeak")
     private static Context sContext;
 
-    public static void initContext(Context context) {
+    static void initContext(Context context) {
         sContext = context.getApplicationContext();
     }
 

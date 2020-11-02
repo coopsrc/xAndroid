@@ -29,8 +29,8 @@ rootProject.ext {
     reactivex_rxjava = "2.2.19"
     reactivex_rxkotlin = "2.4.0"
 
-    squareup_okio = "2.6.0"
-    squareup_okhttp3 = "4.7.2"
+    squareup_okio = "2.9.0"
+    squareup_okhttp3 = "4.9.0"
     squareup_retrofit = "2.9.0"
     squareup_sqlbrite3 = "3.2.0"
 

@@ -38,9 +38,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation "androidx.core:core:$androidx_core"
+    implementation "androidx.core:core-ktx:$androidx_core"
 
-    implementation "androidx.sqlite:sqlite:$androidx_sqlite"
+    implementation "androidx.sqlite:sqlite-ktx:$androidx_sqlite"
     implementation "androidx.sqlite:sqlite-framework:$androidx_sqlite"
 
     api "io.reactivex.rxjava2:rxjava:$reactivex_rxjava"

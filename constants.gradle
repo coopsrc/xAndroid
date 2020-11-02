@@ -54,7 +54,7 @@ private static def minorVersion() {
 
 // 00
 private static def revisionVersion() {
-    return 0
+    return 1
 }
 
 static def generateVersionCode() {
@@ -62,14 +62,9 @@ static def generateVersionCode() {
 }
 
 static def generateVersionName() {
-    def versionName = "${majorVersion()}.${minorVersion()}.${revisionVersion()}"
-    def suffix = generateVersionSuffix()
-
-    if (suffix.isEmpty()) {
-        return versionName;
-    } else {
-        return "${versionName}.${suffix}-${commitId()}"
-    }
+    def versionName = "${majorVersion()}.${minorVersion()}.${revisionVersion()}${versionSuffix()}"
+    System.println("generateVersionName: VersionName=" + versionName)
+    return versionName
 }
 
 static def releaseTime() {
@@ -82,17 +77,26 @@ private static def commitVersion() {
     return process.getText().toInteger()
 }
 
+private static def diffCommits(def source) {
+    Process process = "git rev-list --all --count ${source} ^master".execute()
+    process.waitFor()
+    return process.getText().trim()
+}
+
 private static def commitId() {
     Process process = "git rev-parse --short HEAD".execute()
     process.waitFor()
     return process.getText().trim()
 }
 
-private static def generateVersionSuffix() {
+private static def branch() {
     Process process = "git symbolic-ref --short -q HEAD".execute()
     process.waitFor()
+    return process.getText().trim()
+}
 
-    def branch = process.getText().trim();
+private static def versionSuffix() {
+    def branch = branch()
 
     System.println("generateVersionSuffix: Branch=" + branch)
 
@@ -100,8 +104,9 @@ private static def generateVersionSuffix() {
         case "master":
             return "";
         case "develop":
-            return "dev"
+            return "-alpha${diffCommits(branch)}"
         default:
-            return branch.replaceAll(File.pathSeparator, "-")
+            def feature = branch.replaceAll(File.pathSeparator, "-")
+            return "-${feature}-${diffCommits()}"
     }
 }

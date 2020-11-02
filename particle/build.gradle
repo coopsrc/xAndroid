@@ -33,6 +33,7 @@ dependencies {
     implementation "androidx.annotation:annotation:$androidx_annotation"
 
     implementation project(path: ':utils')
+    implementation project(path: ':startup')
 }
 
 ext {

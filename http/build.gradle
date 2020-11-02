@@ -45,6 +45,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-core:$androidx_lifecycle"
 
     api project(path: ':utils')
+    implementation project(path: ':startup')
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:core:$androidx_test"

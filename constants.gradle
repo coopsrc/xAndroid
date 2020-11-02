@@ -1,39 +1,32 @@
 rootProject.ext {
-    compileSdkVersion = 29
+    compileSdkVersion = 30
     minSdkVersion = 21
-    targetSdkVersion = 29
-    buildToolsVersion = "29.0.2"
+    targetSdkVersion = 30
+    buildToolsVersion = "30.0.2"
 
-    // A.BB.CCC
-    // Major.Minor.Revision
-    majorVersion = 1
-    minorVersion = 7
-    revisionVersion = 3
-    snapshotVersion = 0
-    versionCode = generateVersionCode(majorVersion, minorVersion, revisionVersion)
-    versionNameBase = generateVersionName(majorVersion, minorVersion, revisionVersion)
-    versionNameAlpha = versionNameBase + '-alpha' + snapshotVersion
-    versionName = versionNameBase
+    versionCode = generateVersionCode()
+    versionName = generateVersionName()
 
     androidx_arch_core = "2.1.0"
-    androidx_core = "1.3.1"
+    androidx_core = "1.3.2"
     androidx_lifecycle = "2.2.0"
     androidx_room = '2.2.5'
-    androidx_constraintlayout = "1.1.3"
+    androidx_constraintlayout = "2.0.2"
     androidx_annotation = "1.1.0"
     androidx_appcompat = "1.2.0"
     androidx_sqlite = "2.1.0"
+    androidx_startup_runtime = "1.0.0"
 
-    google_android_material = "1.2.0"
+    google_android_material = "1.2.1"
     google_code_gson = "2.8.6"
 
-    junit = "4.13"
-    androidx_test = "1.2.0"
-    androidx_test_ext = "1.1.1"
-    androirx_test_espresso = "3.2.0"
+    junit = "4.13.1"
+    androidx_test = "1.3.0"
+    androidx_test_ext = "1.1.2"
+    androirx_test_espresso = "3.3.0"
 
     reactivex_rxandroid = "2.1.1"
-    reactivex_rxjava = "2.2.15"
+    reactivex_rxjava = "2.2.19"
     reactivex_rxkotlin = "2.4.0"
 
     squareup_okio = "2.6.0"
@@ -49,10 +42,66 @@ rootProject.ext {
     }
 }
 
-static def generateVersionCode(def major, def minor, def revision) {
-    return major * 100000 + minor * 1000 + revision
+// 0
+private static def majorVersion() {
+    return 1
 }
 
-static def generateVersionName(def major, def minor, def revision) {
-    return '' + major + '.' + minor + '.' + revision
+// 0
+private static def minorVersion() {
+    return 8
+}
+
+// 00
+private static def revisionVersion() {
+    return 0
+}
+
+static def generateVersionCode() {
+    return majorVersion() * 100000 + minorVersion() * 1000 + revisionVersion()
+}
+
+static def generateVersionName() {
+    def versionName = "${majorVersion()}.${minorVersion()}.${revisionVersion()}"
+    def suffix = generateVersionSuffix()
+
+    if (suffix.isEmpty()) {
+        return versionName;
+    } else {
+        return "${versionName}.${suffix}-${commitId()}"
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyMMddHHmm", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+private static def commitVersion() {
+    Process process = "git rev-list --count HEAD".execute()
+    process.waitFor()
+    return process.getText().toInteger()
+}
+
+private static def commitId() {
+    Process process = "git rev-parse --short HEAD".execute()
+    process.waitFor()
+    return process.getText().trim()
+}
+
+private static def generateVersionSuffix() {
+    Process process = "git symbolic-ref --short -q HEAD".execute()
+    process.waitFor()
+
+    def branch = process.getText().trim();
+
+    System.println("generateVersionSuffix: Branch=" + branch)
+
+    switch (branch) {
+        case "master":
+            return "";
+        case "develop":
+            return "dev"
+        default:
+            return branch.replaceAll(File.pathSeparator, "-")
+    }
 }

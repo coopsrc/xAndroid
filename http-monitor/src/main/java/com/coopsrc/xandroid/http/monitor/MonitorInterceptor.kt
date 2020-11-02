@@ -25,7 +25,7 @@ import com.coopsrc.xandroid.http.monitor.model.HttpInfo
 import com.coopsrc.xandroid.http.monitor.model.RequestInfo
 import com.coopsrc.xandroid.http.monitor.model.ResponseInfo
 import com.coopsrc.xandroid.http.monitor.utils.MonitorUtils
-import com.coopsrc.xandroid.utils.ContextProvider
+import com.coopsrc.xandroid.startup.ContextProvider
 import com.coopsrc.xandroid.utils.LogUtils
 import okhttp3.Headers
 import okhttp3.Interceptor

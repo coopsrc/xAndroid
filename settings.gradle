@@ -1,12 +1,17 @@
-gradle.ext.xandroidRoot = settingsDir
+include ':demos'
 
-def modulePrefix = ":"
-if (gradle.ext.has('xandroidModulePrefix')) {
-    modulePrefix += gradle.ext.xandroidModulePrefix
-}
-
-include modulePrefix + 'demos'
+include ':startup'
+include ':utils'
+include ':widget'
+include ':adaptive'
+include ':selector'
+include ':androlua'
+include ':http'
+include ':http-monitor-noop'
+include ':http-monitor'
+include ':downloader'
+include ':dewdrops'
+include ':particle'
+include ':framesequence'
 
 rootProject.name = 'xAndroid'
-
-apply from: 'core_settings.gradle'

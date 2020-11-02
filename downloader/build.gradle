@@ -14,6 +14,8 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
+        buildConfigField("int", "DB_VERSION", "${rootProject.ext.versionCode}")
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
@@ -50,6 +52,7 @@ dependencies {
 
     api project(path: ':utils')
     api project(path: ':http')
+    implementation project(path: ':startup')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 

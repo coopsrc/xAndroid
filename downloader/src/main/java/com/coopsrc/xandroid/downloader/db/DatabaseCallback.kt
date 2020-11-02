@@ -26,7 +26,7 @@ internal class DatabaseCallback : SupportSQLiteOpenHelper.Callback(DB_VERSION) {
 
     companion object {
 
-        private const val DB_VERSION = BuildConfig.VERSION_CODE
+        private const val DB_VERSION = BuildConfig.DB_VERSION
         const val DB_NAME = "downloader.db"
 
         private const val TEXT_TYPE = " TEXT"

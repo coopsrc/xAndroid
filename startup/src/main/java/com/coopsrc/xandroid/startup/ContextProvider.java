@@ -1,4 +1,4 @@
-package com.coopsrc.xandroid.utils;
+package com.coopsrc.xandroid.startup;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,14 +8,15 @@ import android.content.res.Resources;
 /**
  * @author tingkuo
  * <p>
- * Datetime: 2019-11-08 15:36
+ * Datetime: 2020-11-02 10:08
  */
 public class ContextProvider {
     @SuppressLint("StaticFieldLeak")
     private static Context sContext;
 
-    public static void initContext(Context context) {
+    static Context initContext(Context context) {
         sContext = context.getApplicationContext();
+        return sContext;
     }
 
     public static Context getAppContext() {

@@ -1,6 +1,6 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.library'
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -13,7 +13,7 @@ android {
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -22,34 +22,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation "androidx.annotation:annotation:$androidx_annotation"
-
-    implementation "com.google.code.gson:gson:$google_code_gson"
-
     api "androidx.startup:startup-runtime:$androidx_startup_runtime"
 
-    testImplementation "junit:junit:$junit"
-    androidTestImplementation "androidx.test:core:$androidx_test"
-    androidTestImplementation "androidx.test:runner:$androidx_test"
-    androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$androirx_test_espresso"
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
 ext {
-    releaseArtifact = 'common-utils'
-    releaseDescription = 'The Android common utils module.'
+    releaseArtifact = 'startup'
+    releaseDescription = 'The Android common startup module.'
 }
 
 apply from: '../publish.gradle'

@@ -41,6 +41,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle"
 
     api project(path: ':utils')
+    implementation project(path: ':startup')
     compileOnly project(path: ':http')
 
     implementation "androidx.room:room-runtime:$androidx_room"

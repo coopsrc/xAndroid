@@ -18,7 +18,7 @@ package com.coopsrc.xandroid.http.config
 
 import android.content.Context
 import com.coopsrc.xandroid.http.interceptor.BaseMonitorInterceptor
-import com.coopsrc.xandroid.utils.ContextProvider
+import com.coopsrc.xandroid.startup.ContextProvider
 import okhttp3.Authenticator
 import okhttp3.Cache
 import okhttp3.Interceptor

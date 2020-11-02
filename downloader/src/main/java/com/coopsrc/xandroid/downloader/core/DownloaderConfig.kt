@@ -4,7 +4,7 @@ import android.content.Context
 import com.coopsrc.xandroid.downloader.db.DatabaseModule
 import com.coopsrc.xandroid.downloader.helper.RangeMode
 import com.coopsrc.xandroid.downloader.utils.Constants
-import com.coopsrc.xandroid.utils.ContextProvider
+import com.coopsrc.xandroid.startup.ContextProvider
 
 /**
  * Created by tingkuo.

@@ -1,4 +1,6 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'com.android.library'
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -11,7 +13,7 @@ android {
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -20,25 +22,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.annotation:annotation:$androidx_annotation"
 
-    implementation project(path: ':utils')
-    implementation project(path: ':startup')
+    implementation "androidx.annotation:annotation:$androidx_annotation"
+    api "androidx.startup:startup-runtime:$androidx_startup_runtime"
+
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
 ext {
-    releaseArtifact = 'particle'
-    releaseDescription = 'The Android particle system.'
+    releaseArtifact = 'startup'
+    releaseDescription = 'The Android common startup module.'
 }
 
 apply from: '../publish.gradle'

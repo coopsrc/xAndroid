@@ -21,7 +21,7 @@ import android.content.Context.CONNECTIVITY_SERVICE
 import android.net.ConnectivityManager
 import android.text.TextUtils
 import com.coopsrc.xandroid.http.config.HttpConstants
-import com.coopsrc.xandroid.utils.ContextProvider
+import com.coopsrc.xandroid.startup.ContextProvider
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -15,7 +15,7 @@ rootProject.ext {
     androidx_annotation = "1.1.0"
     androidx_appcompat = "1.2.0"
     androidx_sqlite = "2.1.0"
-    androidx_startup_runtime = "1.0.0-rc01"
+    androidx_startup_runtime = "1.0.0"
 
     google_android_material = "1.2.1"
     google_code_gson = "2.8.6"
@@ -49,12 +49,12 @@ private static def majorVersion() {
 
 // 0
 private static def minorVersion() {
-    return 7
+    return 8
 }
 
 // 00
 private static def revisionVersion() {
-    return 4
+    return 0
 }
 
 static def generateVersionCode() {

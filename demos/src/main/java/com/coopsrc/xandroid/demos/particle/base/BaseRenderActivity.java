@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.coopsrc.android.particle.widget.BaseParticleView;
+import com.coopsrc.xandroid.particle.widget.BaseParticleView;
 import com.coopsrc.xandroid.demos.R;
 
 public abstract class BaseRenderActivity extends AppCompatActivity {

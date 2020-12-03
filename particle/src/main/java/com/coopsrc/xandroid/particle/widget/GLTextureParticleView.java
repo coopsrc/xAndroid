@@ -1,4 +1,4 @@
-package com.coopsrc.android.particle.widget;
+package com.coopsrc.xandroid.particle.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

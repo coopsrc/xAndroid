@@ -1,4 +1,4 @@
-package com.coopsrc.android.particle.utils;
+package com.coopsrc.xandroid.particle.utils;
 
 import android.content.res.Resources;
 import android.opengl.GLES31;

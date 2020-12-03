@@ -1,4 +1,4 @@
-package com.coopsrc.android.particle;
+package com.coopsrc.xandroid.particle;
 
 import java.util.List;
 

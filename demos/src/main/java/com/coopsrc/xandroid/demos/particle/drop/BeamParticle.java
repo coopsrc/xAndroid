@@ -1,6 +1,6 @@
 package com.coopsrc.xandroid.demos.particle.drop;
 
-import com.coopsrc.android.particle.Particle;
+import com.coopsrc.xandroid.particle.Particle;
 
 public class BeamParticle extends Particle {
     float fade;

@@ -1,14 +1,14 @@
-package com.coopsrc.android.particle.widget;
+package com.coopsrc.xandroid.particle.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 
-import com.coopsrc.android.particle.ParticleSystem;
-import com.coopsrc.android.particle.render.BaseParticleRenderer;
-import com.coopsrc.android.particle.render.ParticleRenderer;
-import com.coopsrc.android.particle.texture.TextureAtlasFactory;
+import com.coopsrc.xandroid.particle.ParticleSystem;
+import com.coopsrc.xandroid.particle.render.BaseParticleRenderer;
+import com.coopsrc.xandroid.particle.render.ParticleRenderer;
+import com.coopsrc.xandroid.particle.texture.TextureAtlasFactory;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 

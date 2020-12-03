@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.coopsrc.android.particle">
+    package="com.coopsrc.xandroid.particle">
 
     <uses-feature
         android:glEsVersion="0x00030001"

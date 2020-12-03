@@ -1,4 +1,4 @@
-package com.coopsrc.android.particle.render;
+package com.coopsrc.xandroid.particle.render;
 
 import android.graphics.Bitmap;
 import android.opengl.GLES31;
@@ -6,11 +6,11 @@ import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.util.Log;
 
-import com.coopsrc.android.particle.Particle;
-import com.coopsrc.android.particle.R;
-import com.coopsrc.android.particle.texture.Region;
-import com.coopsrc.android.particle.texture.TextureAtlas;
-import com.coopsrc.android.particle.utils.ShaderUtils;
+import com.coopsrc.xandroid.particle.Particle;
+import com.coopsrc.xandroid.particle.R;
+import com.coopsrc.xandroid.particle.texture.Region;
+import com.coopsrc.xandroid.particle.texture.TextureAtlas;
+import com.coopsrc.xandroid.particle.utils.ShaderUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

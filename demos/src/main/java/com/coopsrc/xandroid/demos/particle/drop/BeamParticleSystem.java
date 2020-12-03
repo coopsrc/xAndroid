@@ -1,7 +1,7 @@
 package com.coopsrc.xandroid.demos.particle.drop;
 
-import com.coopsrc.android.particle.Particle;
-import com.coopsrc.android.particle.ParticleSystem;
+import com.coopsrc.xandroid.particle.Particle;
+import com.coopsrc.xandroid.particle.ParticleSystem;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

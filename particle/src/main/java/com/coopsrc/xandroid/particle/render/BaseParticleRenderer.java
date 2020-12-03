@@ -1,9 +1,9 @@
-package com.coopsrc.android.particle.render;
+package com.coopsrc.xandroid.particle.render;
 
 import android.opengl.GLSurfaceView;
 
-import com.coopsrc.android.particle.ParticleSystem;
-import com.coopsrc.android.particle.texture.TextureAtlasFactory;
+import com.coopsrc.xandroid.particle.ParticleSystem;
+import com.coopsrc.xandroid.particle.texture.TextureAtlasFactory;
 
 public abstract class BaseParticleRenderer implements GLSurfaceView.Renderer {
     protected volatile ParticleSystem particleSystem;

@@ -44,6 +44,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout"
     implementation "com.google.android.material:material:$google_android_material"
 
+    implementation project(path: ':adaptive')
     implementation project(path: ':utils')
     implementation project(path: ':androlua')
     implementation project(path: ':dewdrops')

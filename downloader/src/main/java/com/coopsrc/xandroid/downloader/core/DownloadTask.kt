@@ -5,11 +5,11 @@ import com.coopsrc.xandroid.downloader.api.DownloadApiProxy
 import com.coopsrc.xandroid.downloader.core.impl.NormalDownloader
 import com.coopsrc.xandroid.downloader.core.impl.RangeDownloader
 import com.coopsrc.xandroid.downloader.core.impl.SingleDownloader
-import com.coopsrc.xandroid.downloader.db.DatabaseModule
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Status
 import com.coopsrc.xandroid.downloader.model.TaskInfo
 import com.coopsrc.xandroid.downloader.model.Type
+import com.coopsrc.xandroid.downloader.record.DatabaseModule
 import com.coopsrc.xandroid.downloader.utils.Constants
 import com.coopsrc.xandroid.downloader.utils.DownloaderUtils
 import com.coopsrc.xandroid.downloader.utils.HttpUtils

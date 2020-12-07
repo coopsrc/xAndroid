@@ -5,6 +5,8 @@ import android.app.Application;
 import com.coopsrc.xandroid.downloader.ExDownloader;
 import com.coopsrc.xandroid.downloader.core.DownloaderConfig;
 import com.coopsrc.xandroid.downloader.helper.RangeMode;
+import com.coopsrc.xandroid.utils.LogUtils;
+import com.coopsrc.xandroid.utils.logger.DebugLogger;
 
 /**
  * @author tingkuo
@@ -14,6 +16,7 @@ import com.coopsrc.xandroid.downloader.helper.RangeMode;
 public class DemosApp extends Application {
     @Override
     public void onCreate() {
+        LogUtils.register(new DebugLogger());
         super.onCreate();
     }
 }

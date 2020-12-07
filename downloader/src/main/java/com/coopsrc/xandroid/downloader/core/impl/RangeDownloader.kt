@@ -4,10 +4,10 @@ import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.api.DownloadApiProxy
 import com.coopsrc.xandroid.downloader.core.DownloadTask
 import com.coopsrc.xandroid.downloader.core.Downloader
-import com.coopsrc.xandroid.downloader.db.DatabaseModule
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.SegmentInfo
 import com.coopsrc.xandroid.downloader.model.TaskInfo
+import com.coopsrc.xandroid.downloader.record.DatabaseModule
 import com.coopsrc.xandroid.downloader.utils.Constants
 import com.coopsrc.xandroid.downloader.utils.Logger
 import io.reactivex.Flowable

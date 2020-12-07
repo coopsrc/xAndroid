@@ -1,13 +1,17 @@
 package com.coopsrc.xandroid.downloader.model
 
+import androidx.room.ColumnInfo
+
 /**
  * Created by tingkuo.
  * Date: 2018-08-01
  * Time: 09:38
  */
-internal class SegmentInfo {
+open class SegmentInfo {
 
     var tag: String
+
+    @ColumnInfo(name = "_index")
     var index: Long
     var start: Long
     var position: Long

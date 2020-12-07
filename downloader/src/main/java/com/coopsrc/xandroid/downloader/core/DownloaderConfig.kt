@@ -1,10 +1,12 @@
 package com.coopsrc.xandroid.downloader.core
 
 import android.content.Context
-import com.coopsrc.xandroid.downloader.db.DatabaseModule
 import com.coopsrc.xandroid.downloader.helper.RangeMode
+import com.coopsrc.xandroid.downloader.record.DatabaseModule
 import com.coopsrc.xandroid.downloader.utils.Constants
 import com.coopsrc.xandroid.startup.ContextProvider
+import com.coopsrc.xandroid.utils.LogUtils
+import com.coopsrc.xandroid.utils.logger.DebugLogger
 
 /**
  * Created by tingkuo.

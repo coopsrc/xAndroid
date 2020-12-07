@@ -1,5 +1,6 @@
 package com.coopsrc.xandroid.downloader.model
 
+import androidx.room.ColumnInfo
 import com.coopsrc.xandroid.utils.MemoryUnit
 import java.text.NumberFormat
 
@@ -8,13 +9,15 @@ import java.text.NumberFormat
  * Date: 2018-07-23
  * Time: 19:20
  */
-class Progress(var tag: String) {
+open class Progress(var tag: String) {
+    @ColumnInfo(name = "download_size")
     var downloadSize: Long = 0L
+    @ColumnInfo(name = "total_size")
     var totalSize: Long = 0L
     var status: Status = Status.Idle
+    @ColumnInfo(name = "last_modified")
     var lastModified: Long = 0L
     var updated: Long = 0L
-    private var speed: Long = 0L
 
     constructor(progress: Progress) : this(progress.tag) {
         this.downloadSize = progress.downloadSize
@@ -22,7 +25,6 @@ class Progress(var tag: String) {
         this.status = progress.status
         this.lastModified = progress.lastModified
         this.updated = progress.updated
-        this.speed = progress.speed
     }
 
     fun getPercent(): String {
@@ -81,12 +83,9 @@ class Progress(var tag: String) {
         return MemoryUnit.format(totalSize)
     }
 
-    private fun getFormatSpeed(): String {
-        return MemoryUnit.formatSpeed(speed)
-    }
 
     override fun toString(): String {
-        return "Progress(tag='$tag', downloadSize=$downloadSize, totalSize=$totalSize, status=$status, lastModified=$lastModified, updated=$updated, speed=$speed)"
+        return "Progress(tag='$tag', downloadSize=$downloadSize, totalSize=$totalSize, status=$status, lastModified=$lastModified, updated=$updated)"
     }
 
 }

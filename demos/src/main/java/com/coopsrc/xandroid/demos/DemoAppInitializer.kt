@@ -19,6 +19,7 @@ class DemoAppInitializer : Initializer<Unit> {
                 .rangeMode(fixed(4))
                 .maxRange(4)
                 .maxTask(3)
+                .withDebug(true)
                 .build()
         )
     }

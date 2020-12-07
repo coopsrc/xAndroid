@@ -25,8 +25,21 @@ enum class Status {
             }
         }
 
-        fun parse(type: String): Status {
-            return valueOf(type)
+        fun parse(name: String): Status {
+
+            return when (name) {
+                Idle.name -> Idle
+                Waiting.name -> Waiting
+                Starting.name -> Starting
+                Prepared.name -> Prepared
+                Downloading.name -> Downloading
+                Suspend.name -> Suspend
+                Complete.name -> Complete
+                Failed.name -> Failed
+                Removed.name -> Removed
+                Deleted.name -> Deleted
+                else -> Idle
+            }
         }
     }
 

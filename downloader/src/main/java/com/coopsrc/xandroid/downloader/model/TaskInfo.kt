@@ -1,5 +1,7 @@
 package com.coopsrc.xandroid.downloader.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import com.coopsrc.xandroid.downloader.utils.DownloaderUtils
 
 /**
@@ -7,12 +9,15 @@ import com.coopsrc.xandroid.downloader.utils.DownloaderUtils
  * Date: 2018-07-23
  * Time: 17:44
  */
-class TaskInfo(var url: String) {
+open class TaskInfo(var url: String) {
+    @ColumnInfo(name = "name")
     var saveName: String = ""
+    @ColumnInfo(name = "path")
     var savePath: String = ""
     var type: Type? = null
     var tag: String = DownloaderUtils.encodeMd5(url)
 
+    @Embedded(prefix = "p_")
     var progress: Progress = Progress(tag)
 
     constructor(url: String, saveName: String) : this(url) {
@@ -38,6 +43,7 @@ class TaskInfo(var url: String) {
         this.savePath = savePath
         this.type = type
         this.tag = tag
+        progress.tag = tag
     }
 
     fun update(

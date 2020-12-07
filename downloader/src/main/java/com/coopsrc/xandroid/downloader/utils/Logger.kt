@@ -12,64 +12,62 @@ import java.util.*
 object Logger {
     private const val TAG = "ExDownloader"
 
-    private val debug = ExDownloader.withDebug()
-
     fun i(message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(TAG).i(message)
         }
     }
 
     fun d(message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(buildTag(TAG)).d(buildMessage(message))
         }
     }
 
     fun w(message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(buildTag(TAG)).w(buildMessage(message))
         }
     }
 
     fun e(message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(buildTag(TAG)).e(buildMessage(message))
         }
     }
 
     fun v(message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(buildTag(TAG)).v(buildMessage(message))
         }
     }
 
     fun i(tag: String, message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(buildTag(tag)).i(buildMessage(message))
         }
     }
 
     fun d(tag: String, message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(buildTag(tag)).d(buildMessage(message))
         }
     }
 
     fun w(tag: String, message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(buildTag(tag)).w(buildMessage(message))
         }
     }
 
     fun e(tag: String, message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(buildTag(tag)).e(buildMessage(message))
         }
     }
 
     fun v(tag: String, message: String) {
-        if (debug) {
+        if (debug()) {
             LogUtils.tag(buildTag(tag)).v(buildMessage(message))
         }
     }
@@ -96,5 +94,9 @@ object Logger {
             traceElement.lineNumber,
             message
         )
+    }
+
+    private fun debug(): Boolean {
+        return ExDownloader.withDebug()
     }
 }

@@ -13,6 +13,11 @@ import java.util.concurrent.TimeUnit
 object Constants {
     var any = Any()
 
+    object DB {
+        const val DB_VERSION = BuildConfig.DB_VERSION
+        const val DB_NAME = "downloader.db"
+    }
+
     object RangeHeader {
         val DETECT = mapOf("Range" to "bytes=0-0")
         val NORMAL = mapOf("Range" to "")

@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-kapt'
+
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -39,16 +41,14 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation "androidx.core:core-ktx:$androidx_core"
-
-    implementation "androidx.sqlite:sqlite-ktx:$androidx_sqlite"
-    implementation "androidx.sqlite:sqlite-framework:$androidx_sqlite"
+    implementation "androidx.room:room-runtime:$androidx_room"
+    kapt "androidx.room:room-compiler:$androidx_room"
+    implementation "androidx.room:room-ktx:$androidx_room"
 
     api "io.reactivex.rxjava2:rxjava:$reactivex_rxjava"
     api "io.reactivex.rxjava2:rxandroid:$reactivex_rxandroid"
     api "io.reactivex.rxjava2:rxkotlin:$reactivex_rxkotlin"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$squareup_retrofit"
-    implementation "com.squareup.sqlbrite3:sqlbrite:$squareup_sqlbrite3"
-    implementation "com.squareup.sqlbrite3:sqlbrite-kotlin:$squareup_sqlbrite3"
 
     api project(path: ':utils')
     api project(path: ':http')

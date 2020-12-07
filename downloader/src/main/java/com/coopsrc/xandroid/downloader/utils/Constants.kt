@@ -13,6 +13,19 @@ import java.util.concurrent.TimeUnit
 object Constants {
     var any = Any()
 
+    object RangeHeader {
+        val DETECT = mapOf("Range" to "bytes=0-0")
+        val NORMAL = mapOf("Range" to "")
+
+        fun single(start: Long): Map<String, String> {
+            return mapOf("Range" to "bytes=${start}-")
+        }
+
+        fun segment(start: Long, end: Long): Map<String, String> {
+            return mapOf("Range" to "bytes=${start}-${end}")
+        }
+    }
+
     object Config {
 
         internal val rangeSize: Long = MemoryUnit.MEGA_BYTE.toBytes(8)

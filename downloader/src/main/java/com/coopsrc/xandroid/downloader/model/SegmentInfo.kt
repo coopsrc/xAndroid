@@ -5,7 +5,7 @@ package com.coopsrc.xandroid.downloader.model
  * Date: 2018-08-01
  * Time: 09:38
  */
-internal class Segment {
+internal class SegmentInfo {
 
     var tag: String
     var index: Long
@@ -45,12 +45,12 @@ internal class Segment {
         this.position = position
     }
 
-    fun update(segment: Segment) {
-        this.tag = segment.tag
-        this.index = segment.index
-        this.start = segment.start
-        this.position = segment.position
-        this.end = segment.end
+    fun update(segmentInfo: SegmentInfo) {
+        this.tag = segmentInfo.tag
+        this.index = segmentInfo.index
+        this.start = segmentInfo.start
+        this.position = segmentInfo.position
+        this.end = segmentInfo.end
     }
 
     override fun toString(): String {
@@ -61,7 +61,7 @@ internal class Segment {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Segment
+        other as SegmentInfo
 
         if (tag != other.tag) return false
         if (index != other.index) return false

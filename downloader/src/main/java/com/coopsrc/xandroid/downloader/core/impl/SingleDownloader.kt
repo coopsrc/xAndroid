@@ -66,7 +66,7 @@ internal class SingleDownloader(downloadTask: DownloadTask) : Downloader(downloa
         downloaderProxy.cleanWorkspace()
     }
 
-    private fun provideRange(): String {
-        return "bytes=${downloadTask.taskInfo.progress.downloadSize}-"
+    private fun provideRange(): Map<String, String> {
+        return Constants.RangeHeader.single(downloadTask.taskInfo.progress.downloadSize)
     }
 }

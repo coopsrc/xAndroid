@@ -9,9 +9,6 @@ import java.text.NumberFormat
  * Time: 19:20
  */
 class Progress(var tag: String) {
-    var segmentIndex: Int = 0
-    var segmentProgress: Long = 0L
-    var segmentSize: Long = 0L
     var downloadSize: Long = 0L
     var totalSize: Long = 0L
     var status: Status = Status.Idle

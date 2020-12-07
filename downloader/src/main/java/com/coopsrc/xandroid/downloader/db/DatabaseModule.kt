@@ -20,7 +20,7 @@ internal class DatabaseModule private constructor() {
 
     lateinit var briteDatabase: BriteDatabase
     lateinit var taskInfoAction: TaskInfoAction
-    lateinit var segmentsAction: SegmentsAction
+    lateinit var mSegmentInfoAction: SegmentInfoAction
 
     private object Holder {
         val INSTANCE = DatabaseModule()
@@ -36,7 +36,7 @@ internal class DatabaseModule private constructor() {
         briteDatabase = createDatabase(context)
 
         taskInfoAction = TaskInfoAction(briteDatabase)
-        segmentsAction = SegmentsAction(briteDatabase)
+        mSegmentInfoAction = SegmentInfoAction(briteDatabase)
 
     }
 

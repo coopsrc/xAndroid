@@ -113,7 +113,7 @@ internal class DownloadTask(var taskInfo: TaskInfo, private val semaphore: Semap
     private fun detect(): Maybe<Any> {
         Logger.i(tag, "detect")
 
-        return DownloadApiProxy.detect(taskInfo.url).flatMap {
+        return DownloadApiProxy.detect(taskInfo.url, Constants.RangeHeader.DETECT).flatMap {
             taskInfo.progress.update(updated = HttpUtils.lastModified(it))
             if (taskInfo.type == null) {
                 setupResponse(it)

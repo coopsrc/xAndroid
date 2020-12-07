@@ -5,7 +5,7 @@ package com.coopsrc.xandroid.downloader.db
  * Date: 2018-07-24
  * Time: 09:42
  */
-internal object SegmentColumns {
+internal object SegmentInfoColumns {
     const val TABLE_NAME = "segments"
 
     const val COLUMN_NAME_ID = "id"

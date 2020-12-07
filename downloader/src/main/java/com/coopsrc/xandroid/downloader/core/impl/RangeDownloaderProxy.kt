@@ -2,7 +2,7 @@ package com.coopsrc.xandroid.downloader.core.impl
 
 import com.coopsrc.xandroid.downloader.core.DownloadTask
 import com.coopsrc.xandroid.downloader.core.DownloaderProxy
-import com.coopsrc.xandroid.downloader.model.Segment
+import com.coopsrc.xandroid.downloader.model.SegmentInfo
 import com.coopsrc.xandroid.downloader.utils.Constants
 import com.coopsrc.xandroid.downloader.utils.Logger
 import io.reactivex.BackpressureStrategy
@@ -34,7 +34,7 @@ internal class RangeDownloaderProxy(downloadTask: DownloadTask) : DownloaderProx
 
     override fun saveTargetFile(response: Response<ResponseBody>, vararg args: Any): Flowable<Any> {
         Logger.i(tag, "saveTargetFile: $response, $args")
-        val segment: Segment = args[0] as Segment
+        val segmentInfo: SegmentInfo = args[0] as SegmentInfo
 
         val responseBody = response.body() ?: throw RuntimeException("Response Body is NULL")
         val period = Constants.Config.period
@@ -53,14 +53,14 @@ internal class RangeDownloaderProxy(downloadTask: DownloadTask) : DownloaderProx
                     while (readLength != -1 && !emitter.isCancelled) {
                         val cacheBuffer = cacheChannel.map(
                             FileChannel.MapMode.READ_WRITE,
-                            segment.position,
+                            segmentInfo.position,
                             readLength.toLong()
                         )
                         cacheBuffer.put(buffer, 0, readLength)
 
-                        segment.position += readLength
+                        segmentInfo.position += readLength
 
-                        emitter.onNext(segment)
+                        emitter.onNext(segmentInfo)
 
                         readLength = source.read(buffer)
                     }

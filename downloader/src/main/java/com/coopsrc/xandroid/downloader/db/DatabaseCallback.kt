@@ -48,13 +48,13 @@ internal class DatabaseCallback : SupportSQLiteOpenHelper.Callback(DB_VERSION) {
                     TaskInfoColumns.COLUMN_NAME_STATUS + TEXT_TYPE +
                     " )"
 
-        private const val SQL_CREATE_SEGMENTS = "CREATE TABLE " + SegmentColumns.TABLE_NAME + " (" +
-                SegmentColumns.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
-                SegmentColumns.COLUMN_NAME_TAG + TEXT_TYPE + COMMA_SEP +
-                SegmentColumns.COLUMN_NAME_INDEX + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
-                SegmentColumns.COLUMN_NAME_START + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
-                SegmentColumns.COLUMN_NAME_POSITION + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
-                SegmentColumns.COLUMN_NAME_END + INTEGER_TYPE + SIZE_DEFAULT +
+        private const val SQL_CREATE_SEGMENTS = "CREATE TABLE " + SegmentInfoColumns.TABLE_NAME + " (" +
+                SegmentInfoColumns.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
+                SegmentInfoColumns.COLUMN_NAME_TAG + TEXT_TYPE + COMMA_SEP +
+                SegmentInfoColumns.COLUMN_NAME_INDEX + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
+                SegmentInfoColumns.COLUMN_NAME_START + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
+                SegmentInfoColumns.COLUMN_NAME_POSITION + INTEGER_TYPE + SIZE_DEFAULT + COMMA_SEP +
+                SegmentInfoColumns.COLUMN_NAME_END + INTEGER_TYPE + SIZE_DEFAULT +
                 " )"
     }
 }

@@ -6,7 +6,7 @@ import com.coopsrc.xandroid.downloader.core.DownloadTask
 import com.coopsrc.xandroid.downloader.core.Downloader
 import com.coopsrc.xandroid.downloader.db.DatabaseModule
 import com.coopsrc.xandroid.downloader.model.Progress
-import com.coopsrc.xandroid.downloader.model.Segment
+import com.coopsrc.xandroid.downloader.model.SegmentInfo
 import com.coopsrc.xandroid.downloader.model.TaskInfo
 import com.coopsrc.xandroid.downloader.utils.Constants
 import com.coopsrc.xandroid.downloader.utils.Logger
@@ -27,9 +27,9 @@ internal class RangeDownloader(downloadTask: DownloadTask) : Downloader(download
     private val rangeSize = Constants.Config.rangeSize
 
     private val maxRange = ExDownloader.downloadCore.config.rangeMode.count
-    private val segments = mutableListOf<Segment>()
+    private val segments = mutableListOf<SegmentInfo>()
 
-    private val segmentsAction = DatabaseModule.instance.segmentsAction
+    private val segmentsAction = DatabaseModule.instance.mSegmentInfoAction
 
     init {
         Logger.i(tag, "init: ${downloadTask.taskInfo}")
@@ -66,7 +66,7 @@ internal class RangeDownloader(downloadTask: DownloadTask) : Downloader(download
 
         downloaderProxy.initWorkspace()
 
-        val segmentFlowList = mutableListOf<Flowable<Segment>>()
+        val segmentFlowList = mutableListOf<Flowable<SegmentInfo>>()
 
         segments.filter {
             !it.isComplete()
@@ -100,8 +100,8 @@ internal class RangeDownloader(downloadTask: DownloadTask) : Downloader(download
     }
 
     @Synchronized
-    private fun updateProgress(segment: Segment) {
-        segments[segment.index.toInt()] = segment
+    private fun updateProgress(segmentInfo: SegmentInfo) {
+        segments[segmentInfo.index.toInt()] = segmentInfo
 
         val downloadSize = segments.map {
             it.downloadSize()
@@ -128,7 +128,7 @@ internal class RangeDownloader(downloadTask: DownloadTask) : Downloader(download
             }
 
             Logger.d(tag, "$index, $start, $start, $end")
-            segments.add(Segment(taskInfo.tag, index, start, start, end))
+            segments.add(SegmentInfo(taskInfo.tag, index, start, start, end))
         }
 
         segments.forEach {
@@ -146,17 +146,17 @@ internal class RangeDownloader(downloadTask: DownloadTask) : Downloader(download
         }
     }
 
-    private fun downloadSegment(segment: Segment): Flowable<Segment> {
-        return Maybe.just(segment).subscribeOn(Schedulers.io()).map {
-            "bytes=${it.position}-${it.end}"
+    private fun downloadSegment(segmentInfo: SegmentInfo): Flowable<SegmentInfo> {
+        return Maybe.just(segmentInfo).subscribeOn(Schedulers.io()).map {
+            Constants.RangeHeader.segment(it.position, it.end)
         }.doOnSuccess {
-            Logger.w(tag, "Start download: $segment, Range: $it")
+            Logger.w(tag, "Start download: $segmentInfo, Range: $it")
         }.flatMap {
             DownloadApiProxy.download(downloadTask.taskInfo.url, it)
         }.flatMapPublisher {
-            downloaderProxy.saveTargetFile(it, segment)
+            downloaderProxy.saveTargetFile(it, segmentInfo)
         }.map {
-            it as Segment
+            it as SegmentInfo
         }
     }
 }

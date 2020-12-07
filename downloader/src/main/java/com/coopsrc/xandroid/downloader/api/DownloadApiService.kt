@@ -4,7 +4,7 @@ import io.reactivex.Maybe
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
+import retrofit2.http.HeaderMap
 import retrofit2.http.Streaming
 import retrofit2.http.Url
 
@@ -15,9 +15,9 @@ import retrofit2.http.Url
  */
 internal interface DownloadApiService {
     @GET
-    fun detect(@Url url: String, @Header("Range") range: String): Maybe<Response<Void>>
+    fun detect(@Url url: String, @HeaderMap headers: Map<String, String>): Maybe<Response<Void>>
 
     @GET
     @Streaming
-    fun download(@Url url: String, @Header("Range") range: String = ""): Maybe<Response<ResponseBody>>
+    fun download(@Url url: String, @HeaderMap headers: Map<String, String>): Maybe<Response<ResponseBody>>
 }

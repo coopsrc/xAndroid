@@ -1,5 +1,6 @@
 include ':demos'
 
+include ':common'
 include ':startup'
 include ':utils'
 include ':widget'

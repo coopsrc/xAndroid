@@ -1,13 +1,13 @@
 package com.coopsrc.xandroid.utils.executor;
 
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.lang.reflect.InvocationTargetException;
+import com.coopsrc.xandroid.utils.HandlerUtils;
+
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -83,7 +83,7 @@ public class DefaultTaskExecutor extends TaskExecutor {
         if (mMainHandler == null) {
             synchronized (mLock) {
                 if (mMainHandler == null) {
-                    mMainHandler = createAsync(Looper.getMainLooper());
+                    mMainHandler = HandlerUtils.createAsync();
                 }
             }
         }
@@ -94,20 +94,6 @@ public class DefaultTaskExecutor extends TaskExecutor {
     @Override
     public boolean isMainThread() {
         return Looper.getMainLooper().getThread() == Thread.currentThread();
-    }
-
-    private static Handler createAsync(@NonNull Looper looper) {
-        if (Build.VERSION.SDK_INT >= 28) {
-            return Handler.createAsync(looper);
-        }
-        try {
-            return Handler.class.getDeclaredConstructor(Looper.class, Handler.Callback.class, boolean.class)
-                    .newInstance(looper, null, true);
-        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException ignored) {
-        } catch (InvocationTargetException e) {
-            return new Handler(looper);
-        }
-        return new Handler(looper);
     }
 }
 

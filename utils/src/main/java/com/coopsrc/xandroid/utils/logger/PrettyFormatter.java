@@ -16,6 +16,8 @@
 
 package com.coopsrc.xandroid.utils.logger;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -104,7 +106,19 @@ public final class PrettyFormatter extends Formatter {
     }
 
     private void printContentLine(int priority, @Nullable String tag, @NonNull String message) {
-        String format = "%s  %-" + CONTENT_LENGTH + "s  %s";
+        String format = format(message);
         mPrinter.println(priority, tag, String.format(format, HORIZONTAL_LINE, message, HORIZONTAL_LINE));
+    }
+
+    public String format(String message) {
+        int asciiCount = 0;
+        for (int i = 0; i < message.length(); i++) {
+            char c = message.charAt(i);
+            if (c >= 32 && c <= 127) {
+                asciiCount++;
+            }
+        }
+        int format = CONTENT_LENGTH - message.length() + asciiCount;
+        return "%s  %-" + format + "s  %s";
     }
 }

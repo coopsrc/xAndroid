@@ -63,11 +63,20 @@ public class MainActivity extends AppCompatActivity {
         LogUtils.wtf("testLogUtils: [%d, %d]", 1920, 1080);
         LogUtils.pretty().w("testLogUtils: [%d, %d]", 1920, 1080);
         LogUtils.pretty("Particle").w("testLogUtils: [%d, %d]", 1920, 1080);
-//
 
         LogUtils.i("testLogUtils: [%d, %d]", 1920, 1080);
         LogUtils.tag("Particle").i("testLogUtils: [%d, %d]", 1920, 1080);
         LogUtils.pretty().i("testLogUtils: [%d, %d]", 1920, 1080);
         LogUtils.pretty("Particle").i("testLogUtils: [%d, %d]", 1920, 1080);
+
+        String jsonString = "{\"_index\":\"book_shop\",\"_type\":\"it_book\",\"_id\":\"1\",\"_score\":1.0," +
+                "\"_source\":{\"name\": \"Java编程思想（第4版）\",\"author\": \"[美] Bruce Eckel\",\"category\": \"编程语言\"," +
+                "\"price\": 109.0,\"publisher\": \"机械工业出版社\",\"date\": \"2007-06-01\",\"tags\": [ \"Java\", \"编程语言\" ]}}";
+
+        LogUtils.pretty().i("Java编程思想（第4版）（第5版）: [%d, %d]", 1920, 1080);
+        LogUtils.json(jsonString);
+        LogUtils.tag("Particle").json(jsonString);
+        LogUtils.pretty().json(jsonString);
+        LogUtils.pretty("Particle").json(jsonString);
     }
 }

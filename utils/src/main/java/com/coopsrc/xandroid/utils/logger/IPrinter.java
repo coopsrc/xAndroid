@@ -16,8 +16,6 @@
 
 package com.coopsrc.xandroid.utils.logger;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -27,12 +25,5 @@ import androidx.annotation.Nullable;
  * Datetime: 2020-01-08 12:10
  */
 interface IPrinter {
-    /**
-     * Write a log message to its destination. Called for all level-specific methods by default.
-     *
-     * @param priority Log level. See {@link Log} for constants.
-     * @param tag      Explicit or inferred tag. May be {@code null}.
-     * @param message  Formatted log message. May be {@code null}, but then {@code t} will not be.
-     */
     void println(int priority, @Nullable String tag, @NonNull String message);
 }

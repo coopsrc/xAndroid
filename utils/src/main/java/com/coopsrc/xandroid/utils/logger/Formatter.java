@@ -16,8 +16,6 @@
 
 package com.coopsrc.xandroid.utils.logger;
 
-import java.util.regex.Pattern;
-
 /**
  * @author tingkuo
  * <p>
@@ -28,9 +26,6 @@ public abstract class Formatter implements IPrinter {
     protected final IPrinter mPrinter;
 
     static final int MAX_LOG_LENGTH = 4000;
-    static final int MAX_TAG_LENGTH = 23;
-    static final int CALL_STACK_INDEX = 5;
-    static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
 
     public Formatter() {
         mPrinter = new LogcatPrinter();

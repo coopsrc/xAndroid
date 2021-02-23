@@ -27,13 +27,6 @@ import androidx.annotation.Nullable;
  * Datetime: 2020-01-08 15:14
  */
 final class LogcatPrinter implements IPrinter {
-    /**
-     * Break up {@code message} into maximum-length chunks (if needed) and send to either
-     * {@link Log#println(int, String, String) Log.println()} or
-     * {@link Log#wtf(String, String) Log.wtf()} for logging.
-     * <p>
-     * {@inheritDoc}
-     */
     @Override
     public void println(int priority, @Nullable String tag, @NonNull String message) {
         if (priority == Log.ASSERT) {

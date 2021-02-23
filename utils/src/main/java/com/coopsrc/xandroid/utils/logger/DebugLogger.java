@@ -17,10 +17,11 @@
 package com.coopsrc.xandroid.utils.logger;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.coopsrc.xandroid.utils.GsonUtils;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -47,6 +48,16 @@ public class DebugLogger extends Logger {
         super();
     }
 
+    @Override
+    public void json(String content) {
+//        if (isPretty()) {
+//            super.json("\n" + GsonUtils.toPrettyFormat(content));
+//        } else {
+//            super.json(content);
+//        }
+        super.json("\n" + GsonUtils.toPrettyFormat(content));
+    }
+
     @Nullable
     protected String createStackElementTag(@NonNull StackTraceElement element) {
         String tag = element.getClassName();
@@ -69,8 +80,6 @@ public class DebugLogger extends Logger {
             return tag;
         }
 
-        // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
-        // because Robolectric runs them on the JVM but on Android the elements are different.
         StackTraceElement[] stackTrace = new Throwable().getStackTrace();
         if (stackTrace.length <= CALL_STACK_INDEX) {
             throw new IllegalStateException(
@@ -79,25 +88,16 @@ public class DebugLogger extends Logger {
         return createStackElementTag(stackTrace[CALL_STACK_INDEX]);
     }
 
-    /**
-     * Break up {@code message} into maximum-length chunks (if needed) and send to either
-     * {@link Log#println(int, String, String) Log.println()} or
-     * {@link Log#wtf(String, String) Log.wtf()} for logging.
-     * <p>
-     * {@inheritDoc}
-     */
     @Override
     public void log(int priority, String tag, @NonNull String message, Throwable t, boolean depthPlus) {
         if (isPretty()) {
-//            prettyFormatter.println(priority, tag, message);
-            prettyFormatter.println(priority, buildTag(tag, depthPlus), buildMessage(message, depthPlus));
+            prettyFormatter.println(priority, buildTag(tag), buildMessage(message, depthPlus));
         } else {
-//            formatter.println(priority, tag, message);
-            formatter.println(priority, buildTag(tag, depthPlus), buildMessage(message, depthPlus));
+            formatter.println(priority, buildTag(tag), buildMessage(message, depthPlus));
         }
     }
 
-    private static String buildTag(@NonNull String tag, boolean assignedTag) {
+    private static String buildTag(@NonNull String tag) {
         String key = String.format(Locale.US, "%s@%s", tag, Thread.currentThread().getName());
 
         if (!sCachedTag.containsKey(key)) {
@@ -118,17 +118,17 @@ public class DebugLogger extends Logger {
         return sCachedTag.get(key);
     }
 
-    private static String buildMessage(String message, boolean assignedTag) {
+    private static String buildMessage(String message, boolean depthPlus) {
         StackTraceElement[] traceElements = new Throwable().getStackTrace();
 
-        int traceDepth = assignedTag ? 5 : 6;
+        int traceDepth = depthPlus ? 6 : 7;
 
         if (traceElements == null || traceElements.length < traceDepth) {
             return message;
         }
         StackTraceElement traceElement = traceElements[traceDepth];
 
-        return String.format(Locale.US, "%s.%s(%s:%d) %s",
+        return String.format(Locale.US, "%s.%s(%s:%d): %s",
                 traceElement.getClassName().substring(traceElement.getClassName().lastIndexOf(".") + 1),
                 traceElement.getMethodName(),
                 traceElement.getFileName(),

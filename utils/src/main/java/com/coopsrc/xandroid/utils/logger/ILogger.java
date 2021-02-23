@@ -22,115 +22,49 @@ package com.coopsrc.xandroid.utils.logger;
  * Datetime: 2020-01-08 12:17
  */
 public interface ILogger {
-    /**
-     * Log a verbose message with optional format args.
-     */
+
     void v(String message, Object... args);
 
-    /**
-     * Log a verbose exception and a message with optional format args.
-     */
     void v(Throwable t, String message, Object... args);
 
-    /**
-     * Log a verbose exception.
-     */
     void v(Throwable t);
 
-    /**
-     * Log a debug message with optional format args.
-     */
     void d(String message, Object... args);
 
-    /**
-     * Log a debug exception and a message with optional format args.
-     */
     void d(Throwable t, String message, Object... args);
 
-
-    /**
-     * Log a debug exception.
-     */
     void d(Throwable t);
 
-    /**
-     * Log an info message with optional format args.
-     */
     void i(String message, Object... args);
 
-    /**
-     * Log an info exception and a message with optional format args.
-     */
     void i(Throwable t, String message, Object... args);
 
-
-    /**
-     * Log an info exception.
-     */
     void i(Throwable t);
 
-    /**
-     * Log a warning message with optional format args.
-     */
     void w(String message, Object... args);
 
-    /**
-     * Log a warning exception and a message with optional format args.
-     */
     void w(Throwable t, String message, Object... args);
 
-    /**
-     * Log a warning exception.
-     */
     void w(Throwable t);
 
-
-    /**
-     * Log an error message with optional format args.
-     */
     void e(String message, Object... args);
 
-
-    /**
-     * Log an error exception and a message with optional format args.
-     */
     void e(Throwable t, String message, Object... args);
 
-
-    /**
-     * Log an error exception.
-     */
     void e(Throwable t);
 
-
-    /**
-     * Log an assert message with optional format args.
-     */
     void wtf(String message, Object... args);
 
-    /**
-     * Log an assert exception and a message with optional format args.
-     */
     void wtf(Throwable t, String message, Object... args);
 
-    /**
-     * Log an assert exception.
-     */
     void wtf(Throwable t);
 
-    /**
-     * Log at {@code priority} a message with optional format args.
-     */
+    void json(String content);
+
     void log(int priority, String message, Object... args);
 
-    /**
-     * Log at {@code priority} an exception and a message with optional format args.
-     */
     void log(int priority, Throwable t, String message, Object... args);
 
-    /**
-     * Log at {@code priority} an exception.
-     */
     void log(int priority, Throwable t);
 
 }

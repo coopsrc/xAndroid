@@ -16,6 +16,8 @@
 
 package com.coopsrc.xandroid.utils;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.coopsrc.xandroid.utils.logger.Logger;
@@ -39,160 +41,97 @@ public final class LogUtils {
         throw new AssertionError("No instances.");
     }
 
-    /**
-     * Log a verbose message with optional format args.
-     */
     public static void v(@NonNull String message, Object... args) {
-        PROXY.v(message, args);
+        LoggerDelegate.v(message, args);
     }
 
-    /**
-     * Log a verbose exception and a message with optional format args.
-     */
     public static void v(Throwable t, @NonNull String message, Object... args) {
-        PROXY.v(t, message, args);
+        LoggerDelegate.v(t, message, args);
     }
 
-    /**
-     * Log a verbose exception.
-     */
     public static void v(Throwable t) {
-        PROXY.v(t);
+        LoggerDelegate.v(t);
     }
 
-    /**
-     * Log a debug message with optional format args.
-     */
     public static void d(@NonNull String message, Object... args) {
-        PROXY.d(message, args);
+        LoggerDelegate.d(message, args);
     }
 
-    /**
-     * Log a debug exception and a message with optional format args.
-     */
     public static void d(Throwable t, @NonNull String message, Object... args) {
-        PROXY.d(t, message, args);
+        LoggerDelegate.d(t, message, args);
     }
 
-    /**
-     * Log a debug exception.
-     */
     public static void d(Throwable t) {
-        PROXY.d(t);
+        LoggerDelegate.d(t);
     }
 
-    /**
-     * Log an info message with optional format args.
-     */
     public static void i(@NonNull String message, Object... args) {
-        PROXY.i(message, args);
+        LoggerDelegate.i(message, args);
     }
 
-    /**
-     * Log an info exception and a message with optional format args.
-     */
     public static void i(Throwable t, @NonNull String message, Object... args) {
-        PROXY.i(t, message, args);
+        LoggerDelegate.i(t, message, args);
     }
 
-    /**
-     * Log an info exception.
-     */
     public static void i(Throwable t) {
-        PROXY.i(t);
+        LoggerDelegate.i(t);
     }
 
-    /**
-     * Log a warning message with optional format args.
-     */
     public static void w(@NonNull String message, Object... args) {
-        PROXY.w(message, args);
+        LoggerDelegate.w(message, args);
     }
 
-    /**
-     * Log a warning exception and a message with optional format args.
-     */
     public static void w(Throwable t, @NonNull String message, Object... args) {
-        PROXY.w(t, message, args);
+        LoggerDelegate.w(t, message, args);
     }
 
-    /**
-     * Log a warning exception.
-     */
     public static void w(Throwable t) {
-        PROXY.w(t);
+        LoggerDelegate.w(t);
     }
 
-    /**
-     * Log an error message with optional format args.
-     */
     public static void e(@NonNull String message, Object... args) {
-        PROXY.e(message, args);
+        LoggerDelegate.e(message, args);
     }
 
-    /**
-     * Log an error exception and a message with optional format args.
-     */
     public static void e(Throwable t, @NonNull String message, Object... args) {
-        PROXY.e(t, message, args);
+        LoggerDelegate.e(t, message, args);
     }
 
-    /**
-     * Log an error exception.
-     */
     public static void e(Throwable t) {
-        PROXY.e(t);
+        LoggerDelegate.e(t);
     }
 
-    /**
-     * Log an assert message with optional format args.
-     */
     public static void wtf(@NonNull String message, Object... args) {
-        PROXY.wtf(message, args);
+        LoggerDelegate.wtf(message, args);
     }
 
-    /**
-     * Log an assert exception and a message with optional format args.
-     */
     public static void wtf(Throwable t, @NonNull String message, Object... args) {
-        PROXY.wtf(t, message, args);
+        LoggerDelegate.wtf(t, message, args);
     }
 
-    /**
-     * Log an assert exception.
-     */
     public static void wtf(Throwable t) {
-        PROXY.wtf(t);
+        LoggerDelegate.wtf(t);
     }
 
-    /**
-     * Log at {@code priority} a message with optional format args.
-     */
+    public static void json(String content) {
+        LoggerDelegate.json(content);
+    }
+
     public static void log(int priority, @NonNull String message, Object... args) {
-        PROXY.log(priority, message, args);
+        LoggerDelegate.log(priority, message, args);
     }
 
-    /**
-     * Log at {@code priority} an exception and a message with optional format args.
-     */
     public static void log(int priority, Throwable t, @NonNull String message, Object... args) {
-        PROXY.log(priority, t, message, args);
+        LoggerDelegate.log(priority, t, message, args);
     }
 
-    /**
-     * Log at {@code priority} an exception.
-     */
     public static void log(int priority, Throwable t) {
-        PROXY.log(priority, t);
+        LoggerDelegate.log(priority, t);
     }
 
-    /**
-     * A view into LogUtils's planted trees as a tree itself. This can be used for injecting a logger
-     * instance rather than using static methods or to facilitate testing.
-     */
     @NonNull
     public static Logger asLogger() {
-        return PROXY;
+        return LoggerDelegate;
     }
 
     /**
@@ -204,7 +143,7 @@ public final class LogUtils {
         for (Logger logger : loggers) {
             logger.getExplicitTag().set(tag);
         }
-        return PROXY;
+        return LoggerDelegate;
     }
 
     @NonNull
@@ -213,7 +152,7 @@ public final class LogUtils {
         for (Logger logger : loggers) {
             logger.getPretty().set(true);
         }
-        return PROXY;
+        return LoggerDelegate;
     }
 
     @NonNull
@@ -223,7 +162,7 @@ public final class LogUtils {
             logger.getExplicitTag().set(tag);
             logger.getPretty().set(true);
         }
-        return PROXY;
+        return LoggerDelegate;
     }
 
     /**
@@ -233,7 +172,7 @@ public final class LogUtils {
         if (logger == null) {
             throw new NullPointerException("logger == null");
         }
-        if (logger == PROXY) {
+        if (logger == LoggerDelegate) {
             throw new IllegalArgumentException("Cannot register LogUtils into itself.");
         }
         synchronized (LOGGER_LIST) {
@@ -242,9 +181,6 @@ public final class LogUtils {
         }
     }
 
-    /**
-     * Adds new logging loggers.
-     */
     public static void register(@NonNull Logger... loggers) {
         if (loggers == null) {
             throw new NullPointerException("loggers == null");
@@ -253,7 +189,7 @@ public final class LogUtils {
             if (logger == null) {
                 throw new NullPointerException("loggers contains null");
             }
-            if (logger == PROXY) {
+            if (logger == LoggerDelegate) {
                 throw new IllegalArgumentException("Cannot register LogUtils into itself.");
             }
         }
@@ -263,9 +199,6 @@ public final class LogUtils {
         }
     }
 
-    /**
-     * Remove a registered logger.
-     */
     public static void unregister(@NonNull Logger logger) {
         synchronized (LOGGER_LIST) {
             if (!LOGGER_LIST.remove(logger)) {
@@ -275,9 +208,6 @@ public final class LogUtils {
         }
     }
 
-    /**
-     * Remove all registered trees.
-     */
     public static void unregisterAll() {
         synchronized (LOGGER_LIST) {
             LOGGER_LIST.clear();
@@ -285,9 +215,6 @@ public final class LogUtils {
         }
     }
 
-    /**
-     * Return a copy of all registered {@linkplain Logger LOGGER_LIST}.
-     */
     @NonNull
     public static List<Logger> loggerList() {
         synchronized (LOGGER_LIST) {
@@ -295,20 +222,13 @@ public final class LogUtils {
         }
     }
 
-
-    /**
-     * Return a copy of all registered {@linkplain Logger}.
-     */
     public static int loggerCount() {
         synchronized (LOGGER_LIST) {
             return LOGGER_LIST.size();
         }
     }
 
-    /**
-     * A {@link Logger} that delegates to all registered loggers in the {@linkplain #LOGGER_LIST}.
-     */
-    private static final Logger PROXY = new Logger() {
+    private static final Logger LoggerDelegate = new Logger() {
         @Override
         public void v(String message, Object... args) {
             Logger[] loggers = sLoggers;
@@ -450,6 +370,14 @@ public final class LogUtils {
             Logger[] loggers = sLoggers;
             for (Logger logger : loggers) {
                 logger.wtf(t);
+            }
+        }
+
+        @Override
+        public void json(String content) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
+                logger.json(content);
             }
         }
 

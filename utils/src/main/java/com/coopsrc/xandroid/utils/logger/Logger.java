@@ -45,192 +45,132 @@ public abstract class Logger implements ILogger {
         this.formatter = formatter;
     }
 
-    /**
-     * Log a verbose message with optional format args.
-     */
     @Override
     public void v(String message, Object... args) {
         prepareLog(Log.VERBOSE, null, message, args);
     }
 
-    /**
-     * Log a verbose exception and a message with optional format args.
-     */
     @Override
     public void v(Throwable t, String message, Object... args) {
         prepareLog(Log.VERBOSE, t, message, args);
     }
 
-    /**
-     * Log a verbose exception.
-     */
     @Override
     public void v(Throwable t) {
         prepareLog(Log.VERBOSE, t, null);
     }
 
-    /**
-     * Log a debug message with optional format args.
-     */
     @Override
     public void d(String message, Object... args) {
         prepareLog(Log.DEBUG, null, message, args);
     }
 
-    /**
-     * Log a debug exception and a message with optional format args.
-     */
     @Override
     public void d(Throwable t, String message, Object... args) {
         prepareLog(Log.DEBUG, t, message, args);
     }
 
-    /**
-     * Log a debug exception.
-     */
     @Override
     public void d(Throwable t) {
         prepareLog(Log.DEBUG, t, null);
     }
 
-    /**
-     * Log an info message with optional format args.
-     */
     @Override
     public void i(String message, Object... args) {
         prepareLog(Log.INFO, null, message, args);
     }
 
-    /**
-     * Log an info exception and a message with optional format args.
-     */
     @Override
     public void i(Throwable t, String message, Object... args) {
         prepareLog(Log.INFO, t, message, args);
     }
 
-    /**
-     * Log an info exception.
-     */
     @Override
     public void i(Throwable t) {
         prepareLog(Log.INFO, t, null);
     }
 
-    /**
-     * Log a warning message with optional format args.
-     */
     @Override
     public void w(String message, Object... args) {
         prepareLog(Log.WARN, null, message, args);
     }
 
-    /**
-     * Log a warning exception and a message with optional format args.
-     */
     @Override
     public void w(Throwable t, String message, Object... args) {
         prepareLog(Log.WARN, t, message, args);
     }
 
-    /**
-     * Log a warning exception.
-     */
     @Override
     public void w(Throwable t) {
         prepareLog(Log.WARN, t, null);
     }
 
-    /**
-     * Log an error message with optional format args.
-     */
     @Override
     public void e(String message, Object... args) {
         prepareLog(Log.ERROR, null, message, args);
     }
 
-    /**
-     * Log an error exception and a message with optional format args.
-     */
     @Override
     public void e(Throwable t, String message, Object... args) {
         prepareLog(Log.ERROR, t, message, args);
     }
 
-    /**
-     * Log an error exception.
-     */
     @Override
     public void e(Throwable t) {
         prepareLog(Log.ERROR, t, null);
     }
 
-    /**
-     * Log an assert message with optional format args.
-     */
     @Override
     public void wtf(String message, Object... args) {
         prepareLog(Log.ASSERT, null, message, args);
     }
 
-    /**
-     * Log an assert exception and a message with optional format args.
-     */
     @Override
     public void wtf(Throwable t, String message, Object... args) {
         prepareLog(Log.ASSERT, t, message, args);
     }
 
-    /**
-     * Log an assert exception.
-     */
     @Override
     public void wtf(Throwable t) {
         prepareLog(Log.ASSERT, t, null);
     }
 
-    /**
-     * Log at {@code priority} a message with optional format args.
-     */
+    @Override
+    public void json(String content) {
+        prepareLog(Log.INFO, true, null, content);
+    }
+
     @Override
     public void log(int priority, String message, Object... args) {
         prepareLog(priority, null, message, args);
     }
 
-    /**
-     * Log at {@code priority} an exception and a message with optional format args.
-     */
     @Override
     public void log(int priority, Throwable t, String message, Object... args) {
         prepareLog(priority, t, message, args);
     }
 
-    /**
-     * Log at {@code priority} an exception.
-     */
     @Override
     public void log(int priority, Throwable t) {
         prepareLog(priority, t, null);
     }
 
-    /**
-     * Return whether a message at {@code priority} should be logged.
-     */
     protected boolean isLoggable(int priority) {
         return true;
     }
 
-    /**
-     * Return whether a message at {@code priority} or {@code tag} should be logged.
-     */
     protected boolean isLoggable(@Nullable String tag, int priority) {
         //noinspection deprecation
         return isLoggable(priority);
     }
 
     private void prepareLog(int priority, Throwable throwable, String message, Object... args) {
-        // Consume tag even when message is not loggable so that next message is correctly tagged.
         boolean depthPlus = getExplicitTag().get() != null || getPretty().get() != null;
+        prepareLog(priority, depthPlus, throwable, message, args);
+    }
+
+    private void prepareLog(int priority, boolean depthPlus, Throwable throwable, String message, Object... args) {
+        // Consume tag even when message is not loggable so that next message is correctly tagged.
         String tag = getTag();
 
         if (!isLoggable(tag, priority)) {
@@ -264,8 +204,6 @@ public abstract class Logger implements ILogger {
     }
 
     private String getStackTraceString(Throwable t) {
-        // Don't replace this with Log.getStackTraceString() - it hides
-        // UnknownHostException, which is not what we want.
         StringWriter sw = new StringWriter(256);
         PrintWriter pw = new PrintWriter(sw, false);
         t.printStackTrace(pw);
@@ -301,13 +239,5 @@ public abstract class Logger implements ILogger {
         return false;
     }
 
-    /**
-     * Write a log message to its destination. Called for all level-specific methods by default.
-     *
-     * @param priority Log level. See {@link Log} for constants.
-     * @param tag      Explicit or inferred tag. May be {@code null}.
-     * @param message  Formatted log message. May be {@code null}, but then {@code t} will not be.
-     * @param t        Accompanying exceptions. May be {@code null}, but then {@code message} will not be.
-     */
     protected abstract void log(int priority, @Nullable String tag, @NonNull String message, @Nullable Throwable t, boolean depthPlus);
 }

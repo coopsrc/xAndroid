@@ -1,43 +1,44 @@
 package com.coopsrc.xandroid.demos.blur;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.coopsrc.xandroid.demos.R;
+import com.coopsrc.xandroid.demos.databinding.ActivityBlurBinding;
 import com.coopsrc.xandroid.dewdrops.DewdropsBlur;
 import com.coopsrc.xandroid.dewdrops.annotation.Mode;
 import com.coopsrc.xandroid.dewdrops.annotation.Scheme;
 import com.coopsrc.xandroid.dewdrops.config.BlurConfig;
-import com.coopsrc.xandroid.dewdrops.widget.DragBlurringView;
 
 public class BlurActivity extends AppCompatActivity {
 
-    private TextView textViewInfo;
-    private RadioGroup radioGroupScheme;
-    private RadioGroup radioGroupAlgorithm;
-    private SeekBar seekBarRadius;
-    private SeekBar seekBarSampleFactor;
-    private SeekBar seekBarBlurScale;
+//    private TextView textViewInfo;
+//    private RadioGroup radioGroupScheme;
+//    private RadioGroup radioGroupAlgorithm;
+//    private SeekBar seekBarRadius;
+//    private SeekBar seekBarSampleFactor;
+//    private SeekBar seekBarBlurScale;
 
     private int scheme = BlurConfig.SCHEME_RENDER_SCRIPT;
     private int mode = BlurConfig.MODE_GAUSSIAN;
     private int radius = BlurConfig.DEFAULT_RADIUS;
     private float sampleFactor = BlurConfig.DEFAULT_SAMPLE_FACTOR;
     private int blurScale = BlurConfig.DEFAULT_BLUR_SCALE;
+//
+//    private ImageView imageView;
+//    private DragBlurringView blurringView;
 
-    private ImageView imageView;
-    private DragBlurringView blurringView;
+    private ActivityBlurBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blur);
+        mBinding = ActivityBlurBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
         initView();
     }
 
@@ -48,32 +49,23 @@ public class BlurActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        textViewInfo = findViewById(R.id.textViewInfo);
-        radioGroupScheme = findViewById(R.id.radioGroupScheme);
-        radioGroupAlgorithm = findViewById(R.id.radioGroupAlgorithm);
-        seekBarRadius = findViewById(R.id.seekBarRadius);
-        seekBarSampleFactor = findViewById(R.id.seekBarSampleFactor);
-        seekBarBlurScale = findViewById(R.id.seekBarBlurScale);
+        mBinding.blurringView.setBlurredView(mBinding.imageView);
 
-        imageView = findViewById(R.id.imageView);
-        blurringView = findViewById(R.id.blurringView);
-        blurringView.setBlurredView(imageView);
-
-        radioGroupScheme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mBinding.radioGroupScheme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 updateSchemeChecked(checkedId);
                 updateConfigInfo();
             }
         });
-        radioGroupAlgorithm.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mBinding.radioGroupAlgorithm.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 updateAlgorithmChecked(checkedId);
                 updateConfigInfo();
             }
         });
-        seekBarRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mBinding.seekBarRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 updateRadius(progress);
@@ -91,7 +83,7 @@ public class BlurActivity extends AppCompatActivity {
             }
         });
 
-        seekBarSampleFactor.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mBinding.seekBarSampleFactor.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 updateSampleFactor(progress);
@@ -108,7 +100,7 @@ public class BlurActivity extends AppCompatActivity {
             }
         });
 
-        seekBarBlurScale.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mBinding.seekBarBlurScale.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 updateBlurScale(progress);
@@ -128,18 +120,10 @@ public class BlurActivity extends AppCompatActivity {
     }
 
     private void initConfigInfo() {
-        if (radioGroupScheme != null) {
-            updateSchemeChecked(radioGroupScheme.getCheckedRadioButtonId());
-        }
-        if (radioGroupAlgorithm != null) {
-            updateSchemeChecked(radioGroupAlgorithm.getCheckedRadioButtonId());
-        }
-        if (seekBarRadius != null) {
-            updateRadius(seekBarRadius.getProgress());
-        }
-        if (seekBarSampleFactor != null) {
-            updateRadius(seekBarSampleFactor.getProgress());
-        }
+        updateSchemeChecked(mBinding.radioGroupScheme.getCheckedRadioButtonId());
+        updateSchemeChecked(mBinding.radioGroupAlgorithm.getCheckedRadioButtonId());
+        updateRadius(mBinding.seekBarRadius.getProgress());
+        updateRadius(mBinding.seekBarSampleFactor.getProgress());
         updateConfigInfo();
     }
 
@@ -188,23 +172,17 @@ public class BlurActivity extends AppCompatActivity {
 
     private void updateConfigInfo() {
         String info = String.format("Scheme: %s, Mode: %s, Radius: %s, Sample: %s, Scale: %s", getSchemeText(scheme), getModeText(mode), radius, sampleFactor, blurScale);
-        textViewInfo.setText(info);
+        mBinding.textViewInfo.setText(info);
 
         updateBlurProcessor();
     }
 
     private String getSchemeText(@Scheme int scheme) {
-        if (radioGroupScheme != null) {
-            return getSelectedText(radioGroupScheme);
-        }
-        return String.valueOf(scheme);
+        return getSelectedText(mBinding.radioGroupScheme);
     }
 
     private String getModeText(@Mode int mode) {
-        if (radioGroupAlgorithm != null) {
-            return getSelectedText(radioGroupAlgorithm);
-        }
-        return String.valueOf(mode);
+        return getSelectedText(mBinding.radioGroupAlgorithm);
     }
 
     private String getSelectedText(RadioGroup radioGroup) {
@@ -215,14 +193,12 @@ public class BlurActivity extends AppCompatActivity {
 
     private void updateBlurProcessor() {
 
-        if (blurringView != null) {
-            blurringView.setBlurProcessor(DewdropsBlur.with(this)
-                                                      .scheme(scheme)
-                                                      .mode(mode)
-                                                      .radius(radius)
-                                                      .sampleFactor(sampleFactor)
-                                                      .build());
-            blurringView.setScale(blurScale);
-        }
+        mBinding.blurringView.setBlurProcessor(DewdropsBlur.with(this)
+                .scheme(scheme)
+                .mode(mode)
+                .radius(radius)
+                .sampleFactor(sampleFactor)
+                .build());
+        mBinding.blurringView.setScale(blurScale);
     }
 }

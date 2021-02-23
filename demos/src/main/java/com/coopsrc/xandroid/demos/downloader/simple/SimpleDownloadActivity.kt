@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.coopsrc.xandroid.demos.R
+import com.coopsrc.xandroid.demos.databinding.ActivitySimpleDownloadBinding
 import com.coopsrc.xandroid.downloader.ExDownloader
 import com.coopsrc.xandroid.downloader.model.Progress
 import com.coopsrc.xandroid.downloader.model.Status
@@ -12,7 +12,6 @@ import com.coopsrc.xandroid.downloader.model.TaskInfo
 import com.coopsrc.xandroid.downloader.utils.DownloaderUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_simple_download.*
 
 class SimpleDownloadActivity : AppCompatActivity() {
 
@@ -26,9 +25,12 @@ class SimpleDownloadActivity : AppCompatActivity() {
 
     private lateinit var disposable: Disposable
 
+    private lateinit var mBinding: ActivitySimpleDownloadBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_simple_download)
+        mBinding = ActivitySimpleDownloadBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
         taskInfo = TaskInfo(url1)
         progress = Progress(taskInfo.tag)
 
@@ -73,7 +75,7 @@ class SimpleDownloadActivity : AppCompatActivity() {
                 updateProgressBar()
             }
         }
-        button_download.text = when (progress.status) {
+        mBinding.buttonDownload.text = when (progress.status) {
             Status.Idle -> {
                 if (progress.downloadSize > 0) {
                     "继续"
@@ -94,14 +96,14 @@ class SimpleDownloadActivity : AppCompatActivity() {
     }
 
     private fun initProgressBar() {
-        segmentProgressBar.setFixedCountSegments(progress.totalSize, 4)
+        mBinding.segmentProgressBar.setFixedCountSegments(progress.totalSize, 4)
     }
 
     private fun updateProgressBar() {
-        segmentProgressBar.setSegment(0, progress.downloadSize / 4)
-        segmentProgressBar.setSegment(1, progress.downloadSize / 4)
-        segmentProgressBar.setSegment(2, progress.downloadSize / 4)
-        segmentProgressBar.setSegment(3, progress.downloadSize / 4)
+        mBinding.segmentProgressBar.setSegment(0, progress.downloadSize / 4)
+        mBinding.segmentProgressBar.setSegment(1, progress.downloadSize / 4)
+        mBinding.segmentProgressBar.setSegment(2, progress.downloadSize / 4)
+        mBinding.segmentProgressBar.setSegment(3, progress.downloadSize / 4)
     }
 
 

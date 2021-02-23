@@ -6,10 +6,10 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import com.coopsrc.xandroid.particle.texture.TextureAtlas;
-import com.coopsrc.xandroid.particle.texture.TextureAtlasFactory;
 import com.coopsrc.xandroid.demos.R;
 import com.coopsrc.xandroid.demos.particle.base.BaseRenderActivity;
+import com.coopsrc.xandroid.particle.texture.TextureAtlas;
+import com.coopsrc.xandroid.particle.texture.TextureAtlasFactory;
 
 public class DropParticleActivity extends BaseRenderActivity {
 

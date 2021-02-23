@@ -25,7 +25,6 @@ import android.util.LongSparseArray;
 
 import androidx.core.app.NotificationCompat;
 
-import com.coopsrc.xandroid.http.monitor.BuildConfig;
 import com.coopsrc.xandroid.http.monitor.HttpMonitor;
 import com.coopsrc.xandroid.http.monitor.R;
 import com.coopsrc.xandroid.http.monitor.model.HttpInfo;

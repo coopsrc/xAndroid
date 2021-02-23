@@ -2,9 +2,6 @@ package com.coopsrc.xandroid.demos;
 
 import android.app.Application;
 
-import com.coopsrc.xandroid.downloader.ExDownloader;
-import com.coopsrc.xandroid.downloader.core.DownloaderConfig;
-import com.coopsrc.xandroid.downloader.helper.RangeMode;
 import com.coopsrc.xandroid.utils.LogUtils;
 import com.coopsrc.xandroid.utils.logger.DebugLogger;
 

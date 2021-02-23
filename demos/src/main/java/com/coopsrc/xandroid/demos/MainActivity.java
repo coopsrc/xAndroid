@@ -12,8 +12,6 @@ import com.coopsrc.xandroid.demos.downloader.DownloaderActivity;
 import com.coopsrc.xandroid.demos.framesequence.FrameSequenceActivity;
 import com.coopsrc.xandroid.demos.particle.ParticleActivity;
 import com.coopsrc.xandroid.utils.LogUtils;
-import com.coopsrc.xandroid.utils.logger.DebugLogger;
-import com.coopsrc.xandroid.utils.logger.Logger;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";

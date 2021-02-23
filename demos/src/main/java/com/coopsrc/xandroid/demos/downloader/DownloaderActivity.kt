@@ -4,19 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.coopsrc.xandroid.demos.R
+import com.coopsrc.xandroid.demos.databinding.ActivityDownloaderBinding
 import com.coopsrc.xandroid.demos.downloader.simple.SimpleDownloadActivity
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_downloader.*
 
 class DownloaderActivity : AppCompatActivity() {
 
+    private lateinit var mBinding: ActivityDownloaderBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_downloader)
-        setSupportActionBar(toolbar)
+        mBinding = ActivityDownloaderBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
+        setSupportActionBar(mBinding.toolbar)
 
-        fab.setOnClickListener { view ->
+        mBinding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }

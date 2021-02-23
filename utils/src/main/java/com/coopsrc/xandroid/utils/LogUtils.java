@@ -16,8 +16,6 @@
 
 package com.coopsrc.xandroid.utils;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.coopsrc.xandroid.utils.logger.Logger;

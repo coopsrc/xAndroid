@@ -230,6 +230,7 @@ public abstract class Logger implements ILogger {
 
     private void prepareLog(int priority, Throwable throwable, String message, Object... args) {
         // Consume tag even when message is not loggable so that next message is correctly tagged.
+        boolean depthPlus = getExplicitTag().get() != null || getPretty().get() != null;
         String tag = getTag();
 
         if (!isLoggable(tag, priority)) {
@@ -252,7 +253,7 @@ public abstract class Logger implements ILogger {
             }
         }
 
-        log(priority, tag, message, throwable);
+        log(priority, tag, message, throwable, depthPlus);
     }
 
     /**
@@ -292,7 +293,7 @@ public abstract class Logger implements ILogger {
     protected boolean isPretty() {
         Boolean isPretty = pretty.get();
         if (isPretty != null) {
-            pretty.set(false);
+            pretty.remove();
 
             return isPretty;
         }
@@ -308,5 +309,5 @@ public abstract class Logger implements ILogger {
      * @param message  Formatted log message. May be {@code null}, but then {@code t} will not be.
      * @param t        Accompanying exceptions. May be {@code null}, but then {@code message} will not be.
      */
-    protected abstract void log(int priority, @Nullable String tag, @NonNull String message, @Nullable Throwable t);
+    protected abstract void log(int priority, @Nullable String tag, @NonNull String message, @Nullable Throwable t, boolean depthPlus);
 }

@@ -37,7 +37,7 @@ final class DefaultFormatter extends Formatter {
     @Override
     public void println(int priority, @Nullable String tag, @NonNull String message) {
         if (message.length() < MAX_LOG_LENGTH) {
-            printer.println(priority, tag, message);
+            mPrinter.println(priority, tag, message);
             return;
         }
 
@@ -48,7 +48,7 @@ final class DefaultFormatter extends Formatter {
             do {
                 int end = Math.min(newline, i + MAX_LOG_LENGTH);
                 String part = message.substring(i, end);
-                printer.println(priority, tag, part);
+                mPrinter.println(priority, tag, part);
                 i = end;
             } while (i < newline);
         }

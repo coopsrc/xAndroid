@@ -22,6 +22,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,12 +33,15 @@ import java.util.regex.Pattern;
  * Datetime: 2020-01-08 11:55
  */
 public class DebugLogger extends Logger {
+    private static final String TAG = "DebugLogger";
 
     private static final int MAX_TAG_LENGTH = 23;
     private static final int CALL_STACK_INDEX = 5;
     private static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
 
     private static final Formatter prettyFormatter = new PrettyFormatter();
+
+    private static final HashMap<String, String> sCachedTag = new HashMap<>();
 
     public DebugLogger() {
         super();
@@ -82,11 +87,53 @@ public class DebugLogger extends Logger {
      * {@inheritDoc}
      */
     @Override
-    public void log(int priority, String tag, @NonNull String message, Throwable t) {
+    public void log(int priority, String tag, @NonNull String message, Throwable t, boolean depthPlus) {
         if (isPretty()) {
-            prettyFormatter.println(priority, tag, message);
+//            prettyFormatter.println(priority, tag, message);
+            prettyFormatter.println(priority, buildTag(tag, depthPlus), buildMessage(message, depthPlus));
         } else {
-            formatter.println(priority, tag, message);
+//            formatter.println(priority, tag, message);
+            formatter.println(priority, buildTag(tag, depthPlus), buildMessage(message, depthPlus));
         }
+    }
+
+    private static String buildTag(@NonNull String tag, boolean assignedTag) {
+        String key = String.format(Locale.US, "%s@%s", tag, Thread.currentThread().getName());
+
+        if (!sCachedTag.containsKey(key)) {
+            if (TAG.equals(tag)) {
+                sCachedTag.put(key, String.format(Locale.US, "|%s|%s|",
+                        tag,
+                        Thread.currentThread().getName()
+                ));
+            } else {
+                sCachedTag.put(key, String.format(Locale.US, "|%s_%s|%s|",
+                        TAG,
+                        tag,
+                        Thread.currentThread().getName()
+                ));
+            }
+        }
+
+        return sCachedTag.get(key);
+    }
+
+    private static String buildMessage(String message, boolean assignedTag) {
+        StackTraceElement[] traceElements = new Throwable().getStackTrace();
+
+        int traceDepth = assignedTag ? 5 : 6;
+
+        if (traceElements == null || traceElements.length < traceDepth) {
+            return message;
+        }
+        StackTraceElement traceElement = traceElements[traceDepth];
+
+        return String.format(Locale.US, "%s.%s(%s:%d) %s",
+                traceElement.getClassName().substring(traceElement.getClassName().lastIndexOf(".") + 1),
+                traceElement.getMethodName(),
+                traceElement.getFileName(),
+                traceElement.getLineNumber(),
+                message
+        );
     }
 }

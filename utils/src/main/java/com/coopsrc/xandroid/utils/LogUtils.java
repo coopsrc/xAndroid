@@ -207,6 +207,7 @@ public final class LogUtils {
         return PROXY;
     }
 
+    @NonNull
     public static Logger pretty() {
         Logger[] loggers = sLoggers;
         for (Logger logger : loggers) {
@@ -215,6 +216,7 @@ public final class LogUtils {
         return PROXY;
     }
 
+    @NonNull
     public static Logger pretty(String tag) {
         Logger[] loggers = sLoggers;
         for (Logger logger : loggers) {
@@ -309,174 +311,174 @@ public final class LogUtils {
     private static final Logger PROXY = new Logger() {
         @Override
         public void v(String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.v(message, args);
             }
         }
 
         @Override
         public void v(Throwable t, String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.v(t, message, args);
             }
         }
 
         @Override
         public void v(Throwable t) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.v(t);
             }
         }
 
         @Override
         public void d(String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.d(message, args);
             }
         }
 
         @Override
         public void d(Throwable t, String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.d(t, message, args);
             }
         }
 
         @Override
         public void d(Throwable t) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.d(t);
             }
         }
 
         @Override
         public void i(String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.i(message, args);
             }
         }
 
         @Override
         public void i(Throwable t, String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.i(t, message, args);
             }
         }
 
         @Override
         public void i(Throwable t) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.i(t);
             }
         }
 
         @Override
         public void w(String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.w(message, args);
             }
         }
 
         @Override
         public void w(Throwable t, String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.w(t, message, args);
             }
         }
 
         @Override
         public void w(Throwable t) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.w(t);
             }
         }
 
         @Override
         public void e(String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.e(message, args);
             }
         }
 
         @Override
         public void e(Throwable t, String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.e(t, message, args);
             }
         }
 
         @Override
         public void e(Throwable t) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.e(t);
             }
         }
 
         @Override
         public void wtf(String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.wtf(message, args);
             }
         }
 
         @Override
         public void wtf(Throwable t, String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.wtf(t, message, args);
             }
         }
 
         @Override
         public void wtf(Throwable t) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.wtf(t);
             }
         }
 
         @Override
         public void log(int priority, String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.log(priority, message, args);
             }
         }
 
         @Override
         public void log(int priority, Throwable t, String message, Object... args) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.log(priority, t, message, args);
             }
         }
 
         @Override
         public void log(int priority, Throwable t) {
-            Logger[] forest = sLoggers;
-            for (Logger logger : forest) {
+            Logger[] loggers = sLoggers;
+            for (Logger logger : loggers) {
                 logger.log(priority, t);
             }
         }
 
         @Override
-        public void log(int priority, String tag, @NonNull String message, Throwable t) {
+        public void log(int priority, String tag, @NonNull String message, Throwable t, boolean depthPlus) {
             throw new AssertionError("Missing override for log method.");
         }
     };

@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  */
 public abstract class Formatter implements IPrinter {
 
-    protected final IPrinter printer;
+    protected final IPrinter mPrinter;
 
     static final int MAX_LOG_LENGTH = 4000;
     static final int MAX_TAG_LENGTH = 23;
@@ -33,10 +33,10 @@ public abstract class Formatter implements IPrinter {
     static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
 
     public Formatter() {
-        printer = new LogcatPrinter();
+        mPrinter = new LogcatPrinter();
     }
 
     public Formatter(IPrinter printer) {
-        this.printer = printer;
+        this.mPrinter = printer;
     }
 }

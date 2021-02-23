@@ -19,6 +19,8 @@ package com.coopsrc.xandroid.utils.logger;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Locale;
+
 /**
  * @author tingkuo
  * <p>
@@ -39,16 +41,19 @@ public final class PrettyFormatter extends Formatter {
     private static final char HORIZONTAL_LINE = '│';
     private static final char VERTICAL_LINE = '─';
     private static final char VERTICAL_DOTTED_LINE = '╌';
-    private static final String HORIZONTAL_DIVIDER = "──────────────────────────────────────────────────────────────────────────────────────────";
-    private static final String HORIZONTAL_DOTTED_DIVIDER = "╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌";
+    private static final String HORIZONTAL_DIVIDER = "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────";
+    private static final String HORIZONTAL_DOTTED_DIVIDER = "╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌";
 
     private static final String TOP_BORDER = String.format("%s%s%s", LEFT_TOP_CORNER, HORIZONTAL_DIVIDER, RIGHT_TOP_CORNER);
     private static final String MIDDLE_BORDER = String.format("%s%s%s", LEFT_MIDDLE_CORNER, HORIZONTAL_DOTTED_DIVIDER, RIGHT_MIDDLE_CORNER);
     private static final String BOTTOM_BORDER = String.format("%s%s%s", LEFT_BOTTOM_CORNER, HORIZONTAL_DIVIDER, RIGHT_BOTTOM_CORNER);
 
-    private static final int CONTENT_LENGTH = (TOP_BORDER.length() - 4) * 2;
+    private static final int CONTENT_SIZE = 134;
+    private static final int CONTENT_LENGTH = CONTENT_SIZE - 6;
+
 
     public PrettyFormatter() {
+        super();
     }
 
     public PrettyFormatter(IPrinter printer) {
@@ -63,22 +68,19 @@ public final class PrettyFormatter extends Formatter {
     }
 
     private void printTopBorder(int priority, @Nullable String tag) {
-        printer.println(priority, tag, TOP_BORDER);
+        mPrinter.println(priority, tag, TOP_BORDER);
     }
 
     private void printMiddleBorder(int priority, @Nullable String tag) {
-        printer.println(priority, tag, MIDDLE_BORDER);
+        mPrinter.println(priority, tag, MIDDLE_BORDER);
     }
 
     private void printBottomBorder(int priority, @Nullable String tag) {
-        printer.println(priority, tag, BOTTOM_BORDER);
-    }
-
-    private void printHeader() {
-
+        mPrinter.println(priority, tag, BOTTOM_BORDER);
     }
 
     private void printBody(int priority, @Nullable String tag, @NonNull String message) {
+        message = message.replaceAll("\t", "    ");
         if (message.length() <= CONTENT_LENGTH) {
             printContentLine(priority, tag, message);
             return;
@@ -94,10 +96,15 @@ public final class PrettyFormatter extends Formatter {
                 printContentLine(priority, tag, part);
                 i = end;
             } while (i < newline);
+
+            if (newline != -1 && message.indexOf('\n', 0) == i) {
+                printMiddleBorder(priority, tag);
+            }
         }
     }
 
     private void printContentLine(int priority, @Nullable String tag, @NonNull String message) {
-        printer.println(priority, tag, String.format("%s  %s", HORIZONTAL_LINE, message));
+        String format = "%s  %-" + CONTENT_LENGTH + "s  %s";
+        mPrinter.println(priority, tag, String.format(format, HORIZONTAL_LINE, message, HORIZONTAL_LINE));
     }
 }
